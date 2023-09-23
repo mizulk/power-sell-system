@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="team.skadi.powersellsys.mapper.UserMapper">
+	<select id="page" resultType="team.skadi.powersellsys.pojo.User">
+		SELECT * FROM `users`
+		<where>
+			<if test="account != null">
+				account = #{account}
+			</if>
+			<if test="name != null">
+				AND `name` = #{name}
+			</if>
+			<if test="address != null">
+				AND address LIKE CONCAT('%',#{address},'%')
+			</if>
+		</where>
+	</select>
+</mapper>

@@ -5,9 +5,9 @@ import lombok.Data;
 
 @Data
 public class Supplier {
-	Integer id;
-	String name;
-	String tel;
-	String address;
-	String zipCode;
+	private Integer id;
+	private String name;
+	private String tel;
+	private String address;
+	private String zipCode;
 }

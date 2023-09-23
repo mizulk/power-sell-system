@@ -5,11 +5,8 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class Order {
-	private Integer id;
+public class Collection {
 	private Integer userId;
 	private Integer powerId;
-	private Integer sum;
-	private Double amount;
 	private LocalDateTime createTime;
 }

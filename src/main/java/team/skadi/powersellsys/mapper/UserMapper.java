@@ -8,4 +8,6 @@ import java.util.List;
 public interface UserMapper {
 	@Select("SELECT * FROM user")
 	List<User> selectAll();
+
+	List<User> page(String account, String name, String address);
 }

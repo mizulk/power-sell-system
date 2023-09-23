@@ -12,9 +12,10 @@ public class SqlSessionUtil {
 
 	private static SqlSessionFactory sqlSessionFactory;
 
+	// 初始化mybatis配置文件
 	static {
 		try {
-			String resource = "team/skadi/powersellsys/mybatis-config.xml";
+			String resource = "mybatis-config.xml";
 			InputStream in = Resources.getResourceAsStream(resource);
 			sqlSessionFactory = new SqlSessionFactoryBuilder().build(in);
 		} catch (IOException e) {
@@ -22,7 +23,7 @@ public class SqlSessionUtil {
 		}
 	}
 
-	public SqlSession getSession() {
+	public static SqlSession getSqlSession() {
 		return sqlSessionFactory.openSession();
 	}
 

@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class Comment {
-	Integer userId;
-	Integer powerId;
-	String content;
-	Byte star;
+	private Integer userId;
+	private Integer powerId;
+	private String content;
+	private Byte star;
 }

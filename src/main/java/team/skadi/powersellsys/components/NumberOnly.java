@@ -1,7 +1,5 @@
 package team.skadi.powersellsys.components;
 
-import team.skadi.powersellsys.pojo.User;
-
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 

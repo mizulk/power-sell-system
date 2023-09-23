@@ -6,15 +6,16 @@ import java.time.LocalDateTime;
 
 @Data
 public class User {
-	Integer id;
-	String account;
-	String password;
-	Byte sex;
-	Short age;
-	String zipCode;
-	String tel;
-	String address;
-	LocalDateTime createTime;
-	LocalDateTime updateTime;
-	LocalDateTime loginTime;
+	private Integer id;
+	private String account;
+	private String password;
+	private String name;
+	private Byte sex;
+	private Short age;
+	private String zipCode;
+	private String tel;
+	private String address;
+	private LocalDateTime createTime;
+	private LocalDateTime updateTime;
+	private LocalDateTime loginTime;
 }

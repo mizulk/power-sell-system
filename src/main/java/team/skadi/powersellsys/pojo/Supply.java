@@ -6,9 +6,10 @@ import java.time.LocalDateTime;
 
 @Data
 public class Supply {
-	Integer id;
-	Integer supplierId;
-	Integer powerId;
-	Integer sum;
-	LocalDateTime supplyTime;
+	private Integer id;
+	private Integer supplierId;
+	private Integer powerId;
+	private Integer sum;
+	private LocalDateTime createTime;
+	private LocalDateTime supplyTime;
 }
