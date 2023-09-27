@@ -6,29 +6,38 @@ import java.awt.CardLayout;
 import java.util.LinkedList;
 
 /**
- * 用于面板的跳转
+ * 用于页面的跳转
  */
 public class Router {
-	private final LinkedList<PanelName> panelStack;
+	// 使用栈来模拟类似于游览器的导航效果
+	private final LinkedList<ViewName> viewStack;
 
 	private final App app;
 
 	private final CardLayout cardLayout;
 
 
-	public void showPanel(PanelName from, PanelName to) {
+	/**
+	 * 展示指定页面
+	 * @param from 从那个页面
+	 * @param to 跳转到那个页面
+	 */
+	public void showView(ViewName from, ViewName to) {
 		cardLayout.show(app.getContentPane(), to.getValue());
-		panelStack.push(from);
+		viewStack.push(from);
 	}
 
-	public void showPreviousPanel() {
-		cardLayout.show(app.getContentPane(), panelStack.pop().getValue());
+	/**
+	 * 展示上一个页面，类似于返回上一级
+	 */
+	public void showPreviousView() {
+		cardLayout.show(app.getContentPane(), viewStack.pop().getValue());
 	}
 
 	public Router(App app) {
 		this.app = app;
 		cardLayout = new CardLayout();
-		panelStack = new LinkedList<>();
+		viewStack = new LinkedList<>();
 	}
 
 	public CardLayout getCardLayout() {

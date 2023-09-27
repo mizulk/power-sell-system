@@ -3,6 +3,8 @@ package team.skadi.powersellsys.view;
 import team.skadi.powersellsys.App;
 import team.skadi.powersellsys.Main;
 import team.skadi.powersellsys.components.ImageButton;
+import team.skadi.powersellsys.router.ViewName;
+import team.skadi.powersellsys.view.BasicView;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,9 +27,10 @@ public class SelectLoginView extends BasicView implements ActionListener {
 	}
 
 	@Override
-	void buildLayout() {
+	protected void buildLayout() {
 		setLayout(new BorderLayout());
 
+		// 将构建中心部分的内容抽象成一个方法有利于代码简洁，方便维护
 		add(getCenterPanel(), BorderLayout.CENTER);
 
 		add(getSouthPanel(), BorderLayout.SOUTH);
@@ -53,7 +56,7 @@ public class SelectLoginView extends BasicView implements ActionListener {
 		title.setFont(Main.TITLE_FONT);
 		centerPanel.add(title, gbc);
 
-		//(2~3, 2)
+		//(1~3, 2)
 		gbc.gridy++;
 		gbc.anchor = GridBagConstraints.WEST;
 		JLabel subTitle = new JLabel("请选择：");
@@ -91,7 +94,7 @@ public class SelectLoginView extends BasicView implements ActionListener {
 	}
 
 	@Override
-	void addListener() {
+	protected void addListener() {
 		user.addActionListener(this);
 		supplier.addActionListener(this);
 		manager.addActionListener(this);
@@ -99,6 +102,13 @@ public class SelectLoginView extends BasicView implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
+		Object source = e.getSource();
+		if (source == user) {
+			app.useRouter().showView(ViewName.SELECT_LOGIN_VIEW, ViewName.USER_LOGIN_VIEW);
+		} else if (source == supplier) {
+			app.useRouter().showView(ViewName.SELECT_LOGIN_VIEW, ViewName.SUPPLIER_LOGIN_VIEW);
+		} else if (source == manager) {
+			app.useRouter().showView(ViewName.SELECT_LOGIN_VIEW, ViewName.MANAGER_LOGIN_VIEW);
+		}
 	}
 }

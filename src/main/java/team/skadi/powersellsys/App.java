@@ -1,14 +1,17 @@
 package team.skadi.powersellsys;
 
-import team.skadi.powersellsys.router.PanelName;
+import team.skadi.powersellsys.router.ViewName;
 import team.skadi.powersellsys.router.Router;
-import team.skadi.powersellsys.view.LoginView;
-import team.skadi.powersellsys.view.SelectLoginView;
+import team.skadi.powersellsys.view.BasicView;
 
 import javax.swing.JFrame;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.lang.reflect.InvocationTargetException;
 
+/**
+ * 主页面
+ */
 public class App extends JFrame {
 
 	public static final String TITLE = "";
@@ -39,9 +42,16 @@ public class App extends JFrame {
 
 	private void buildLayout() {
 		setLayout(router.getCardLayout());
-		LoginView loginView = new LoginView(this);
-//		add(loginView, PanelName.LOGIN_PANEL.getValue());
-		add(new SelectLoginView(this), PanelName.SELECT_LOGIN_PANEL.getValue());
+		// 初始化在router.ViewName类下的所有页面
+		for (ViewName panel : ViewName.values()) {
+			try {
+				BasicView basicView = panel.getTarget().getDeclaredConstructor(App.class).newInstance(this);
+				add(basicView, panel.getValue());
+			} catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+					 NoSuchMethodException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public Router useRouter() {
