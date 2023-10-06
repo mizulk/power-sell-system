@@ -1,6 +1,7 @@
 package team.skadi.powersellsys.view.supplier;
 
 import team.skadi.powersellsys.App;
+import team.skadi.powersellsys.router.ViewName;
 import team.skadi.powersellsys.view.LoginView;
 
 public class SupplierLoginView extends LoginView {
@@ -17,6 +18,7 @@ public class SupplierLoginView extends LoginView {
 	@Override
 	protected void login() {
 		System.out.println("supplier");
+		app.useRouter().showView(ViewName.SUPPLIER_LOGIN_VIEW,ViewName.SUPPLIER_MAIN_VIEW);
 	}
 
 	@Override

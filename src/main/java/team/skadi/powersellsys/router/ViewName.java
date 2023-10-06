@@ -5,6 +5,7 @@ import team.skadi.powersellsys.view.manager.ManagerLoginView;
 import team.skadi.powersellsys.view.manager.ManagerView;
 import team.skadi.powersellsys.view.supplier.SupplierLoginView;
 import team.skadi.powersellsys.view.SelectLoginView;
+import team.skadi.powersellsys.view.supplier.SupplierMainView;
 import team.skadi.powersellsys.view.user.UserLoginView;
 
 /**
@@ -14,6 +15,7 @@ public enum ViewName {
 	SELECT_LOGIN_VIEW("selectLogin", SelectLoginView.class),
 	USER_LOGIN_VIEW("userLogin", UserLoginView.class),
 	SUPPLIER_LOGIN_VIEW("supperLogin", SupplierLoginView.class),
+	SUPPLIER_MAIN_VIEW("SupplierMain", SupplierMainView.class),
 	MANAGER_LOGIN_VIEW("managerLogin", ManagerLoginView.class),
 	MANAGER_VIEW("manager", ManagerView.class);
 //	在这里新建类，UserMainView.java -> USER_MAIN_VIEW("userMain", UserMainView.class)
