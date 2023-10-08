@@ -4,7 +4,6 @@ import team.skadi.powersellsys.App;
 import team.skadi.powersellsys.Main;
 import team.skadi.powersellsys.components.ImageButton;
 import team.skadi.powersellsys.router.ViewName;
-import team.skadi.powersellsys.view.BasicView;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
