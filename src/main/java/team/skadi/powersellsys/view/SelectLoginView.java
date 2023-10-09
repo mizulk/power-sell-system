@@ -51,14 +51,14 @@ public class SelectLoginView extends BasicView implements ActionListener {
 		gbc.gridy = 1;
 		gbc.gridwidth = 3;
 		gbc.insets.set(0, 0, 20, 0);
-		JLabel title = new JLabel("欢迎使用");
+		JLabel title = new JLabel("欢迎使用琨坤电力");
 		title.setFont(Main.TITLE_FONT);
 		centerPanel.add(title, gbc);
 
 		//(1~3, 2)
 		gbc.gridy++;
 		gbc.anchor = GridBagConstraints.WEST;
-		JLabel subTitle = new JLabel("请选择：");
+		JLabel subTitle = new JLabel("请选择您的登录身份：");
 		centerPanel.add(subTitle, gbc);
 
 

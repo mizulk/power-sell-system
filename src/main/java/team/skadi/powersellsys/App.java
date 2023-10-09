@@ -14,7 +14,7 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class App extends JFrame {
 
-	public static final String TITLE = "";
+	public static final String TITLE = "铌干犸电力有限公司";
 	public static final int FRAME_WIDTH = 1000, FRAME_HEIGHT = 605;
 	public static final int FRAME_MIN_WIDTH, FRAME_MIN_HEIGHT;
 
