@@ -1,4 +1,4 @@
 package team.skadi.powersellsys.service;
 
-public interface GoodsMapper {
+public interface SupplyService {
 }

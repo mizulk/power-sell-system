@@ -11,21 +11,11 @@
  Target Server Version : 80034 (8.0.34)
  File Encoding         : 65001
 
- Date: 27/09/2023 21:28:18
+ Date: 09/10/2023 22:33:42
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
-
--- ----------------------------
--- Table structure for collections
--- ----------------------------
-DROP TABLE IF EXISTS `collections`;
-CREATE TABLE `collections`  (
-  `user_id` int NOT NULL,
-  `power_id` int NOT NULL,
-  `create_time` datetime NOT NULL
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for comments
@@ -36,6 +26,16 @@ CREATE TABLE `comments`  (
   `power_id` int NOT NULL COMMENT '电源id',
   `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '评论内容',
   `star` tinyint NOT NULL DEFAULT 1 COMMENT '星'
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for favorites
+-- ----------------------------
+DROP TABLE IF EXISTS `favorites`;
+CREATE TABLE `favorites`  (
+  `user_id` int NOT NULL,
+  `power_id` int NOT NULL,
+  `create_time` datetime NOT NULL
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -158,7 +158,7 @@ CREATE TABLE `users`  (
   `login_time` datetime NULL DEFAULT NULL COMMENT '最近一次登录',
   PRIMARY KEY (`id`) USING BTREE,
   CONSTRAINT `sex check` CHECK (`sex` in (0,1))
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- View structure for goods

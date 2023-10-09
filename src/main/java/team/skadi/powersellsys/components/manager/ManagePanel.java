@@ -1,5 +1,7 @@
 package team.skadi.powersellsys.components.manager;
 
+import team.skadi.powersellsys.components.BasicComponent;
+
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -7,13 +9,11 @@ import javax.swing.JTable;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.ActionListener;
 
 // 相当于wrapper panel
-public abstract class ManagePanel extends JPanel implements ActionListener {
+public abstract class ManagePanel extends BasicComponent {
 
 	public ManagePanel() {
-		init();
 	}
 
 	protected void init() {
@@ -38,13 +38,17 @@ public abstract class ManagePanel extends JPanel implements ActionListener {
 		addListener();
 	}
 
+	@Override
+	protected void buildLayout() {
+
+	}
+
 	abstract protected JPanel getSearchPanel();
 
 	abstract protected JTable getTable();
 
 	abstract protected JPanel getBtnPanel();
 
-	abstract protected void addListener();
 
 	protected JPanel createBtnPanel() {
 		JPanel btnPanel = new JPanel(new GridBagLayout());
