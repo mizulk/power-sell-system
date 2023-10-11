@@ -43,3 +43,7 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### config ###
+# mybatis
+src/main/resources/mybatis-config.xml
