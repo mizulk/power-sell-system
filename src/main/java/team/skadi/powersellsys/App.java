@@ -1,7 +1,7 @@
 package team.skadi.powersellsys;
 
 import team.skadi.powersellsys.router.ViewName;
-import team.skadi.powersellsys.router.Router;
+import team.skadi.powersellsys.router.ViewRouter;
 import team.skadi.powersellsys.view.BasicView;
 
 import javax.swing.JFrame;
@@ -17,8 +17,7 @@ public class App extends JFrame {
 	public static final String TITLE = "铌干犸电力有限公司";
 	public static final int FRAME_WIDTH = 1000, FRAME_HEIGHT = 605;
 	public static final int FRAME_MIN_WIDTH, FRAME_MIN_HEIGHT;
-
-	private final Router router;
+	private final ViewRouter viewRouter;
 
 	static {
 		float scale = 0.9f;
@@ -35,13 +34,12 @@ public class App extends JFrame {
 		int y = (screenSize.height >> 1) - (FRAME_HEIGHT >> 1);
 		setBounds(x, y, FRAME_WIDTH, FRAME_HEIGHT);
 		setMinimumSize(new Dimension(FRAME_MIN_WIDTH, FRAME_MIN_HEIGHT));
-		router = new Router(this);
+		viewRouter = new ViewRouter(this);
 		buildLayout();
 		setVisible(true);
 	}
 
 	private void buildLayout() {
-		setLayout(router.getCardLayout());
 		// 初始化在router.ViewName类下的所有页面
 		for (ViewName panel : ViewName.values()) {
 			try {
@@ -54,7 +52,7 @@ public class App extends JFrame {
 		}
 	}
 
-	public Router useRouter() {
-		return router;
+	public ViewRouter useRouter() {
+		return viewRouter;
 	}
 }

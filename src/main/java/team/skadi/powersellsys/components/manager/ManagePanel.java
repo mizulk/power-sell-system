@@ -1,6 +1,8 @@
 package team.skadi.powersellsys.components.manager;
 
+import team.skadi.powersellsys.App;
 import team.skadi.powersellsys.components.BasicComponent;
+import team.skadi.powersellsys.utils.LayoutUtil;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -13,10 +15,17 @@ import java.awt.GridBagLayout;
 // 相当于wrapper panel
 public abstract class ManagePanel extends BasicComponent {
 
-	public ManagePanel() {
+	public ManagePanel(App app) {
+		super(app);
 	}
 
 	protected void init() {
+		buildLayout();
+		addListener();
+	}
+
+	@Override
+	protected void buildLayout() {
 		setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.weightx = 1;
@@ -30,17 +39,17 @@ public abstract class ManagePanel extends BasicComponent {
 
 		JPanel innerPanel = new JPanel(new BorderLayout());
 		innerPanel.add(getSearchPanel(), BorderLayout.NORTH);
-		innerPanel.add(new JScrollPane(getTable()), BorderLayout.CENTER);
+		innerPanel.setBorder(BorderFactory.createLoweredBevelBorder());
+		innerPanel.add(LayoutUtil.createWrapper(new JScrollPane(getTable()), 6), BorderLayout.CENTER);
+		innerPanel.add(LayoutUtil.createWrapper(getPaginationPanel(), 6), BorderLayout.SOUTH);
 
 		outerPanel.add(innerPanel, BorderLayout.CENTER);
-		add(outerPanel, gbc);
 
-		addListener();
+		add(outerPanel, gbc);
 	}
 
-	@Override
-	protected void buildLayout() {
-
+	protected JPanel getPaginationPanel() {
+		return new JPanel();
 	}
 
 	abstract protected JPanel getSearchPanel();
@@ -51,8 +60,6 @@ public abstract class ManagePanel extends BasicComponent {
 
 
 	protected JPanel createBtnPanel() {
-		JPanel btnPanel = new JPanel(new GridBagLayout());
-		btnPanel.setBorder(BorderFactory.createRaisedSoftBevelBorder());
-		return btnPanel;
+		return new JPanel(new GridBagLayout());
 	}
 }

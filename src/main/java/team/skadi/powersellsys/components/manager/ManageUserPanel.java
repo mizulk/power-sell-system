@@ -1,33 +1,52 @@
 package team.skadi.powersellsys.components.manager;
 
-import team.skadi.powersellsys.Main;
+import team.skadi.powersellsys.App;
+import team.skadi.powersellsys.components.PaginationPanel;
+import team.skadi.powersellsys.components.SearchPanel;
 import team.skadi.powersellsys.model.manager.UserTableModel;
 
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 
 public class ManageUserPanel extends ManagePanel {
 
+	private UserTableModel userTableModel;
+
+	public ManageUserPanel(App app) {
+		super(app);
+	}
+
 	@Override
 	protected JPanel getSearchPanel() {
-		JPanel panel = new JPanel(new BorderLayout());
-		JLabel label = new JLabel("search");
-		label.setFont(Main.TITLE_FONT);
-		panel.add(label);
-		return panel;
+		SearchPanel searchPanel = new SearchPanel(app, new String[]{"123", "321"});
+		searchPanel.addOnClickListener(new SearchPanel.OnClickListener() {
+			@Override
+			public SearchPanel.SearchResult onSearchButtonClick(int optionIndex, String content) {
+				return SearchPanel.SearchResult.NAN;
+			}
+
+			@Override
+			public void onCloseButtonCLick() {
+
+			}
+		});
+		return searchPanel;
 	}
 
 	@Override
 	protected JTable getTable() {
-		UserTableModel userTableModel = new UserTableModel();
+		userTableModel = new UserTableModel();
 		JTable userTable = new JTable(userTableModel);
 		userTable.setRowHeight(30);
 		return userTable;
+	}
+
+	@Override
+	protected JPanel getPaginationPanel() {
+		return new PaginationPanel(app, false);
 	}
 
 	@Override

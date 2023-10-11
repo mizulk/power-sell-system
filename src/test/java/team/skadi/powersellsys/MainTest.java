@@ -1,24 +1,54 @@
 package team.skadi.powersellsys;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.Test;
+import team.skadi.powersellsys.components.dialog.BasicDialog;
 import team.skadi.powersellsys.mapper.SupplierMapper;
-import team.skadi.powersellsys.mapper.UserMapper;
 import team.skadi.powersellsys.pojo.Supplier;
+import team.skadi.powersellsys.service.UserService;
+import team.skadi.powersellsys.utils.ServiceUtil;
 import team.skadi.powersellsys.utils.SqlSessionUtil;
 
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import java.util.List;
 
+@Slf4j
 public class MainTest {
 
 	@Test
-	public void test(){
+	public void testMapper() {
 		SqlSession sqlSession = SqlSessionUtil.getSqlSession();
 		SupplierMapper supplierMapper = sqlSession.getMapper(SupplierMapper.class);
 		List<Supplier> suppliers = supplierMapper.selectAll();
-		for (Supplier supplier: suppliers) {
-			System.out.println(supplier);
+		for (Supplier supplier : suppliers) {
+			log.debug("{}", supplier.toString());
 		}
 		sqlSession.close();
+	}
+
+	@Test
+	public void testService() throws Exception {
+//		String s = UserService.class.getPackageName() + ".impl.";
+//		String s1 = UserService.class.getSimpleName() + "Impl";
+//		Class<Service> aClass = (Class<Service>) Class.forName(s + s1);
+//		System.out.println(aClass.newInstance());
+		UserService userService = ServiceUtil.getService(UserService.class);
+		log.debug("{}", userService);
+	}
+
+	@Test
+	public void testDialog() {
+		BasicDialog basicDialog = new BasicDialog(null, "title") {
+			@Override
+			protected JComponent getCenterLayout() {
+				JPanel panel = new JPanel();
+				panel.add(new JLabel("ffdfdf"));
+				return panel;
+			}
+		};
+		System.out.println(basicDialog.getOption());
 	}
 }

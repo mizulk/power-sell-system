@@ -1,4 +1,4 @@
 package team.skadi.powersellsys.service;
 
-public interface CommentService {
+public interface CommentService extends Service{
 }

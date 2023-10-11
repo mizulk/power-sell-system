@@ -11,4 +11,15 @@ public class NumberOnly extends KeyAdapter {
 			e.consume();
 		}
 	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+			onEnterPressed();
+		}
+	}
+
+	public void onEnterPressed() {
+
+	}
 }

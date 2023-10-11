@@ -4,7 +4,7 @@ import team.skadi.powersellsys.pojo.Supplier;
 
 import java.util.List;
 
-public interface SupplierService {
+public interface SupplierService extends Service{
 
 	List<Supplier> getAllSupplier();
 }
