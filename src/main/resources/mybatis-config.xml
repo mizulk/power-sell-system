@@ -27,7 +27,7 @@
 				<property name="driver" value="com.mysql.cj.jdbc.Driver"/>
 				<property name="url" value="jdbc:mysql://localhost:3306/power_sell_sys?useSSL=false"/>
 				<property name="username" value="root"/>
-				<property name="password" value="021214"/>
+				<property name="password" value="123456"/>
 			</dataSource>
 		</environment>
 	</environments>
