@@ -41,6 +41,7 @@ public class Main {
 				out.flush();
 				out.close();
 				in.close();
+				JOptionPane.showMessageDialog(null,"创建配置文件成功，如果需要修改请到src/main/resources/mybatis-config.xml下修改密码");
 			} catch (IOException e) {
 				e.printStackTrace();
 				JOptionPane.showMessageDialog(null, "生成配置文件失败: " + e);
