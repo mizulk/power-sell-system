@@ -4,12 +4,14 @@ import team.skadi.powersellsys.App;
 import team.skadi.powersellsys.components.PaginationPanel;
 import team.skadi.powersellsys.components.SearchPanel;
 import team.skadi.powersellsys.model.manager.UserTableModel;
+import team.skadi.powersellsys.pojo.PageBean;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 public class ManageUserPanel extends ManagePanel {
 
@@ -20,25 +22,20 @@ public class ManageUserPanel extends ManagePanel {
 	}
 
 	@Override
+	protected void init() {
+		userTableModel = new UserTableModel();
+		super.init();
+	}
+
+	@Override
 	protected JPanel getSearchPanel() {
 		SearchPanel searchPanel = new SearchPanel(app, new String[]{"123", "321"});
-		searchPanel.addOnClickListener(new SearchPanel.OnClickListener() {
-			@Override
-			public SearchPanel.SearchResult onSearchButtonClick(int optionIndex, String content) {
-				return SearchPanel.SearchResult.NAN;
-			}
-
-			@Override
-			public void onCloseButtonCLick() {
-
-			}
-		});
+		searchPanel.addOnClickListener(userTableModel);
 		return searchPanel;
 	}
 
 	@Override
 	protected JTable getTable() {
-		userTableModel = new UserTableModel();
 		JTable userTable = new JTable(userTableModel);
 		userTable.setRowHeight(30);
 		return userTable;
@@ -46,7 +43,10 @@ public class ManageUserPanel extends ManagePanel {
 
 	@Override
 	protected JPanel getPaginationPanel() {
-		return new PaginationPanel(app, false);
+		PaginationPanel paginationPanel = new PaginationPanel(app, false);
+		paginationPanel.setPageBean(new PageBean<>(100,new ArrayList<>()));
+		paginationPanel.addOnclickListener(userTableModel);
+		return paginationPanel;
 	}
 
 	@Override
