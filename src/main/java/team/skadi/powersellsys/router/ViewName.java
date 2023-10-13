@@ -9,6 +9,7 @@ import team.skadi.powersellsys.view.SelectLoginView;
 import team.skadi.powersellsys.view.supplier.SupplierMainView;
 import team.skadi.powersellsys.view.user.UserLoginView;
 import team.skadi.powersellsys.view.user.UserMainView;
+import team.skadi.powersellsys.view.user.UserRegisterView;
 
 /**
  * 该枚举类是用于切换不同页面
@@ -16,6 +17,7 @@ import team.skadi.powersellsys.view.user.UserMainView;
 public enum ViewName {
 	SELECT_LOGIN_VIEW("selectLogin", SelectLoginView.class),
 	USER_LOGIN_VIEW("userLogin", UserLoginView.class),
+	USER_REGISTER_VIEW("userRegister", UserRegisterView.class),
 	USER_MAIN_VIEW("userMain", UserMainView.class),
 	SUPPLIER_LOGIN_VIEW("supperLogin", SupplierLoginView.class),
 	SUPPLIER_MAIN_VIEW("supplierMain", SupplierMainView.class),

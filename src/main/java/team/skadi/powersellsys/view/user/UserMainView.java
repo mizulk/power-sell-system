@@ -15,7 +15,7 @@ public class UserMainView extends BasicView implements ActionListener {
 
     private ImageButton exitButton;
     private JButton personalButton;
-    private JButton collectButton;
+    private JButton favoriteButton;
     private JButton detailButton;
     private JButton orderButton;
     private JButton customButton;
@@ -64,13 +64,13 @@ public class UserMainView extends BasicView implements ActionListener {
         JPanel panel = new JPanel(new GridLayout(6, 1, 10, 20));
 
         personalButton = new JButton("个人信息");
-        collectButton = new JButton("收藏");
+        favoriteButton = new JButton("收藏");
         detailButton = new JButton("商品详情");
         orderButton = new JButton("提交订单");
         customButton = new JButton("定制");
         evaluateButton = new JButton("评价");
         panel.add(personalButton);
-        panel.add(collectButton);
+        panel.add(favoriteButton);
         panel.add(detailButton);
         panel.add(orderButton);
         panel.add(customButton);
@@ -81,14 +81,77 @@ public class UserMainView extends BasicView implements ActionListener {
     }
 
     private JPanel getCenterPanel(){
-        JPanel panel = new JPanel(new BorderLayout());
+        JPanel panel = new JPanel();
+        router = new PanelRouter(panel);
+
+        panel.add("personal", getPersonalPanel());
+        panel.add("favorite", getFavoritePanel());
+        panel.add("detail", getDetailPanel());
+        panel.add("order", getOrderPanel());
+        panel.add("custom", getCustomPanel());
+        panel.add("evaluate", getEvaluatePanel());
 
         return panel;
+    }
+
+    private JPanel getEvaluatePanel() {
+        JPanel evaluatePanel = new JPanel(new BorderLayout());
+        JTable table = new JTable();//TODO： 添加数据模型
+        evaluatePanel.add(table,BorderLayout.CENTER);
+        return getWrapper(evaluatePanel);
+    }
+
+    private JPanel getCustomPanel() {
+        JPanel customPanel = new JPanel(new BorderLayout());
+        JTable table = new JTable();//TODO： 添加数据模型
+        customPanel.add(table,BorderLayout.CENTER);
+        return getWrapper(customPanel);
+    }
+
+    private JPanel getOrderPanel() {
+        JPanel orderPanel = new JPanel(new BorderLayout());
+        JTable table = new JTable();//TODO： 添加数据模型
+        orderPanel.add(table,BorderLayout.CENTER);
+        return getWrapper(orderPanel);
+    }
+
+    private JPanel getDetailPanel() {
+        JPanel detailPanel = new JPanel(new BorderLayout());
+        JTable table = new JTable();//TODO： 添加数据模型
+        detailPanel.add(table,BorderLayout.CENTER);
+        return getWrapper(detailPanel);
+    }
+
+    private JPanel getFavoritePanel() {
+        JPanel favoritePanel = new JPanel(new BorderLayout());
+        JTable table = new JTable();//TODO： 添加数据模型
+        favoritePanel.add(table,BorderLayout.CENTER);
+        return getWrapper(favoritePanel);
+    }
+
+
+    private JPanel getPersonalPanel() {
+        JPanel personPanel = new JPanel(new BorderLayout());
+        JTable table = new JTable();//TODO： 添加数据模型
+        personPanel.add(table,BorderLayout.CENTER);
+        return getWrapper(personPanel);
+    }
+
+    private JPanel getWrapper(JPanel Panel) {
+        JPanel wrapper = LayoutUtil.createWrapper(Panel, 20);
+        wrapper.setBorder(BorderFactory.createRaisedBevelBorder());
+        return wrapper;
     }
 
     @Override
     protected void addListener() {
         exitButton.addActionListener(this);
+        personalButton.addActionListener(this);
+        favoriteButton.addActionListener(this);
+        detailButton.addActionListener(this);
+        orderButton.addActionListener(this);
+        customButton.addActionListener(this);
+        evaluateButton.addActionListener(this);
     }
 
     @Override
@@ -96,6 +159,18 @@ public class UserMainView extends BasicView implements ActionListener {
         Object source = e.getSource();
         if (source == exitButton) {
             app.useRouter().showPreviousView();
+        }else if (source == personalButton) {
+            router.showPanel("personal");
+        }else if (source == favoriteButton) {
+            router.showPanel("favorite");
+        }else if (source == detailButton) {
+            router.showPanel("detail");
+        }else if (source == orderButton) {
+            router.showPanel("order");
+        }else if (source == customButton) {
+            router.showPanel("custom");
+        }else if (source == evaluateButton) {
+            router.showPanel("evaluate");
         }
     }
 }
