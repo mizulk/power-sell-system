@@ -58,12 +58,12 @@ public class ManagerMainView extends BasicView implements ActionListener {
 	private JTabbedPane getCenter() {
 		JTabbedPane tabbedPane = new JTabbedPane();
 		tabbedPane.setBorder(BorderFactory.createLoweredBevelBorder());
-		tabbedPane.add("user", new ManageUserPanel());
-		tabbedPane.add("supplier", new ManageSupplierPanel());
-		tabbedPane.add("goods", new ManageGoodsPanel());
-		tabbedPane.add("order", new ManageOrderPanel());
-		tabbedPane.add("supply", new ManageSupplyPanel());
-		tabbedPane.add("comment", new ManageCommentPanel());
+		tabbedPane.add("user", new ManageUserPanel(app));
+		tabbedPane.add("supplier", new ManageSupplierPanel(app));
+		tabbedPane.add("goods", new ManageGoodsPanel(app));
+		tabbedPane.add("order", new ManageOrderPanel(app));
+		tabbedPane.add("supply", new ManageSupplyPanel(app));
+		tabbedPane.add("comment", new ManageCommentPanel(app));
 		return tabbedPane;
 	}
 

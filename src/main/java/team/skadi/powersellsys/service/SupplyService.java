@@ -1,4 +1,4 @@
 package team.skadi.powersellsys.service;
 
-public interface SupplyService {
+public interface SupplyService extends Service{
 }

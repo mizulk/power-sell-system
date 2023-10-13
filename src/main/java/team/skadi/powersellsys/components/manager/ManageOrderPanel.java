@@ -1,5 +1,6 @@
 package team.skadi.powersellsys.components.manager;
 
+import team.skadi.powersellsys.App;
 import team.skadi.powersellsys.Main;
 import team.skadi.powersellsys.model.manager.OrderTableModel;
 
@@ -12,6 +13,11 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 
 public class ManageOrderPanel extends ManagePanel{
+
+	public ManageOrderPanel(App app) {
+		super(app);
+	}
+
 	@Override
 	protected JPanel getSearchPanel() {
 		JPanel panel = new JPanel(new BorderLayout());

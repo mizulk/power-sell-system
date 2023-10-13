@@ -1,5 +1,7 @@
 package team.skadi.powersellsys.model.manager;
 
+import team.skadi.powersellsys.components.PaginationPanel;
+import team.skadi.powersellsys.components.SearchPanel;
 import team.skadi.powersellsys.pojo.User;
 
 import javax.swing.table.AbstractTableModel;
@@ -7,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserTableModel extends AbstractTableModel {
+public class UserTableModel extends AbstractTableModel implements PaginationPanel.OnClickListener, SearchPanel.OnClickListener {
 
 	private final String[] columnName = new String[]{"账号", "姓名", "性别", "年龄", "电话"};
 	private List<User> data;
@@ -46,4 +48,33 @@ public class UserTableModel extends AbstractTableModel {
 		};
 	}
 
+	@Override
+	public void firstPage(int pageSize) {
+
+	}
+
+	@Override
+	public void nextPage(int curPage, int pageSize) {
+
+	}
+
+	@Override
+	public void previousPage(int curPage, int pageSize) {
+
+	}
+
+	@Override
+	public void jumpTo(int page, int pageSize) {
+
+	}
+
+	@Override
+	public SearchPanel.SearchResult onSearchButtonClick(int optionIndex, String content) {
+		return null;
+	}
+
+	@Override
+	public void onCloseButtonCLick() {
+
+	}
 }

@@ -21,9 +21,9 @@ public enum ViewName {
 //	在这里新建类，UserMainView.java -> USER_MAIN_VIEW("userMain", UserMainView.class)
 
 	/** 页面名称，用于跳转 */
-	final String value;
+	private final String value;
 	/** 页面类型，用于初始化 */
-	final Class<? extends BasicView> target;
+	private final Class<? extends BasicView> target;
 
 	ViewName(String value, Class<? extends BasicView> target) {
 		this.value = value;
