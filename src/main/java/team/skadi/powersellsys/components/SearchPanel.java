@@ -119,7 +119,9 @@ public class SearchPanel extends BasicComponent {
 	private void search() {
 		if (l == null) return;
 		if (!hintTextField.isEmpty()) {
-			switch (l.onSearchButtonClick(curOptionIndex, hintTextField.getText())) {
+			SearchResult searchResult = l.onSearchButtonClick(curOptionIndex, hintTextField.getText());
+			if (searchResult == null) return;
+			switch (searchResult) {
 				case NO_RESULT -> JOptionPane.showMessageDialog(app, "无搜索结果");
 				case HAVE_RESULT -> isSearching = true;
 				case NAN -> JOptionPane.showMessageDialog(app, "你输入的不是数字，请重新输入");

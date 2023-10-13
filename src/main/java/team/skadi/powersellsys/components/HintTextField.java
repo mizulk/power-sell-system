@@ -21,7 +21,7 @@ public class HintTextField extends JTextField implements FocusListener {
 	}
 
 	public void setHint(String hint) {
-		if (getText().equals(this.hint)) setText(hint);
+		if (getText().equals("")) setText(hint);
 		this.hint = hint;
 	}
 
@@ -29,18 +29,25 @@ public class HintTextField extends JTextField implements FocusListener {
 		return hint;
 	}
 
+	@Override
+	public String getText() {
+		String text = super.getText();
+		return text.equals(hint) ? "" : text;
+	}
+
 	/**
 	 * 输入的内容是否为空
+	 *
 	 * @return true，当前输入框没有内容，否则false
 	 */
-	public boolean isEmpty(){
+	public boolean isEmpty() {
 		return getText().equals(hint);
 	}
 
 	@Override
 	public void focusGained(FocusEvent e) {
 		String text = getText();
-		if (text.equals(hint)) {
+		if (text.equals("")) {
 			setText("");
 			setForeground(Color.BLACK);
 		}
@@ -49,7 +56,7 @@ public class HintTextField extends JTextField implements FocusListener {
 	@Override
 	public void focusLost(FocusEvent e) {
 		String text = getText();
-		if (text.equals("")){
+		if (text.equals("")) {
 			setForeground(Color.GRAY);
 			setText(hint);
 		}
