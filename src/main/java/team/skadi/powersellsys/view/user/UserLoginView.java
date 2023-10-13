@@ -1,6 +1,7 @@
 package team.skadi.powersellsys.view.user;
 
 import team.skadi.powersellsys.App;
+import team.skadi.powersellsys.router.ViewName;
 import team.skadi.powersellsys.view.LoginView;
 
 public class UserLoginView extends LoginView {
@@ -16,7 +17,7 @@ public class UserLoginView extends LoginView {
 
 	@Override
 	protected void login() {
-		System.out.println("user");
+		app.useRouter().showView(ViewName.USER_LOGIN_VIEW,ViewName.USER_MAIN_VIEW);
 	}
 
 	@Override
