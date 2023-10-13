@@ -5,6 +5,8 @@ import team.skadi.powersellsys.Main;
 import team.skadi.powersellsys.components.ImageButton;
 import team.skadi.powersellsys.router.ViewName;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
@@ -20,6 +22,7 @@ public class SelectLoginView extends BasicView implements ActionListener {
 	private ImageButton manager;
 	private ImageButton supplier;
 	private ImageButton user;
+	private ImageButton helpBtn;
 
 	public SelectLoginView(App app) {
 		super(app);
@@ -36,9 +39,16 @@ public class SelectLoginView extends BasicView implements ActionListener {
 	}
 
 	private JPanel getSouthPanel() {
-		JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		JLabel label = new JLabel("2023-2023");
+		JPanel southPanel = new JPanel();
+		southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.X_AXIS));
+		JLabel label = new JLabel("2023.09.18-2023");
 		southPanel.add(label);
+
+		southPanel.add(Box.createHorizontalGlue());
+
+		helpBtn = new ImageButton("帮助", "/images/help.png");
+		helpBtn.setTextPosition(ImageButton.RIGHT, ImageButton.CENTER);
+		southPanel.add(helpBtn);
 		return southPanel;
 	}
 
@@ -97,6 +107,7 @@ public class SelectLoginView extends BasicView implements ActionListener {
 		user.addActionListener(this);
 		supplier.addActionListener(this);
 		manager.addActionListener(this);
+		helpBtn.addActionListener(this);
 	}
 
 	@Override
@@ -108,6 +119,8 @@ public class SelectLoginView extends BasicView implements ActionListener {
 			app.useRouter().showView(ViewName.SELECT_LOGIN_VIEW, ViewName.SUPPLIER_LOGIN_VIEW);
 		} else if (source == manager) {
 			app.useRouter().showView(ViewName.SELECT_LOGIN_VIEW, ViewName.MANAGER_LOGIN_VIEW);
+		} else if (source == helpBtn) {
+			app.useRouter().showView(ViewName.SELECT_LOGIN_VIEW, ViewName.HELP_VIEW);
 		}
 	}
 }
