@@ -7,6 +7,7 @@ import team.skadi.powersellsys.view.manager.ManagerMainView;
 import team.skadi.powersellsys.view.supplier.SupplierLoginView;
 import team.skadi.powersellsys.view.SelectLoginView;
 import team.skadi.powersellsys.view.supplier.SupplierMainView;
+import team.skadi.powersellsys.view.supplier.SupplierRegisterView;
 import team.skadi.powersellsys.view.user.UserLoginView;
 import team.skadi.powersellsys.view.user.UserMainView;
 import team.skadi.powersellsys.view.user.UserRegisterView;
@@ -20,6 +21,7 @@ public enum ViewName {
 	USER_REGISTER_VIEW("userRegister", UserRegisterView.class),
 	USER_MAIN_VIEW("userMain", UserMainView.class),
 	SUPPLIER_LOGIN_VIEW("supperLogin", SupplierLoginView.class),
+	SUPPLIER_REGISTER_VIEW("supplierRegister", SupplierRegisterView.class),
 	SUPPLIER_MAIN_VIEW("supplierMain", SupplierMainView.class),
 	MANAGER_LOGIN_VIEW("managerLogin", ManagerLoginView.class),
 	MANAGER_MAIN_VIEW("managerMain", ManagerMainView.class),

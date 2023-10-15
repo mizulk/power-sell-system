@@ -21,7 +21,7 @@ import java.awt.event.FocusListener;
  * // 带有提示文本的输入框 ({@link HintTextField})
  * VerificationTextField&lt;HintTextField&gt; accountField = new VerificationTextField&lt;&gt;("账号：", new HintTextField("请输入你的账号", 20));
  * // 密码输入框
- * VerificationTextField&lt;JPasswordField&gt; passwordField = new VerificationTextField&lt;&gt;("账号：", new JPasswordField(20));
+ * VerificationTextField&lt;JPasswordField&gt; passwordField = new VerificationTextField&lt;&gt;("密码：", new JPasswordField(20));
  * // 普通的输入框
  * VerificationTextField&lt;JTextField&gt; addressField = new VerificationTextField&lt;&gt;("账号：", new JTextField(20));
  * </code></pre>
