@@ -88,15 +88,7 @@ public class VerificationTextField<T extends JTextField> extends JPanel implemen
 
 	@Override
 	public void focusLost(FocusEvent e) {
-		if (verification == null) return;
-		String str = verification.verify(textField.getText());
-		if (!str.equals("")) {
-			errorLabel.setText(str);
-			textField.setBorder(ERROR_BORDER);
-		} else {
-			errorLabel.setText(" ");
-			textField.setBorder(DEFAULT_BORDER);
-		}
+		updateErrorLabel();
 	}
 
 	public interface Verification {
@@ -109,16 +101,27 @@ public class VerificationTextField<T extends JTextField> extends JPanel implemen
 		String verify(String context);
 	}
 
+	private boolean updateErrorLabel() {
+		if (verification == null) return true;
+		String str = verification.verify(textField.getText());
+		if (str.equals("")) {
+			errorLabel.setText(" ");
+			textField.setBorder(DEFAULT_BORDER);
+			return true;
+		} else {
+			errorLabel.setText(str);
+			textField.setBorder(ERROR_BORDER);
+			return false;
+		}
+	}
+
 	/**
 	 * 验证是否通过
 	 *
 	 * @return false：验证失败，true：验证通过或无监听事件
 	 */
 	public boolean isTextValid() {
-		if (verification == null) return true;
-		String verify = verification.verify(textField.getText());
-		errorLabel.setText(verify);
-		return verify.equals("");
+		return updateErrorLabel();
 	}
 
 	public T getTextField() {
