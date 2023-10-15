@@ -72,13 +72,28 @@ public abstract class RegisterView extends BasicView implements ActionListener {
 	/**
 	 * 注册页面的输入框，需要包括一个标签（JLabel）和一个输入框（JTextField主要）
 	 * <p>
-	 * 使用方法：
+	 * 方法1：(JLabel + JTextFiled)
 	 * <pre><code>
 	 * gbc.gridy++; // 表示为下一行，每行应该有两个元素
 	 * JLabel label = new JLabel("账号", JLabel.LEFT);
 	 * centerPanel.add(label, gbc);// 第一个元素是输入框的提示语句
 	 * JTextField accountTextField = new JTextField(20);
-	 * centerPanel.add(accountTextField);// 第二个元素是输入框
+	 * centerPanel.add(accountTextField, gbc);// 第二个元素是输入框
+	 * </code></pre>
+	 * </p>
+	 * <p>
+	 * 方法2：{@link team.skadi.powersellsys.components.VerificationTextField}
+	 * <pre><code>
+	 * gbc.gridy++;
+	 * VerificationTextField<JTextField> accountField = new VerificationTextField<>("账号：", new JTextField(20));
+	 * accountField.setVerification(context -> {
+	 *     if (context.length() < 6) {
+	 *         return "账号长度不能少于6位";
+	 *     } else {
+	 *         return "";
+	 *     }
+	 * });
+	 * centerPanel.add(accountField, gbc);
 	 * </code></pre>
 	 * </p>
 	 */

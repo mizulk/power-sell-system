@@ -8,6 +8,7 @@ import team.skadi.powersellsys.utils.SqlSessionUtil;
 
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class SupplierServiceImpl implements SupplierService {
 	@Override
 	public List<Supplier> getAllSupplier() {

@@ -38,12 +38,12 @@ public class HelpView extends BasicView implements ActionListener {
 	@Override
 	protected void buildLayout() {
 		setLayout(new BorderLayout());
-		titleLabel = new JLabel("欢迎来到帮助页面", JLabel.CENTER);
+		titleLabel = new JLabel();
+		titleLabel.setHorizontalAlignment(JLabel.CENTER);
 		titleLabel.setFont(Main.MIDDLE_FONT);
 		add(titleLabel, BorderLayout.NORTH);
 
 		textArea = new JTextArea();
-		textArea.setText("欢迎来到帮助界面，请选择右边你想要查询的功能。");
 		textArea.setEditable(false);
 		textArea.setBackground(new Color(230, 230, 230));
 		textArea.setBorder(BorderFactory.createLoweredBevelBorder());
@@ -69,6 +69,8 @@ public class HelpView extends BasicView implements ActionListener {
 
 		JLabel label = new JLabel("如有问题请致电11451419198", JLabel.RIGHT);
 		add(label, BorderLayout.SOUTH);
+
+		reset();
 	}
 
 	@Override
@@ -81,10 +83,17 @@ public class HelpView extends BasicView implements ActionListener {
 		JButton btn = (JButton) e.getSource();
 		if (btn.equals(exitBtn)) {
 			app.useRouter().showPreviousView();
+			titleLabel.setText("欢迎来到帮助页面");
+			reset();
 			return;
 		}
 		String text = btn.getText();
 		textArea.setText(hashMap.get(text));
 		titleLabel.setText(text);
+	}
+
+	private void reset() {
+		titleLabel.setText("欢迎来到帮助页面");
+		textArea.setText("欢迎来到帮助界面，请选择右边你想要查询的功能。");
 	}
 }

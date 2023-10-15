@@ -13,8 +13,16 @@ public class HintTextField extends JTextField implements FocusListener {
 	private String hint;
 
 	public HintTextField(String hint) {
-		super();
+		this(hint, 0);
+	}
+
+	public HintTextField(String hint, int column) {
+		super(column);
 		this.hint = hint;
+		init();
+	}
+
+	protected void init() {
 		setText(hint);
 		setForeground(Color.GRAY);
 		addFocusListener(this);
@@ -33,6 +41,12 @@ public class HintTextField extends JTextField implements FocusListener {
 	public String getText() {
 		String text = super.getText();
 		return text.equals(hint) ? "" : text;
+	}
+
+	@Override
+	public void setText(String t) {
+		if (getText().equals("")) return;
+		super.setText(t);
 	}
 
 	/**
