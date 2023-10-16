@@ -10,7 +10,7 @@ import java.util.List;
 
 public class GoodsTableModel extends AbstractTableModel implements SearchPanel.OnClickListener, PaginationPanel.OnClickListener {
 
-    private final String[] columnName = new String[]{"电源id","电源名称", "电源类型", "库存","状态"};
+    private final String[] columnName = new String[]{"电源id","电源名称", "电源类型","电源容量", "库存","状态"};
 
     private List<Goods> data = new ArrayList<>();
 

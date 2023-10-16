@@ -15,23 +15,28 @@ public class PutOnDialog extends BasicDialog {
     @Override
     protected JComponent getCenterLayout() {
         JPanel panel = new JPanel(new GridLayout(0,1));
-        JLabel jLabel1 = new JLabel("电源名称：");
+        JLabel jLabel1 = new JLabel("电源名称");
         JTextField nameTextField = new JTextField(20);
         JLabel jLabel2 = new JLabel("电源类型");
         JTextField typeTextField = new JTextField(20);
-        JLabel jLabel3 = new JLabel("库存");
+        JLabel jLabel3 = new JLabel("电源容量");
+        JTextField capTextField = new JTextField(20);
+        JLabel jLabel4 = new JLabel("库存");
         JTextField stockTextField = new JTextField(20);
         panel.add(jLabel1);
         panel.add(nameTextField);
         panel.add(jLabel2);
         panel.add(typeTextField);
         panel.add(jLabel3);
+        panel.add(capTextField);
+        panel.add(jLabel4);
         panel.add(stockTextField);
         return panel;
     }
 
     @Override
     protected boolean onConfirmButtonClick() {
+
         return super.onConfirmButtonClick();
     }
 }
