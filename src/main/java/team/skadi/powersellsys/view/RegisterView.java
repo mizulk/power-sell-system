@@ -113,7 +113,11 @@ public abstract class RegisterView extends BasicView implements ActionListener {
 		if (source == registerBtn) {
 			register();
 		} else {
-			app.useRouter().showPreviousView();
+			onReturnBtnClick();
 		}
+	}
+
+	protected void onReturnBtnClick(){
+		app.useRouter().showPreviousView();
 	}
 }
