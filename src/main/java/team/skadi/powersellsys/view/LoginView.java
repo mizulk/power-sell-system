@@ -6,8 +6,7 @@ import team.skadi.powersellsys.Main;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -16,8 +15,6 @@ import java.awt.event.ActionListener;
 
 public abstract class LoginView extends BasicView implements ActionListener {
 
-	JTextField accountTextField;
-	JPasswordField passwordField;
 	JButton loginBtn;
 	JButton registerBtn;
 	JButton returnBtn;
@@ -28,51 +25,38 @@ public abstract class LoginView extends BasicView implements ActionListener {
 
 	@Override
 	protected void buildLayout() {
-		setLayout(new GridBagLayout());
+		setLayout(new BorderLayout());
+		JPanel centerPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 
-		JLabel label;
-
-		gbc.gridy = 1;// (1~2, 1)
-		gbc.gridwidth = 2;
-		gbc.insets.bottom = 50;
-		label = new JLabel(getTitleString(), JLabel.CENTER);
-		label.setFont(Main.TITLE_FONT);
-		add(label, gbc);
-
-		gbc.gridy++;// (1, 2)
-		gbc.gridwidth = 1;
-		gbc.insets.right = 10;
-		gbc.insets.bottom = 30;
-
-		gbc.gridy++;
-		gbc.gridx = -1;
-		label = new JLabel("账户：", JLabel.CENTER);
-		add(label, gbc);
-		gbc.insets.right = 0;// (2, 2)
-		accountTextField = new JTextField(20);
-		add(accountTextField, gbc);
-
-		gbc.gridy++;//(1, 3)
-		gbc.insets.right = 10;
+		// (1, 1) 0,0,40,0
+		gbc.gridy = 1;
 		gbc.insets.bottom = 40;
-		label = new JLabel("密码：", JLabel.CENTER);
-		add(label, gbc);
-		gbc.insets.right = 0;// (2, 3)
-		passwordField = new JPasswordField(20);
-		add(passwordField, gbc);
+		JLabel label = new JLabel(getTitleString(), JLabel.CENTER);
+		label.setFont(Main.TITLE_FONT);
+		centerPanel.add(label, gbc);
 
-		gbc.gridy++;//(1~2, 4)
-		gbc.gridwidth = 2;
+		gbc.insets.bottom = 10;
+		// (1,n) 0,0,10,0
+		buildTextField(centerPanel, gbc);
+
+		// (1, 1+n) 20,0,0,0
+		gbc.gridy++;
+		gbc.insets.top = 20;
 		gbc.insets.bottom = 0;
-		add(getBtnPanel(), gbc);
+		centerPanel.add(getBtnPanel(), gbc);
+		add(centerPanel, BorderLayout.CENTER);
 	}
+
+	/**
+	 * 使用方法和注册{@link RegisterView#buildTextField(JPanel, GridBagConstraints)}相同
+	 */
+	abstract protected void buildTextField(JPanel centerPanel, GridBagConstraints gbc);
 
 	@Override
 	protected void addListener() {
 		loginBtn.addActionListener(this);
 		returnBtn.addActionListener(this);
-
 	}
 
 	protected JPanel getBtnPanel() {

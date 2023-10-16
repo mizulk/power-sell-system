@@ -23,4 +23,5 @@ public class Goods {
 	private LocalDateTime createTime;
 	private LocalDateTime updateTime;
 	private String describe;
+	private Integer sum;
 }
