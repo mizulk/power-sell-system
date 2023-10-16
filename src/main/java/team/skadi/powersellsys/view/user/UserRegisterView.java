@@ -84,8 +84,10 @@ public class UserRegisterView extends RegisterView {
             user.setPassword(passwordTextField.getText());
             user.setTel(telTextField.getText());
             user.setAddress(addressTextField.getText());
-            JOptionPane.showMessageDialog(app, "一眼顶真，鉴定为玩原神玩的");
+            JOptionPane.showMessageDialog(app, "注册完成");
             log.info("{}", user);
+        } else {
+            JOptionPane.showMessageDialog(app, "请完善个人性息");
         }
     }
 
