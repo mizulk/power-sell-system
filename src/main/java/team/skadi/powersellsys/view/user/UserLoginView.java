@@ -1,13 +1,17 @@
 package team.skadi.powersellsys.view.user;
 
 import team.skadi.powersellsys.App;
+import team.skadi.powersellsys.components.VerificationTextField;
 import team.skadi.powersellsys.router.ViewName;
 import team.skadi.powersellsys.view.LoginView;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 import java.awt.GridBagConstraints;
 
 public class UserLoginView extends LoginView {
+
+	private VerificationTextField<JTextField> accountTextField;
+	private VerificationTextField<JPasswordField> passwordField;
 
 	public UserLoginView(App app) {
 		super(app);
@@ -15,7 +19,33 @@ public class UserLoginView extends LoginView {
 
 	@Override
 	protected void buildTextField(JPanel centerPanel, GridBagConstraints gbc) {
+		gbc.gridy++;
+		accountTextField = new VerificationTextField<>("账号：", new JTextField(20));
+		accountTextField.setVerification(context -> {
+			if (context.equals("")) {
+				return "账号不能为空";
+			} else if (context.length() != 8) {
+				return "账号长度为8位";
+			} else {
+				return "";
+			}
+		});
+		centerPanel.add(accountTextField, gbc);
 
+		gbc.gridy++;
+		passwordField = new VerificationTextField<>("密码：", new JPasswordField(20));
+		passwordField.setVerification(context -> {
+			if (context.equals("")) {
+				return "密码不能为空";
+			} else if (context.length() < 6) {
+				return "密码长度最少为6位";
+			} else if (context.length() >= 20) {
+				return "密码长度最大为20位";
+			} else {
+				return "";
+			}
+		});
+		centerPanel.add(passwordField, gbc);
 	}
 
 	@Override
@@ -25,13 +55,15 @@ public class UserLoginView extends LoginView {
 
 	@Override
 	protected void login() {
-		app.useRouter().showView(ViewName.USER_LOGIN_VIEW,ViewName.USER_MAIN_VIEW);
+		if (accountTextField.isTextValid() && passwordField.isTextValid()) {
+			app.useRouter().showView(ViewName.USER_LOGIN_VIEW, ViewName.USER_MAIN_VIEW);
+		} else {
+			JOptionPane.showMessageDialog(app, "请检查你的账号或密码是否正确。");
+		}
 	}
 
 	@Override
 	protected void register() {
 		app.useRouter().showView(ViewName.USER_LOGIN_VIEW, ViewName.USER_REGISTER_VIEW);
 	}
-
-
 }

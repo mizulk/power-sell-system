@@ -34,7 +34,7 @@ public class UserMainView extends BasicView implements ActionListener {
         setLayout(new BorderLayout());
         add(getNorthPanel(), BorderLayout.NORTH);
         add(getWestPanel(), BorderLayout.WEST);
-        add(getCenterPanel(),BorderLayout.CENTER);
+        add(getCenterPanel(), BorderLayout.CENTER);
     }
 
     private JPanel getNorthPanel() {
@@ -56,7 +56,7 @@ public class UserMainView extends BasicView implements ActionListener {
 
         panel.add(Box.createHorizontalStrut(25));
 
-        panel.setBorder(BorderFactory.createMatteBorder(0,0,1,0,Color.BLACK));
+        panel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
         return panel;
     }
 
@@ -80,7 +80,7 @@ public class UserMainView extends BasicView implements ActionListener {
         return wrapper;
     }
 
-    private JPanel getCenterPanel(){
+    private JPanel getCenterPanel() {
         JPanel panel = new JPanel();
         router = new PanelRouter(panel);
 
@@ -96,44 +96,44 @@ public class UserMainView extends BasicView implements ActionListener {
 
     private JPanel getEvaluatePanel() {
         JPanel evaluatePanel = new JPanel(new BorderLayout());
-        JTable table = new JTable();//TODO： 添加数据模型
-        evaluatePanel.add(table,BorderLayout.CENTER);
+        JTable table = new JTable();
+        evaluatePanel.add(table, BorderLayout.CENTER);
         return getWrapper(evaluatePanel);
     }
 
     private JPanel getCustomPanel() {
         JPanel customPanel = new JPanel(new BorderLayout());
-        JTable table = new JTable();//TODO： 添加数据模型
-        customPanel.add(table,BorderLayout.CENTER);
+        JTable table = new JTable();
+        customPanel.add(table, BorderLayout.CENTER);
         return getWrapper(customPanel);
     }
 
     private JPanel getOrderPanel() {
         JPanel orderPanel = new JPanel(new BorderLayout());
-        JTable table = new JTable();//TODO： 添加数据模型
-        orderPanel.add(table,BorderLayout.CENTER);
+        JTable table = new JTable();
+        orderPanel.add(table, BorderLayout.CENTER);
         return getWrapper(orderPanel);
     }
 
     private JPanel getDetailPanel() {
         JPanel detailPanel = new JPanel(new BorderLayout());
-        JTable table = new JTable();//TODO： 添加数据模型
-        detailPanel.add(table,BorderLayout.CENTER);
+        JTable table = new JTable();
+        detailPanel.add(table, BorderLayout.CENTER);
         return getWrapper(detailPanel);
     }
 
     private JPanel getFavoritePanel() {
         JPanel favoritePanel = new JPanel(new BorderLayout());
-        JTable table = new JTable();//TODO： 添加数据模型
-        favoritePanel.add(table,BorderLayout.CENTER);
+        JTable table = new JTable();
+        favoritePanel.add(table, BorderLayout.CENTER);
         return getWrapper(favoritePanel);
     }
 
 
     private JPanel getPersonalPanel() {
         JPanel personPanel = new JPanel(new BorderLayout());
-        JTable table = new JTable();//TODO： 添加数据模型
-        personPanel.add(table,BorderLayout.CENTER);
+        JTable table = new JTable();
+        personPanel.add(table, BorderLayout.CENTER);
         return getWrapper(personPanel);
     }
 
@@ -159,17 +159,17 @@ public class UserMainView extends BasicView implements ActionListener {
         Object source = e.getSource();
         if (source == exitButton) {
             app.useRouter().showPreviousView();
-        }else if (source == personalButton) {
+        } else if (source == personalButton) {
             router.showPanel("personal");
-        }else if (source == favoriteButton) {
+        } else if (source == favoriteButton) {
             router.showPanel("favorite");
-        }else if (source == detailButton) {
+        } else if (source == detailButton) {
             router.showPanel("detail");
-        }else if (source == orderButton) {
+        } else if (source == orderButton) {
             router.showPanel("order");
-        }else if (source == customButton) {
+        } else if (source == customButton) {
             router.showPanel("custom");
-        }else if (source == evaluateButton) {
+        } else if (source == evaluateButton) {
             router.showPanel("evaluate");
         }
     }
