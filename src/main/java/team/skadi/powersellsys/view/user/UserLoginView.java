@@ -30,7 +30,7 @@ public class UserLoginView extends LoginView {
 
 	@Override
 	protected void register() {
-
+		app.useRouter().showView(ViewName.USER_LOGIN_VIEW, ViewName.USER_REGISTER_VIEW);
 	}
 
 
