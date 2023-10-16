@@ -45,7 +45,7 @@ public class HintTextField extends JTextField implements FocusListener {
 
 	@Override
 	public void setText(String t) {
-		if (getText().equals("")) return;
+		if (super.getText().equals(hint)) return;
 		super.setText(t);
 	}
 
@@ -60,16 +60,16 @@ public class HintTextField extends JTextField implements FocusListener {
 
 	@Override
 	public void focusGained(FocusEvent e) {
-		String text = getText();
-		if (text.equals("")) {
-			setText("");
+		String text = super.getText();
+		if (text.equals(hint)) {
+			super.setText("");
 			setForeground(Color.BLACK);
 		}
 	}
 
 	@Override
 	public void focusLost(FocusEvent e) {
-		String text = getText();
+		String text = super.getText();
 		if (text.equals("")) {
 			setForeground(Color.GRAY);
 			setText(hint);
