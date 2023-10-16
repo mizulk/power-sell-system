@@ -2,6 +2,7 @@ package team.skadi.powersellsys.view.user;
 
 import team.skadi.powersellsys.App;
 import team.skadi.powersellsys.components.ImageButton;
+import team.skadi.powersellsys.components.user.*;
 import team.skadi.powersellsys.router.PanelRouter;
 import team.skadi.powersellsys.utils.LayoutUtil;
 import team.skadi.powersellsys.view.BasicView;
@@ -84,57 +85,14 @@ public class UserMainView extends BasicView implements ActionListener {
         JPanel panel = new JPanel();
         router = new PanelRouter(panel);
 
-        panel.add("personal", getPersonalPanel());
-        panel.add("favorite", getFavoritePanel());
-        panel.add("detail", getDetailPanel());
-        panel.add("order", getOrderPanel());
-        panel.add("custom", getCustomPanel());
-        panel.add("evaluate", getEvaluatePanel());
+        panel.add("personal", getWrapper(new UserPersonalPanel(app)));
+        panel.add("favorite", getWrapper(new UserFavoritePanel(app)));
+        panel.add("detail", getWrapper(new UserDetailPanel(app)));
+        panel.add("order", getWrapper(new UserOrderPanel(app)));
+        panel.add("custom", getWrapper(new UserCustomPanel(app)));
+        panel.add("evaluate", getWrapper(new UserEvaluatePanel(app)));
 
         return panel;
-    }
-
-    private JPanel getEvaluatePanel() {
-        JPanel evaluatePanel = new JPanel(new BorderLayout());
-        JTable table = new JTable();
-        evaluatePanel.add(table, BorderLayout.CENTER);
-        return getWrapper(evaluatePanel);
-    }
-
-    private JPanel getCustomPanel() {
-        JPanel customPanel = new JPanel(new BorderLayout());
-        JTable table = new JTable();
-        customPanel.add(table, BorderLayout.CENTER);
-        return getWrapper(customPanel);
-    }
-
-    private JPanel getOrderPanel() {
-        JPanel orderPanel = new JPanel(new BorderLayout());
-        JTable table = new JTable();
-        orderPanel.add(table, BorderLayout.CENTER);
-        return getWrapper(orderPanel);
-    }
-
-    private JPanel getDetailPanel() {
-        JPanel detailPanel = new JPanel(new BorderLayout());
-        JTable table = new JTable();
-        detailPanel.add(table, BorderLayout.CENTER);
-        return getWrapper(detailPanel);
-    }
-
-    private JPanel getFavoritePanel() {
-        JPanel favoritePanel = new JPanel(new BorderLayout());
-        JTable table = new JTable();
-        favoritePanel.add(table, BorderLayout.CENTER);
-        return getWrapper(favoritePanel);
-    }
-
-
-    private JPanel getPersonalPanel() {
-        JPanel personPanel = new JPanel(new BorderLayout());
-        JTable table = new JTable();
-        personPanel.add(table, BorderLayout.CENTER);
-        return getWrapper(personPanel);
     }
 
     private JPanel getWrapper(JPanel Panel) {

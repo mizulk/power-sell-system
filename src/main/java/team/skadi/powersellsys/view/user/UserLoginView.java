@@ -66,4 +66,11 @@ public class UserLoginView extends LoginView {
 	protected void register() {
 		app.useRouter().showView(ViewName.USER_LOGIN_VIEW, ViewName.USER_REGISTER_VIEW);
 	}
+
+	@Override
+	protected void onReturnBtnClick() {
+		super.onReturnBtnClick();
+		accountTextField.reset();
+		passwordField.reset();
+	}
 }
