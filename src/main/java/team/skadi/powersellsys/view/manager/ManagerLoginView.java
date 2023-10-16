@@ -61,6 +61,8 @@ public class ManagerLoginView extends LoginView {
 		// 全部验证一遍不过在提醒用户
 		if (jobNumberField.isTextValid() && passwordField.isTextValid()) {
 			app.useRouter().showView(ViewName.MANAGER_LOGIN_VIEW, ViewName.MANAGER_MAIN_VIEW);
+			// 重重密码框
+			passwordField.reset();
 		} else {
 			JOptionPane.showMessageDialog(app, "请检查你的信息是否正确。");
 		}

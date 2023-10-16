@@ -1,22 +1,19 @@
 package team.skadi.powersellsys.model.manager;
 
-import team.skadi.powersellsys.components.PaginationPanel;
-import team.skadi.powersellsys.components.SearchPanel;
+import team.skadi.powersellsys.pojo.Manager;
 import team.skadi.powersellsys.pojo.User;
+import team.skadi.powersellsys.service.UserService;
+import team.skadi.powersellsys.utils.ServiceUtil;
 
 import javax.swing.table.AbstractTableModel;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
-public class UserTableModel extends AbstractTableModel implements PaginationPanel.OnClickListener, SearchPanel.OnClickListener {
+public class UserTableModel extends AbstractTableModel {
 
 	private final String[] columnName = new String[]{"账号", "姓名", "性别", "年龄", "电话"};
 	private List<User> data;
 
 	public UserTableModel() {
-		data = new ArrayList<>();
-		data.add(new User(1, "000001", "123456", "otto", (byte) 1, (short) 24, "5600", "114", "123", LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now()));
 
 	}
 
@@ -27,7 +24,7 @@ public class UserTableModel extends AbstractTableModel implements PaginationPane
 
 	@Override
 	public int getRowCount() {
-		return data.size();
+		return data == null ? 0 : data.size();
 	}
 
 	@Override
@@ -48,33 +45,14 @@ public class UserTableModel extends AbstractTableModel implements PaginationPane
 		};
 	}
 
-	@Override
-	public void firstPage(int pageSize) {
-
+	public void updateData(List<User> data) {
+		this.data = data;
+		fireTableDataChanged();
 	}
 
-	@Override
-	public void nextPage(int curPage, int pageSize) {
-
-	}
-
-	@Override
-	public void previousPage(int curPage, int pageSize) {
-
-	}
-
-	@Override
-	public void jumpTo(int page, int pageSize) {
-
-	}
-
-	@Override
-	public SearchPanel.SearchResult onSearchButtonClick(int optionIndex, String content) {
-		return null;
-	}
-
-	@Override
-	public void onCloseButtonCLick() {
-
+	public void initData() {
+		UserService userService = ServiceUtil.getService(UserService.class);
+		data = userService.queryUser(1, 10, null).getData();
+		fireTableDataChanged();
 	}
 }

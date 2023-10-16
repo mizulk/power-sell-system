@@ -58,6 +58,7 @@ public abstract class ManagePanel extends BasicComponent {
 
 	abstract protected JPanel getBtnPanel();
 
+	abstract public void initData();
 
 	protected JPanel createBtnPanel() {
 		return new JPanel(new GridBagLayout());

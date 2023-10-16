@@ -12,9 +12,52 @@
 			<if test="name != null">
 				AND `name` = #{name}
 			</if>
+			<if test="sex != null">
+				AND sex = #{sex}
+			</if>
+			<if test="age != null">
+				AND age = #{age}
+			</if>
 			<if test="address != null">
 				AND address LIKE CONCAT('%',#{address},'%')
 			</if>
 		</where>
 	</select>
+
+	<update id="updateUser">
+		UPDATE users
+		<set>
+			<if test="password != null">
+				`password` = #{password},
+			</if>
+			<if test="name != null">
+				`name` = #{name},
+			</if>
+			<if test="sex != null">
+				sex = #{sex},
+			</if>
+			<if test="age != null">
+				age = #{age},
+			</if>
+			<if test="zipCode != null">
+				zip_code = #{zipCode},
+			</if>
+			<if test="tel != null">
+				tel = #{tel},
+			</if>
+			<if test="address != null">
+				address = #{address},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+			<if test="loginTime != null">
+				login_time = #{loginTime}
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
 </mapper>

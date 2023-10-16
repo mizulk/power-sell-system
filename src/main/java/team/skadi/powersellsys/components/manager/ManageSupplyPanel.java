@@ -2,7 +2,6 @@ package team.skadi.powersellsys.components.manager;
 
 import team.skadi.powersellsys.App;
 import team.skadi.powersellsys.Main;
-import team.skadi.powersellsys.model.manager.SupplierTableModel;
 import team.skadi.powersellsys.model.manager.SupplyTableModel;
 
 import javax.swing.JButton;
@@ -13,7 +12,7 @@ import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 
-public class ManageSupplyPanel extends ManagePanel{
+public class ManageSupplyPanel extends ManagePanel {
 
 	public ManageSupplyPanel(App app) {
 		super(app);
@@ -45,6 +44,11 @@ public class ManageSupplyPanel extends ManagePanel{
 		gbc.insets.set(0, 25, 10, 25);
 		supplyBtnPanel.add(btn, gbc);
 		return supplyBtnPanel;
+	}
+
+	@Override
+	public void initData() {
+
 	}
 
 	@Override

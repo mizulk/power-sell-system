@@ -47,6 +47,11 @@ public class ManageSupplierPanel extends ManagePanel {
 	}
 
 	@Override
+	public void initData() {
+
+	}
+
+	@Override
 	protected void addListener() {
 
 	}
