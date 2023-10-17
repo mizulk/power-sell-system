@@ -103,9 +103,12 @@ public class PaginationPanel extends BasicComponent {
 		} else if (source == nextBtn) {
 			nextPage();
 		} else if (source == jumpBtn) {
-			curPage = spinnerNumberModel.getNumber().intValue();
-			updateLabel();
-			l.jumpTo(curPage, pageSize);
+			int i = spinnerNumberModel.getNumber().intValue();
+			if (curPage != i) {
+				curPage = i;
+				updateLabel();
+				l.jumpTo(curPage, pageSize);
+			}
 		}
 	}
 
