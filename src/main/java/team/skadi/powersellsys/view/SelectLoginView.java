@@ -110,6 +110,16 @@ public class SelectLoginView extends BasicView implements ActionListener {
 	}
 
 	@Override
+	public void onShow() {
+		System.out.println("SelectLoginView.onShow");
+	}
+
+	@Override
+	public void onHide() {
+		System.out.println("SelectLoginView.onHide");
+	}
+
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
 		if (source == user) {
