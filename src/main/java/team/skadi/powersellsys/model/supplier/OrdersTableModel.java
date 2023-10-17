@@ -8,9 +8,9 @@ import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrdersTableModel extends AbstractTableModel implements SearchPanel.OnClickListener, PaginationPanel.OnClickListener{
+public class OrdersTableModel extends AbstractTableModel {
 
-    private final String[] columnName = new String[] {"订单编号","用户id","电源id","订购数量","订购金额","订购日期"};
+    private final String[] columnName = new String[] {"订单编号","用户id","电源id","电源类型","电源型号","电源容量","订购数量","订购金额","订购日期"};
 
     private List<Order> data = new ArrayList<>();
 
@@ -43,33 +43,4 @@ public class OrdersTableModel extends AbstractTableModel implements SearchPanel.
         };
     }
 
-    @Override
-    public void firstPage(int pageSize) {
-
-    }
-
-    @Override
-    public void nextPage(int curPage, int pageSize) {
-
-    }
-
-    @Override
-    public void previousPage(int curPage, int pageSize) {
-
-    }
-
-    @Override
-    public void jumpTo(int page, int pageSize) {
-
-    }
-
-    @Override
-    public SearchPanel.SearchResult onSearchButtonClick(int optionIndex, String content) {
-        return null;
-    }
-
-    @Override
-    public void onCloseButtonCLick() {
-
-    }
 }

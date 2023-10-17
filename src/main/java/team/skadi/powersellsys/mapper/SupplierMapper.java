@@ -15,7 +15,7 @@ public interface SupplierMapper {
     Supplier getSupplierByAccountAndPassword(@Param("name") String name, @Param("password") String password);
 
     @Insert("INSERT INTO suppliers(`name`,`password`,`tel`,`address`,`zip_code`) VALUES(#{name},#{password},#{tel},#{address},#{zipCode})")
-    Supplier insertAccount(Supplier supplier);
+    void insertAccount(Supplier supplier);
 
     @Select("SELECT * from suppliers where `tel`= #{tel}")
     Supplier getTelexists(@Param("tel") String tel);

@@ -8,7 +8,7 @@ import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JudgeTableModel extends AbstractTableModel implements SearchPanel.OnClickListener, PaginationPanel.OnClickListener{
+public class JudgeTableModel extends AbstractTableModel {
 
     private final String[] columnName = new String[] {"用户账号","商品名称","商品容量","商品评价"};
     private List<Judge> data = new ArrayList<>();
@@ -40,33 +40,4 @@ public class JudgeTableModel extends AbstractTableModel implements SearchPanel.O
         };
     }
 
-    @Override
-    public void firstPage(int pageSize) {
-
-    }
-
-    @Override
-    public void nextPage(int curPage, int pageSize) {
-
-    }
-
-    @Override
-    public void previousPage(int curPage, int pageSize) {
-
-    }
-
-    @Override
-    public void jumpTo(int page, int pageSize) {
-
-    }
-
-    @Override
-    public SearchPanel.SearchResult onSearchButtonClick(int optionIndex, String content) {
-        return null;
-    }
-
-    @Override
-    public void onCloseButtonCLick() {
-
-    }
 }

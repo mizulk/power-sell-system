@@ -13,7 +13,11 @@ public class Order {
 	private Integer id;
 	private Integer userId;
 	private Integer powerId;
+	private Integer type;
+	private String model;
+	private Integer capacity;
 	private Integer sum;
 	private Double amount;
 	private LocalDateTime createTime;
+	private Integer count;
 }

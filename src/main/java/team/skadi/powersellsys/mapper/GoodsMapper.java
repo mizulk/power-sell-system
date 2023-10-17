@@ -9,4 +9,7 @@ import java.util.List;
 public interface GoodsMapper {
 //	@Insert(Insert into )
 	List<Goods> page();
+
+	@Insert("INSERT INTO goods(`name`,`type`,`capacity`,`stock`,`status`) values(#{name},#{type},#{capacity},#{stock},'上架')")
+	void putOnShelf(Goods goods);
 }

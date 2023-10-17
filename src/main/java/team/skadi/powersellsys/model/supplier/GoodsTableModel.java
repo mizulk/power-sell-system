@@ -8,7 +8,7 @@ import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GoodsTableModel extends AbstractTableModel implements SearchPanel.OnClickListener, PaginationPanel.OnClickListener {
+public class GoodsTableModel extends AbstractTableModel  {
 
     private final String[] columnName = new String[]{"电源id","电源名称", "电源类型","电源容量", "库存","状态"};
 
@@ -42,33 +42,4 @@ public class GoodsTableModel extends AbstractTableModel implements SearchPanel.O
         };
     }
 
-    @Override
-    public void firstPage(int pageSize) {
-
-    }
-
-    @Override
-    public void nextPage(int curPage, int pageSize) {
-
-    }
-
-    @Override
-    public void previousPage(int curPage, int pageSize) {
-
-    }
-
-    @Override
-    public void jumpTo(int page, int pageSize) {
-
-    }
-
-    @Override
-    public SearchPanel.SearchResult onSearchButtonClick(int optionIndex, String content) {
-        return null;
-    }
-
-    @Override
-    public void onCloseButtonCLick() {
-
-    }
 }

@@ -70,9 +70,6 @@ public class SupplierLoginView extends LoginView {
     //TODO:重做登录
     @Override
     protected void login() {
-//        SupplierService supplierService = ServiceUtil.getService(SupplierService.class);
-//        Supplier supplier = supplierService.login(new String(accountTextField.getText()), new String(passwordField.getPassword()));
-//        if (supplier != null) {
           if (accountTextField.isTextValid() && passwordField.isTextValid()){
             app.useRouter().showView(ViewName.SUPPLIER_LOGIN_VIEW, ViewName.SUPPLIER_MAIN_VIEW);
         } else {
@@ -84,13 +81,6 @@ public class SupplierLoginView extends LoginView {
     //TODO:优化注册代码
     @Override
     protected void register() {
-//        SupplierService supplierService = ServiceUtil.getService(SupplierService.class);
-//        Supplier supplier = supplierService.register(new String(accountTextField.getText()), new String(passwordField.getPassword()));
-//        if (supplier != null){
-//            app.useRouter().showView(ViewName.SUPPLIER_LOGIN_VIEW,ViewName.SUPPLIER_MAIN_VIEW);
-//        }else {
-//            JOptionPane.showMessageDialog(app,"注册失败，请输入正确的账号或密码！");
-//        }
         app.useRouter().showView(ViewName.SUPPLIER_LOGIN_VIEW, ViewName.SUPPLIER_REGISTER_VIEW);
     }
 

@@ -1,5 +1,6 @@
 package team.skadi.powersellsys.service;
 
+import team.skadi.powersellsys.pojo.Goods;
 import team.skadi.powersellsys.pojo.Supplier;
 
 import java.util.List;
@@ -13,5 +14,6 @@ public interface SupplierService extends Service{
 	void register(Supplier supplier);
 
 	boolean getTelexists(String tel);
+
 
 }
