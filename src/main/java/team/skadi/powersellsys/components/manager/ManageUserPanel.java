@@ -16,10 +16,11 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
-public class ManageUserPanel extends ManagePanel implements SearchPanel.OnClickListener {
+public class ManageUserPanel extends ManagePanel implements SearchPanel.OnClickListener, PaginationPanel.OnClickListener {
 
 	private UserTableModel userTableModel;
 	private PaginationPanel paginationPanel;
+	private User user;// 全局搜索对象
 
 	public ManageUserPanel(App app) {
 		super(app);
@@ -28,6 +29,7 @@ public class ManageUserPanel extends ManagePanel implements SearchPanel.OnClickL
 	@Override
 	protected void init() {
 		userTableModel = new UserTableModel();
+		user = new User();// 创建全局搜索对象，防止空指针异常
 		super.init();
 	}
 
@@ -80,19 +82,15 @@ public class ManageUserPanel extends ManagePanel implements SearchPanel.OnClickL
 
 	@Override
 	public SearchPanel.SearchResult onSearchButtonClick(int optionIndex, String content) {
-		User user = new User();
+		user = new User();// 每次搜索清空内容（待定）
 		switch (optionIndex) {
 			case 0 -> user.setAccount(content);
 			case 1 -> user.setName(content);
 			case 2 -> {
-				byte sex;
-				try {
-					sex = Byte.parseByte(content);
-					if (sex < 1 || sex > 2) return SearchPanel.SearchResult.ERROR;
-				} catch (NumberFormatException e) {
-					return SearchPanel.SearchResult.NAN;
-				}
-				user.setSex(sex);
+				if (content.equals("男") || content.equals("女"))
+					user.setSex((byte) (content.equals("男") ? 1 : 0));
+				else
+					return SearchPanel.SearchResult.ERROR;// 输入错误
 			}
 			case 3 -> {
 				short age;
@@ -107,12 +105,41 @@ public class ManageUserPanel extends ManagePanel implements SearchPanel.OnClickL
 		}
 		PageBean<User> users = ServiceUtil.getService(UserService.class).queryUser(1, paginationPanel.getPageSize(), user);
 		userTableModel.updateData(users.getData());
+		paginationPanel.setPageBean(users); // 更新分页面板
 		return users.getTotal() == 0 ? SearchPanel.SearchResult.NO_RESULT : SearchPanel.SearchResult.HAVE_RESULT;
 	}
 
 	@Override
 	public void onCloseButtonCLick() {
 		PageBean<User> userPageBean = ServiceUtil.getService(UserService.class).queryUser(1, paginationPanel.getPageSize(), null);
+		userTableModel.updateData(userPageBean.getData());
+	}
+
+	@Override
+	public void firstPage(int pageSize) {
+		UserService userService = ServiceUtil.getService(UserService.class);
+		PageBean<User> userPageBean = userService.queryUser(1, pageSize, user);
+		userTableModel.updateData(userPageBean.getData());
+	}
+
+	@Override
+	public void nextPage(int curPage, int pageSize) {
+		UserService userService = ServiceUtil.getService(UserService.class);
+		PageBean<User> userPageBean = userService.queryUser(curPage, pageSize, user);
+		userTableModel.updateData(userPageBean.getData());
+	}
+
+	@Override
+	public void previousPage(int curPage, int pageSize) {
+		UserService userService = ServiceUtil.getService(UserService.class);
+		PageBean<User> userPageBean = userService.queryUser(curPage, pageSize, user);
+		userTableModel.updateData(userPageBean.getData());
+	}
+
+	@Override
+	public void jumpTo(int page, int pageSize) {
+		UserService userService = ServiceUtil.getService(UserService.class);
+		PageBean<User> userPageBean = userService.queryUser(page, pageSize, user);
 		userTableModel.updateData(userPageBean.getData());
 	}
 }
