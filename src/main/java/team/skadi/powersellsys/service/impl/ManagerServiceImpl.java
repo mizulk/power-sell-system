@@ -17,4 +17,14 @@ public class ManagerServiceImpl implements ManagerService {
 		sqlSession.close();
 		return manager;
 	}
+
+	@Override
+	public Manager queryManager(Short jobNumber) {
+		SqlSession sqlSession = SqlSessionUtil.getSqlSession();
+		ManagerMapper managerMapper = sqlSession.getMapper(ManagerMapper.class);
+		Manager manager = managerMapper.findManagerByJobNumber(jobNumber);
+		sqlSession.commit();
+		sqlSession.close();
+		return manager;
+	}
 }

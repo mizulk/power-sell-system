@@ -10,4 +10,5 @@ public interface UserService extends Service {
 	String register(User user);
 
 	PageBean<User> queryUser(int page, int pageSize, User user);
+
 }

@@ -10,6 +10,9 @@ import team.skadi.powersellsys.components.manager.ManageSupplierPanel;
 import team.skadi.powersellsys.components.manager.ManageSupplyPanel;
 import team.skadi.powersellsys.components.manager.ManageUserPanel;
 import team.skadi.powersellsys.pojo.Manager;
+import team.skadi.powersellsys.service.ManagerService;
+import team.skadi.powersellsys.service.UserService;
+import team.skadi.powersellsys.utils.ServiceUtil;
 import team.skadi.powersellsys.view.BasicView;
 
 import javax.swing.BorderFactory;
@@ -75,12 +78,6 @@ public class ManagerMainView extends BasicView implements ActionListener, Change
 		return tabbedPane;
 	}
 
-	protected void login() {
-		Manager manager = new Manager();
-		jobNumberLabel.setText("工号：" + manager.getJobNumber());
-		nameLabel.setText("姓名：" + manager.getName());
-	}
-
 	@Override
 	protected void addListener() {
 		logoutBtn.addActionListener(this);
@@ -89,18 +86,22 @@ public class ManagerMainView extends BasicView implements ActionListener, Change
 
 	@Override
 	public void onShow() {
+		ManagerService managerService = ServiceUtil.getService(ManagerService.class);
+		Manager manager = managerService.queryManager(app.useStore().managerStore.jobNumber());
+		jobNumberLabel.setText("工号：" + manager.getJobNumber());
+		nameLabel.setText("姓名：" + manager.getName());
 		((ManagePanel) tabbedPane.getComponentAt(0)).initData();
 	}
 
 	@Override
 	public void onHide() {
-		System.out.println("ManagerMainView.onHide");
+		app.useStore().managerStore = null;// 管理员登出，清空保存的记录
+		tabbedPane.setSelectedIndex(0);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		app.useRouter().showPreviousView();
-		tabbedPane.setSelectedIndex(0);
+		app.useRouter().showPreviousView(); // 登出按钮只会触发放回上一个页面
 	}
 
 	@Override

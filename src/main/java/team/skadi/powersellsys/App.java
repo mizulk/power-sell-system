@@ -2,6 +2,7 @@ package team.skadi.powersellsys;
 
 import team.skadi.powersellsys.router.ViewName;
 import team.skadi.powersellsys.router.ViewRouter;
+import team.skadi.powersellsys.store.Store;
 import team.skadi.powersellsys.view.BasicView;
 
 import javax.swing.JFrame;
@@ -18,6 +19,7 @@ public class App extends JFrame {
 	public static final int FRAME_WIDTH = 1000, FRAME_HEIGHT = 605;
 	public static final int FRAME_MIN_WIDTH, FRAME_MIN_HEIGHT;
 	private final ViewRouter viewRouter;
+	private final Store store;
 
 	static {
 		float scale = 0.9f;
@@ -35,6 +37,7 @@ public class App extends JFrame {
 		setBounds(x, y, FRAME_WIDTH, FRAME_HEIGHT);
 		setMinimumSize(new Dimension(FRAME_MIN_WIDTH, FRAME_MIN_HEIGHT));
 		viewRouter = new ViewRouter(this);
+		store = new Store();
 		buildLayout();
 		setVisible(true);
 	}
@@ -55,5 +58,9 @@ public class App extends JFrame {
 
 	public ViewRouter useRouter() {
 		return viewRouter;
+	}
+
+	public Store useStore() {
+		return store;
 	}
 }

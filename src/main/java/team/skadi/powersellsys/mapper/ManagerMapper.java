@@ -11,5 +11,6 @@ public interface ManagerMapper {
 	@Select("SELECT job_number,`name` FROM manager WHERE job_number = #{jobNumber} AND `password` = #{password}")
 	Manager findManagerByJobNumberAndPassword(@Param("jobNumber") Short jobNumber, @Param("password") String password);
 
-
+	@Select("SELECT id, job_number, `password`, `name` FROM manager WHERE job_number = #{jobNumber}")
+	Manager findManagerByJobNumber(@Param("jobNumber") Short jobNumber);
 }

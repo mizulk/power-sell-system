@@ -5,6 +5,7 @@ import team.skadi.powersellsys.components.VerificationTextField;
 import team.skadi.powersellsys.pojo.Manager;
 import team.skadi.powersellsys.router.ViewName;
 import team.skadi.powersellsys.service.ManagerService;
+import team.skadi.powersellsys.store.ManagerStore;
 import team.skadi.powersellsys.utils.ServiceUtil;
 import team.skadi.powersellsys.view.LoginView;
 
@@ -76,6 +77,8 @@ public class ManagerLoginView extends LoginView {
 			ManagerService managerService = ServiceUtil.getService(ManagerService.class);
 			Manager manager = managerService.login(Short.parseShort(jobNumberField.getText()), passwordField.getText());
 			if (manager != null) {
+				// 需要更改jobNumber的值必须重新new一个
+				app.useStore().managerStore = new ManagerStore(manager.getJobNumber());// 直接创建
 				JOptionPane.showMessageDialog(app, "登录成功，欢迎使用你," + manager.getName());
 				app.useRouter().showView(ViewName.MANAGER_LOGIN_VIEW, ViewName.MANAGER_MAIN_VIEW);
 				// 重重密码框
