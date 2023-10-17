@@ -26,7 +26,6 @@ import java.awt.event.ActionListener;
 
 public class ManagerMainView extends BasicView implements ActionListener, ChangeListener {
 
-	private Manager manager;
 	private JLabel jobNumberLabel;
 	private JLabel nameLabel;
 	private ImageButton logoutBtn;
@@ -76,11 +75,10 @@ public class ManagerMainView extends BasicView implements ActionListener, Change
 		return tabbedPane;
 	}
 
-	protected void login(Manager manager) {
-		this.manager = manager;
+	protected void login() {
+		Manager manager = new Manager();
 		jobNumberLabel.setText("工号：" + manager.getJobNumber());
 		nameLabel.setText("姓名：" + manager.getName());
-		((ManagePanel) tabbedPane.getComponentAt(0)).initData();
 	}
 
 	@Override
@@ -91,7 +89,7 @@ public class ManagerMainView extends BasicView implements ActionListener, Change
 
 	@Override
 	public void onShow() {
-		System.out.println("ManagerMainView.onShow");
+		((ManagePanel) tabbedPane.getComponentAt(0)).initData();
 	}
 
 	@Override

@@ -11,7 +11,7 @@
  Target Server Version : 80034 (8.0.34)
  File Encoding         : 65001
 
- Date: 16/10/2023 00:24:35
+ Date: 17/10/2023 23:21:32
 */
 
 SET NAMES utf8mb4;
@@ -29,6 +29,10 @@ CREATE TABLE `comments`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
+-- Records of comments
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for favorites
 -- ----------------------------
 DROP TABLE IF EXISTS `favorites`;
@@ -39,15 +43,25 @@ CREATE TABLE `favorites`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
+-- Records of favorites
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for manager
 -- ----------------------------
 DROP TABLE IF EXISTS `manager`;
 CREATE TABLE `manager`  (
   `id` int NOT NULL,
   `job_number` smallint NULL DEFAULT NULL COMMENT '工号',
+  `password` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT ' 密码',
   `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '管理员名',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of manager
+-- ----------------------------
+INSERT INTO `manager` VALUES (1, 1111, '123456', 'otto');
 
 -- ----------------------------
 -- Table structure for needs
@@ -65,7 +79,11 @@ CREATE TABLE `needs`  (
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `supply_time` datetime NULL DEFAULT NULL COMMENT '供应时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of needs
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for orders
@@ -82,6 +100,10 @@ CREATE TABLE `orders`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
+-- Records of orders
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for power_types
 -- ----------------------------
 DROP TABLE IF EXISTS `power_types`;
@@ -89,7 +111,11 @@ CREATE TABLE `power_types`  (
   `id` int NOT NULL AUTO_INCREMENT,
   `value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '类型',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of power_types
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for powers
@@ -110,7 +136,11 @@ CREATE TABLE `powers`  (
   `describe` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '描述',
   `sum` int NULL DEFAULT NULL COMMENT '访问数量',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of powers
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for suppliers
@@ -127,6 +157,10 @@ CREATE TABLE `suppliers`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
+-- Records of suppliers
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for supplies
 -- ----------------------------
 DROP TABLE IF EXISTS `supplies`;
@@ -138,7 +172,11 @@ CREATE TABLE `supplies`  (
   `create_time` datetime NOT NULL COMMENT '创建日期',
   `supply_time` datetime NULL DEFAULT NULL COMMENT '供应日期',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of supplies
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for users
@@ -158,7 +196,12 @@ CREATE TABLE `users`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '最近一次修改',
   `login_time` datetime NULL DEFAULT NULL COMMENT '最近一次登录',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of users
+-- ----------------------------
+INSERT INTO `users` VALUES (1, '00000001', '123456', 'otto', 1, 123, '123456', '12345678910', 'aaaaaaaaaa', '2023-10-16 01:20:59', '2023-10-16 01:21:02', '2023-10-16 01:21:05');
 
 -- ----------------------------
 -- View structure for goods

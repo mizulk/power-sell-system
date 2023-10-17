@@ -50,9 +50,8 @@ public class UserTableModel extends AbstractTableModel {
 		fireTableDataChanged();
 	}
 
-	public void initData() {
-		UserService userService = ServiceUtil.getService(UserService.class);
-		data = userService.queryUser(1, 10, null).getData();
+	public void initData(List<User> data) {
+		this.data = data;
 		fireTableDataChanged();
 	}
 }

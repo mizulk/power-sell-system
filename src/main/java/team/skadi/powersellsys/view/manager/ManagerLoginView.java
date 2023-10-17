@@ -2,7 +2,10 @@ package team.skadi.powersellsys.view.manager;
 
 import team.skadi.powersellsys.App;
 import team.skadi.powersellsys.components.VerificationTextField;
+import team.skadi.powersellsys.pojo.Manager;
 import team.skadi.powersellsys.router.ViewName;
+import team.skadi.powersellsys.service.ManagerService;
+import team.skadi.powersellsys.utils.ServiceUtil;
 import team.skadi.powersellsys.view.LoginView;
 
 import javax.swing.JOptionPane;
@@ -70,9 +73,16 @@ public class ManagerLoginView extends LoginView {
 	protected void login() {
 		// 全部验证一遍不过在提醒用户
 		if (jobNumberField.isTextValid() && passwordField.isTextValid()) {
-			app.useRouter().showView(ViewName.MANAGER_LOGIN_VIEW, ViewName.MANAGER_MAIN_VIEW);
-			// 重重密码框
-			passwordField.reset();
+			ManagerService managerService = ServiceUtil.getService(ManagerService.class);
+			Manager manager = managerService.login(Short.parseShort(jobNumberField.getText()), passwordField.getText());
+			if (manager != null) {
+				JOptionPane.showMessageDialog(app, "登录成功，欢迎使用你," + manager.getName());
+				app.useRouter().showView(ViewName.MANAGER_LOGIN_VIEW, ViewName.MANAGER_MAIN_VIEW);
+				// 重重密码框
+				passwordField.reset();
+			} else {
+				JOptionPane.showMessageDialog(app, "工号或密码错误");
+			}
 		} else {
 			JOptionPane.showMessageDialog(app, "请检查你的信息是否正确。");
 		}
