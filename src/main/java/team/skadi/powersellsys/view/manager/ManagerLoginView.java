@@ -21,6 +21,16 @@ public class ManagerLoginView extends LoginView {
 	}
 
 	@Override
+	public void onShow() {
+		System.out.println("ManagerLoginView.onShow");
+	}
+
+	@Override
+	public void onHide() {
+		System.out.println("ManagerLoginView.onHide");
+	}
+
+	@Override
 	protected void buildTextField(JPanel centerPanel, GridBagConstraints gbc) {
 		gbc.gridy++;
 		jobNumberField = new VerificationTextField<>("工号：", new JTextField(20));

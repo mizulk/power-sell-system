@@ -33,6 +33,8 @@ public enum ViewName {
 	/** 页面类型，用于初始化 */
 	private final Class<? extends BasicView> target;
 
+	private BasicView instance;
+
 	ViewName(String value, Class<? extends BasicView> target) {
 		this.value = value;
 		this.target = target;
@@ -44,5 +46,14 @@ public enum ViewName {
 
 	public Class<? extends BasicView> getTarget() {
 		return target;
+	}
+
+	public void setInstance(BasicView instance) {
+		if (this.instance == null)
+			this.instance = instance;
+	}
+
+	public BasicView getInstance() {
+		return instance;
 	}
 }

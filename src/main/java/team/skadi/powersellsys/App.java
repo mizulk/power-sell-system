@@ -45,6 +45,7 @@ public class App extends JFrame {
 			try {
 				BasicView basicView = panel.getTarget().getDeclaredConstructor(App.class).newInstance(this);
 				add(basicView, panel.getValue());
+				panel.setInstance(basicView);
 			} catch (InstantiationException | IllegalAccessException | InvocationTargetException |
 					 NoSuchMethodException e) {
 				e.printStackTrace();

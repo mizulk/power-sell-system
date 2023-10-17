@@ -176,7 +176,17 @@ public class SupplierMainView extends BasicView implements ActionListener {
 
     }
 
-    @Override
+	@Override
+	public void onShow() {
+
+	}
+
+	@Override
+	public void onHide() {
+
+	}
+
+	@Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
         if (source == button) {

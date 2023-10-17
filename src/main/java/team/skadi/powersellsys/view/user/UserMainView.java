@@ -112,7 +112,17 @@ public class UserMainView extends BasicView implements ActionListener {
         evaluateButton.addActionListener(this);
     }
 
-    @Override
+	@Override
+	public void onShow() {
+
+	}
+
+	@Override
+	public void onHide() {
+
+	}
+
+	@Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
         if (source == exitButton) {

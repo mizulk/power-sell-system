@@ -24,7 +24,17 @@ public class SupplierRegisterView extends RegisterView {
         super(app);
     }
 
-    @Override
+	@Override
+	public void onShow() {
+
+	}
+
+	@Override
+	public void onHide() {
+
+	}
+
+	@Override
     protected void buildTextField(JPanel centerPanel, GridBagConstraints gbc) {
         gbc.gridy++; // 表示为下一行，每行应该有两个元素
 //        JLabel label = new JLabel("姓名：", JLabel.LEFT);

@@ -90,6 +90,16 @@ public class ManagerMainView extends BasicView implements ActionListener, Change
 	}
 
 	@Override
+	public void onShow() {
+		System.out.println("ManagerMainView.onShow");
+	}
+
+	@Override
+	public void onHide() {
+		System.out.println("ManagerMainView.onHide");
+	}
+
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		app.useRouter().showPreviousView();
 		tabbedPane.setSelectedIndex(0);

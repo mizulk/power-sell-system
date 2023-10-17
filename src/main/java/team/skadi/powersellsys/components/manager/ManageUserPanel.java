@@ -50,7 +50,7 @@ public class ManageUserPanel extends ManagePanel implements SearchPanel.OnClickL
 	@Override
 	protected JPanel getPaginationPanel() {
 		paginationPanel = new PaginationPanel(app, false);
-		paginationPanel.setPageBean(new PageBean<>(100, new ArrayList<>()));
+		paginationPanel.addOnclickListener(this);
 		return paginationPanel;
 	}
 
@@ -67,7 +67,10 @@ public class ManageUserPanel extends ManagePanel implements SearchPanel.OnClickL
 
 	@Override
 	public void initData() {
-		userTableModel.initData();
+		UserService userService = ServiceUtil.getService(UserService.class);
+		PageBean<User> userPageBean = userService.queryUser(1, paginationPanel.getPageSize(), null);
+		paginationPanel.setPageBean(userPageBean);
+		userTableModel.initData(userPageBean.getData());
 	}
 
 	@Override

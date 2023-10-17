@@ -24,7 +24,17 @@ public class UserRegisterView extends RegisterView {
         telPattern = Pattern.compile("^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\\d{8}$");
     }
 
-    @Override
+	@Override
+	public void onShow() {
+
+	}
+
+	@Override
+	public void onHide() {
+
+	}
+
+	@Override
     protected void buildTextField(JPanel centerPanel, GridBagConstraints gbc) {
 
         gbc.gridy++;

@@ -79,6 +79,16 @@ public class HelpView extends BasicView implements ActionListener {
 	}
 
 	@Override
+	public void onShow() {
+
+	}
+
+	@Override
+	public void onHide() {
+
+	}
+
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton btn = (JButton) e.getSource();
 		if (btn.equals(exitBtn)) {

@@ -23,6 +23,16 @@ public class SupplierLoginView extends LoginView {
     }
 
 	@Override
+	public void onShow() {
+
+	}
+
+	@Override
+	public void onHide() {
+
+	}
+
+	@Override
 	protected void buildTextField(JPanel centerPanel, GridBagConstraints gbc) {
         gbc.gridy++;
         accountTextField = new VerificationTextField<>("账号：",new JTextField(20));

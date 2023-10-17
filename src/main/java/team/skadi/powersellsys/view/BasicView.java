@@ -35,4 +35,14 @@ public abstract class BasicView extends JPanel {
 	 * 为页面中的组件增加监听事件
 	 */
 	abstract protected void addListener();
+
+	/**
+	 * 生命周期：当页面显示的时候调用
+	 */
+	abstract public void onShow();
+
+	/**
+	 * 生命周期：当页面被隐藏时调用
+	 */
+	abstract public void onHide();
 }
