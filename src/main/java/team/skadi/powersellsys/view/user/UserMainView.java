@@ -3,8 +3,11 @@ package team.skadi.powersellsys.view.user;
 import team.skadi.powersellsys.App;
 import team.skadi.powersellsys.components.ImageButton;
 import team.skadi.powersellsys.components.user.*;
+import team.skadi.powersellsys.pojo.User;
 import team.skadi.powersellsys.router.PanelRouter;
+import team.skadi.powersellsys.service.UserService;
 import team.skadi.powersellsys.utils.LayoutUtil;
+import team.skadi.powersellsys.utils.ServiceUtil;
 import team.skadi.powersellsys.view.BasicView;
 
 import javax.swing.*;
@@ -114,12 +117,14 @@ public class UserMainView extends BasicView implements ActionListener {
 
 	@Override
 	public void onShow() {
-
+        UserService userService = ServiceUtil.getService(UserService.class);
+        User user = userService.queryUser(app.useStore().userStore.account());
+        nameLabel.setText("昵称：" + user.getName());
+        balanceLabel.setText("余额：" + user.getBalance());
 	}
 
 	@Override
 	public void onHide() {
-
 	}
 
 	@Override

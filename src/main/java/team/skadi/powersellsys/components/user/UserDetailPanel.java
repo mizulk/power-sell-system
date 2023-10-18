@@ -18,6 +18,7 @@ public class UserDetailPanel extends BasicComponent {
 		setLayout(new BorderLayout());
 		DetailTableModel detailTableModel = new DetailTableModel();
 		JTable table = new JTable(detailTableModel);
+		table.getTableHeader().setReorderingAllowed(false);
 		add(new JScrollPane(table), BorderLayout.CENTER);
 	}
 

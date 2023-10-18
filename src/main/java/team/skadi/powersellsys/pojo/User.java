@@ -19,6 +19,7 @@ public class User {
 	private String zipCode;
 	private String tel;
 	private String address;
+	private Double balance;
 	private LocalDateTime createTime;
 	private LocalDateTime updateTime;
 	private LocalDateTime loginTime;

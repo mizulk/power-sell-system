@@ -48,6 +48,9 @@
 			<if test="address != null">
 				address = #{address},
 			</if>
+			<if test="balance != null">
+				balance = #{balance},
+			</if>
 			<if test="createTime != null">
 				create_time = #{createTime},
 			</if>

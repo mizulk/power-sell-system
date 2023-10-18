@@ -1,4 +1,4 @@
 package team.skadi.powersellsys.store;
 
-public record UserStore() {
+public record UserStore(String account) {
 }

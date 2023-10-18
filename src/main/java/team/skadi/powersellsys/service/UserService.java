@@ -11,4 +11,6 @@ public interface UserService extends Service {
 
 	PageBean<User> queryUser(int page, int pageSize, User user);
 
+	User queryUser(String account);
+
 }

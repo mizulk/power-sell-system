@@ -164,6 +164,7 @@ CREATE TABLE `users`  (
   `zip_code` char(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '邮编',
   `tel` char(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '电话',
   `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '地址',
+  `balance` double NOT NULL COMMENT '余额',
   `create_time` datetime NULL DEFAULT NULL COMMENT '注册日期',
   `update_time` datetime NULL DEFAULT NULL COMMENT '最近一次修改',
   `login_time` datetime NULL DEFAULT NULL COMMENT '最近一次登录',
@@ -173,7 +174,7 @@ CREATE TABLE `users`  (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (1, '00000001', '123456', 'otto', 1, 123, '123456', '12345678910', 'aaaaaaaaaa', '2023-10-16 01:20:59', '2023-10-16 01:21:02', '2023-10-16 01:21:05');
+INSERT INTO `users` VALUES (1, '00000001', '123456', 'otto', 1, 123, '123456', '12345678910', 'aaaaaaaaaa', 123, '2023-10-16 01:20:59', '2023-10-16 01:21:02', '2023-10-16 01:21:05');
 
 -- ----------------------------
 -- View structure for goods

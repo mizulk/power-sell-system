@@ -2,7 +2,12 @@ package team.skadi.powersellsys.view.user;
 
 import team.skadi.powersellsys.App;
 import team.skadi.powersellsys.components.VerificationTextField;
+import team.skadi.powersellsys.pojo.User;
 import team.skadi.powersellsys.router.ViewName;
+import team.skadi.powersellsys.service.UserService;
+import team.skadi.powersellsys.store.ManagerStore;
+import team.skadi.powersellsys.store.UserStore;
+import team.skadi.powersellsys.utils.ServiceUtil;
 import team.skadi.powersellsys.view.LoginView;
 
 import javax.swing.*;
@@ -19,12 +24,12 @@ public class UserLoginView extends LoginView {
 
 	@Override
 	public void onShow() {
-
+		System.out.println("UserLoginView.onShow");
 	}
 
 	@Override
 	public void onHide() {
-
+		System.out.println("UserLoginView.onHide");
 	}
 
 	@Override
@@ -66,7 +71,16 @@ public class UserLoginView extends LoginView {
 	@Override
 	protected void login() {
 		if (accountTextField.isTextValid() && passwordField.isTextValid()) {
-			app.useRouter().showView(ViewName.USER_LOGIN_VIEW, ViewName.USER_MAIN_VIEW);
+			UserService userService = ServiceUtil.getService(UserService.class);
+			User user = userService.login(accountTextField.getText(),passwordField.getText());
+			if (user != null) {
+				app.useStore().userStore = new UserStore(user.getAccount());
+				JOptionPane.showMessageDialog(app, "登录成功，欢迎使用你," + user.getName());
+				app.useRouter().showView(ViewName.USER_LOGIN_VIEW, ViewName.USER_MAIN_VIEW);
+				passwordField.reset();
+			} else {
+				JOptionPane.showMessageDialog(app, "账号或密码错误。");
+			}
 		} else {
 			JOptionPane.showMessageDialog(app, "请检查你的账号或密码是否正确。");
 		}

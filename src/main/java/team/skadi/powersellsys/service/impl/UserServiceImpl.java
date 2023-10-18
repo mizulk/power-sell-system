@@ -62,4 +62,14 @@ public class UserServiceImpl implements UserService {
 		return new PageBean<>(users.getTotal(), users.getResult());
 	}
 
+	@Override
+	public User queryUser(String account) {
+		SqlSession sqlSession = SqlSessionUtil.getSqlSession();
+		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+		User user = userMapper.findUserByAccount(account);
+		sqlSession.commit();
+		sqlSession.close();
+		return user;
+	}
+
 }

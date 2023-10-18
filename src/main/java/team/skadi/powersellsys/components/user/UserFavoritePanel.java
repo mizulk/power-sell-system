@@ -18,6 +18,7 @@ public class UserFavoritePanel extends BasicComponent {
 		setLayout(new BorderLayout());
 		FavoriteTableModel favoriteTableModel = new FavoriteTableModel();
 		JTable table = new JTable(favoriteTableModel);
+		table.getTableHeader().setReorderingAllowed(false);
 		add(new JScrollPane(table), BorderLayout.CENTER);
 	}
 
