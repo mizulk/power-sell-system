@@ -2,11 +2,8 @@ package team.skadi.powersellsys.model.user;
 
 import team.skadi.powersellsys.model.DataTableModel;
 import team.skadi.powersellsys.pojo.Favorite;
-import team.skadi.powersellsys.pojo.Goods;
 
-import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
-import java.util.List;
 
 public class FavoriteTableModel extends DataTableModel<Favorite> {
 

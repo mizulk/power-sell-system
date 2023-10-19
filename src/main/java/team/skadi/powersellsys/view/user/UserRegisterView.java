@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import team.skadi.powersellsys.App;
 import team.skadi.powersellsys.components.VerificationTextField;
 import team.skadi.powersellsys.pojo.User;
+import team.skadi.powersellsys.service.UserService;
+import team.skadi.powersellsys.utils.ServiceUtil;
 import team.skadi.powersellsys.view.RegisterView;
 
 import javax.swing.*;
@@ -94,7 +96,9 @@ public class UserRegisterView extends RegisterView {
             user.setPassword(passwordTextField.getText());
             user.setTel(telTextField.getText());
             user.setAddress(addressTextField.getText());
-            JOptionPane.showMessageDialog(app, "注册完成");
+            UserService service = ServiceUtil.getService(UserService.class);
+            String register = service.register(user);
+            JOptionPane.showMessageDialog(app, "注册完成你的账号为：" + register);
             log.info("{}", user);
         } else {
             JOptionPane.showMessageDialog(app, "请完善个人性息");

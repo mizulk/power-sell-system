@@ -23,7 +23,7 @@ public class UserMainView extends BasicView implements ActionListener {
     private JButton detailButton;
     private JButton orderButton;
     private JButton customButton;
-    private JButton evaluateButton;
+    private JButton evaluationButton;
     private JLabel nameLabel;
     private JLabel balanceLabel;
     private PanelRouter router;
@@ -72,13 +72,13 @@ public class UserMainView extends BasicView implements ActionListener {
         detailButton = new JButton("商品详情");
         orderButton = new JButton("提交订单");
         customButton = new JButton("定制");
-        evaluateButton = new JButton("评价");
+        evaluationButton = new JButton("评价");
         panel.add(personalButton);
         panel.add(favoriteButton);
         panel.add(detailButton);
         panel.add(orderButton);
         panel.add(customButton);
-        panel.add(evaluateButton);
+        panel.add(evaluationButton);
         JPanel wrapper = LayoutUtil.createWrapper(panel, 20);
         wrapper.setBorder(BorderFactory.createRaisedBevelBorder());
         return wrapper;
@@ -93,7 +93,7 @@ public class UserMainView extends BasicView implements ActionListener {
         panel.add("detail", getWrapper(new UserDetailPanel(app)));
         panel.add("order", getWrapper(new UserOrderPanel(app)));
         panel.add("custom", getWrapper(new UserCustomPanel(app)));
-        panel.add("evaluate", getWrapper(new UserEvaluatePanel(app)));
+        panel.add("evaluation", getWrapper(new UserEvaluationPanel(app)));
 
         return panel;
     }
@@ -112,7 +112,7 @@ public class UserMainView extends BasicView implements ActionListener {
         detailButton.addActionListener(this);
         orderButton.addActionListener(this);
         customButton.addActionListener(this);
-        evaluateButton.addActionListener(this);
+        evaluationButton.addActionListener(this);
     }
 
 	@Override
@@ -125,6 +125,8 @@ public class UserMainView extends BasicView implements ActionListener {
 
 	@Override
 	public void onHide() {
+        app.useStore().userStore = null;
+        router.showPanel("personal");
 	}
 
 	@Override
@@ -142,8 +144,8 @@ public class UserMainView extends BasicView implements ActionListener {
             router.showPanel("order");
         } else if (source == customButton) {
             router.showPanel("custom");
-        } else if (source == evaluateButton) {
-            router.showPanel("evaluate");
+        } else if (source == evaluationButton) {
+            router.showPanel("evaluation");
         }
     }
 }

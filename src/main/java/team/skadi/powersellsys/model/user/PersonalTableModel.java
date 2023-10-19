@@ -1,8 +1,9 @@
 package team.skadi.powersellsys.model.user;
 
-import javax.swing.table.AbstractTableModel;
+import team.skadi.powersellsys.model.DataTableModel;
+import team.skadi.powersellsys.pojo.User;
 
-public class PersonalTableModel extends AbstractTableModel {
+public class PersonalTableModel extends DataTableModel<User> {
 
 
 	@Override

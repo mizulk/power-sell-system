@@ -4,23 +4,23 @@ import team.skadi.powersellsys.App;
 import team.skadi.powersellsys.components.BasicComponent;
 import team.skadi.powersellsys.components.PaginationPanel;
 import team.skadi.powersellsys.components.SearchPanel;
-import team.skadi.powersellsys.model.user.DetailTableModel;
+import team.skadi.powersellsys.model.user.EvaluationTableModel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-public class UserDetailPanel extends BasicComponent
+public class UserEvaluationPanel extends BasicComponent
 		implements PaginationPanel.OnClickListener, SearchPanel.OnClickListener{
-	public UserDetailPanel(App app) {
+	public UserEvaluationPanel(App app) {
 		super(app);
 	}
 
 	@Override
 	protected void buildLayout() {
 		setLayout(new BorderLayout());
-		DetailTableModel detailTableModel = new DetailTableModel();
-		JTable table = new JTable(detailTableModel);
+		EvaluationTableModel evaluationTableModel = new EvaluationTableModel();
+		JTable table = new JTable(evaluationTableModel);
 		table.getTableHeader().setReorderingAllowed(false);
 		add(new JScrollPane(table), BorderLayout.CENTER);
 
@@ -28,7 +28,7 @@ public class UserDetailPanel extends BasicComponent
 		paginationPanel.addOnclickListener(this);
 		add(paginationPanel,BorderLayout.SOUTH);
 
-		SearchPanel searchPanel = new SearchPanel(app, new String[]{"名称", "型号", "容量"});
+		SearchPanel searchPanel = new SearchPanel(app, new String[]{"评价时间"});
 		searchPanel.addOnClickListener(this);
 		add(searchPanel, BorderLayout.NORTH);
 	}
