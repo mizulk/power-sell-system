@@ -1,16 +1,13 @@
 package team.skadi.powersellsys.model.manager;
 
+import team.skadi.powersellsys.model.DataTableModel;
 import team.skadi.powersellsys.pojo.Order;
 
-import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
-import java.util.List;
 
-public class OrderTableModel extends AbstractTableModel {
+public class OrderTableModel extends DataTableModel<Order> {
 
 	private final String[] columnName = new String[]{"用户id", "电源id", "订购数量", "订购金额", "订购日期"};
-
-	private List<Order> data;
 
 	public OrderTableModel() {
 		data = new ArrayList<>();
@@ -42,5 +39,10 @@ public class OrderTableModel extends AbstractTableModel {
 			case 4 -> order.getCreateTime();
 			default -> null;
 		};
+	}
+
+	@Override
+	public boolean delRow(int rowIndex) {
+		return super.delRow(rowIndex);
 	}
 }

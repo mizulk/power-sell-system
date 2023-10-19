@@ -1,16 +1,13 @@
 package team.skadi.powersellsys.model.manager;
 
+import team.skadi.powersellsys.model.DataTableModel;
 import team.skadi.powersellsys.pojo.Goods;
 
-import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
-import java.util.List;
 
-public class GoodsTableModel extends AbstractTableModel {
+public class GoodsTableModel extends DataTableModel<Goods> {
 
 	private final String[] columnName = new String[]{"名称", "型号", "容量", "库存", "单价", "折扣", "状态"};
-
-	private List<Goods> data;
 
 	public GoodsTableModel() {
 		data = new ArrayList<>();
@@ -44,5 +41,10 @@ public class GoodsTableModel extends AbstractTableModel {
 			case 6 -> goods.getStatus();
 			default -> null;
 		};
+	}
+
+	@Override
+	public boolean delRow(int rowIndex) {
+		return super.delRow(rowIndex);
 	}
 }

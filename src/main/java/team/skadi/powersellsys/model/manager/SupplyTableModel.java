@@ -1,16 +1,13 @@
 package team.skadi.powersellsys.model.manager;
 
+import team.skadi.powersellsys.model.DataTableModel;
 import team.skadi.powersellsys.pojo.Supply;
 
-import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
-import java.util.List;
 
-public class SupplyTableModel extends AbstractTableModel {
+public class SupplyTableModel extends DataTableModel<Supply> {
 
 	private final String[] columnName = new String[]{"供应商id", "电源id", "供应数量", "创建日期", "供应日期"};
-
-	private List<Supply> data;
 
 	public SupplyTableModel() {
 		data = new ArrayList<>();
@@ -42,5 +39,10 @@ public class SupplyTableModel extends AbstractTableModel {
 			case 4 -> supply.getSupplyTime() == null ? "尚未供应" : supply.getSupplyTime();
 			default -> null;
 		};
+	}
+
+	@Override
+	public boolean delRow(int rowIndex) {
+		return super.delRow(rowIndex);
 	}
 }
