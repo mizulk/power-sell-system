@@ -2,6 +2,7 @@ package team.skadi.powersellsys.components.user;
 
 import team.skadi.powersellsys.App;
 import team.skadi.powersellsys.components.BasicComponent;
+import team.skadi.powersellsys.model.user.CustomTableModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,8 +16,10 @@ public class UserCustomPanel extends BasicComponent {
 	@Override
 	protected void buildLayout() {
 		setLayout(new BorderLayout());
-		JTable table = new JTable();
-		add(table, BorderLayout.CENTER);
+		CustomTableModel customTableModel = new CustomTableModel();
+		JTable table = new JTable(customTableModel);
+		table.getTableHeader().setReorderingAllowed(false);
+		add(new JScrollPane(table), BorderLayout.CENTER);
 	}
 
 	@Override

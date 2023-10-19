@@ -2,6 +2,7 @@ package team.skadi.powersellsys.components.user;
 
 import team.skadi.powersellsys.App;
 import team.skadi.powersellsys.components.BasicComponent;
+import team.skadi.powersellsys.model.user.OrderTableModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,8 +16,10 @@ public class UserOrderPanel extends BasicComponent {
 	@Override
 	protected void buildLayout() {
 		setLayout(new BorderLayout());
-		JTable table = new JTable();
-		add(table, BorderLayout.CENTER);
+		OrderTableModel orderTableModel = new OrderTableModel();
+		JTable table = new JTable(orderTableModel);
+		table.getTableHeader().setReorderingAllowed(false);
+		add(new JScrollPane(table), BorderLayout.CENTER);
 	}
 
 	@Override
