@@ -1,27 +1,20 @@
 package team.skadi.powersellsys.model.supplier;
 
-import team.skadi.powersellsys.components.PaginationPanel;
-import team.skadi.powersellsys.components.SearchPanel;
+import team.skadi.powersellsys.model.DataTableModel;
 import team.skadi.powersellsys.pojo.Order;
 
-import javax.swing.table.AbstractTableModel;
-import java.util.ArrayList;
-import java.util.List;
+public class OrdersTableModel extends DataTableModel<Order> {
 
-public class OrdersTableModel extends AbstractTableModel {
-
-    private final String[] columnName = new String[] {"订单编号","用户id","电源id","电源类型","电源型号","电源容量","订购数量","订购金额","订购日期"};
-
-    private List<Order> data = new ArrayList<>();
+    private final String[] columnName = new String[]{"订单编号", "用户id", "电源id", "电源类型", "电源型号", "电源容量", "订购数量", "订购金额", "订购日期"};
 
     @Override
-    public String getColumnName(int column){
+    public String getColumnName(int column) {
         return columnName[column];
     }
 
     @Override
     public int getRowCount() {
-        return data.size();
+        return data == null ? 0 : data.size();
     }
 
     @Override

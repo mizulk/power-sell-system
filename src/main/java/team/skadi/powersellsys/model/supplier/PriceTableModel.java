@@ -1,18 +1,10 @@
 package team.skadi.powersellsys.model.supplier;
-
-import team.skadi.powersellsys.components.PaginationPanel;
-import team.skadi.powersellsys.components.SearchPanel;
+import team.skadi.powersellsys.model.DataTableModel;
 import team.skadi.powersellsys.pojo.Goods;
 
-import javax.swing.table.AbstractTableModel;
-import java.util.ArrayList;
-import java.util.List;
+public class PriceTableModel extends DataTableModel<Goods> {
 
-public class PriceTableModel extends AbstractTableModel {
-
-    private final String[] columnName = new String[]{"商品id","商品名称","商品价格"};
-
-    private List<Goods> data = new ArrayList<>();
+    private final String[] columnName = new String[]{"商品id", "商品名称", "商品价格"};
 
     @Override
     public String getColumnName(int column) {
@@ -21,7 +13,7 @@ public class PriceTableModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return data.size();
+        return data == null ? 0 : data.size();
     }
 
     @Override

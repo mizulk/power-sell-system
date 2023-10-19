@@ -1,17 +1,15 @@
 package team.skadi.powersellsys.model.supplier;
 
-import team.skadi.powersellsys.components.PaginationPanel;
-import team.skadi.powersellsys.components.SearchPanel;
+import team.skadi.powersellsys.model.DataTableModel;
+import team.skadi.powersellsys.pojo.Goods;
 import team.skadi.powersellsys.pojo.Judge;
 
-import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JudgeTableModel extends AbstractTableModel {
+public class JudgeTableModel extends DataTableModel<Judge> {
 
-    private final String[] columnName = new String[] {"用户账号","商品名称","商品容量","商品评价"};
-    private List<Judge> data = new ArrayList<>();
+    private final String[] columnName = new String[]{"用户账号", "商品名称", "商品容量", "商品评价"};
 
     @Override
     public String getColumnName(int column) {
@@ -20,7 +18,7 @@ public class JudgeTableModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return data.size();
+        return data == null ? 0 : data.size();
     }
 
     @Override

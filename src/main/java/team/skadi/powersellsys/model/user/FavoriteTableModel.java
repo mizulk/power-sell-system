@@ -1,5 +1,6 @@
 package team.skadi.powersellsys.model.user;
 
+import team.skadi.powersellsys.model.DataTableModel;
 import team.skadi.powersellsys.pojo.Favorite;
 import team.skadi.powersellsys.pojo.Goods;
 
@@ -7,10 +8,9 @@ import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FavoriteTableModel extends AbstractTableModel {
+public class FavoriteTableModel extends DataTableModel<Favorite> {
 
 	private final String[] columnName = new String[]{"用户id", "电源id"};
-	private List<Favorite> data;
 
 	public FavoriteTableModel() {
 		data = new ArrayList<>();
@@ -22,7 +22,7 @@ public class FavoriteTableModel extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		return data.size();
+		return data == null ? 0 : data.size();
 	}
 
 	@Override

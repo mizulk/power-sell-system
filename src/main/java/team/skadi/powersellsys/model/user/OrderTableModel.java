@@ -1,15 +1,15 @@
 package team.skadi.powersellsys.model.user;
 
+import team.skadi.powersellsys.model.DataTableModel;
 import team.skadi.powersellsys.pojo.Goods;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderTableModel extends AbstractTableModel {
+public class OrderTableModel extends DataTableModel<Goods> {
 
     private final String[] columnName = new String[]{"名称", "型号", "单价", "折扣", "总价"};
-    private List<Goods> data;
 
     public OrderTableModel() {
         data = new ArrayList<>();
@@ -23,7 +23,7 @@ public class OrderTableModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return data.size();
+        return data == null ? 0 : data.size();
     }
 
     @Override

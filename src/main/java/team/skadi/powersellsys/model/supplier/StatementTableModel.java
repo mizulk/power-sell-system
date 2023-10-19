@@ -1,16 +1,11 @@
 package team.skadi.powersellsys.model.supplier;
 
+import team.skadi.powersellsys.model.DataTableModel;
 import team.skadi.powersellsys.pojo.Order;
 
-import javax.swing.table.AbstractTableModel;
-import java.util.ArrayList;
-import java.util.List;
+public class StatementTableModel extends DataTableModel<Order> {
 
-public class StatementTableModel extends AbstractTableModel {
-
-    private final String[] columnName = new String[]{"电源类型","电源型号","订购日期","订购人数"};
-
-    private List<Order> data = new ArrayList<>();
+    private final String[] columnName = new String[]{"电源类型", "电源型号", "订购日期", "订购人数"};
 
     @Override
     public String getColumnName(int column) {
@@ -19,7 +14,7 @@ public class StatementTableModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return data.size();
+        return data == null ? 0 : data.size();
     }
 
     @Override

@@ -1,5 +1,4 @@
 package team.skadi.powersellsys.model.supplier;
-
 import team.skadi.powersellsys.model.DataTableModel;
 import team.skadi.powersellsys.pojo.Goods;
 
