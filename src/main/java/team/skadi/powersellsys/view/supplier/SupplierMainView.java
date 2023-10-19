@@ -6,6 +6,9 @@ import team.skadi.powersellsys.components.supplier.*;
 import team.skadi.powersellsys.model.supplier.*;
 import team.skadi.powersellsys.pojo.Supplier;
 import team.skadi.powersellsys.router.PanelRouter;
+import team.skadi.powersellsys.service.SupplierService;
+import team.skadi.powersellsys.store.SupplierStore;
+import team.skadi.powersellsys.utils.ServiceUtil;
 import team.skadi.powersellsys.view.BasicView;
 
 import javax.swing.*;
@@ -26,6 +29,7 @@ public class SupplierMainView extends BasicView implements ActionListener {
 
     private PanelRouter router;
     private JPanel jPanel2;
+    private JLabel nameLabel;
 
     public SupplierMainView(App app) {
         super(app);
@@ -38,14 +42,12 @@ public class SupplierMainView extends BasicView implements ActionListener {
         jPanel.setLayout(new BoxLayout(jPanel, BoxLayout.X_AXIS));
         jPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
 
-        JLabel label = new JLabel("supplier");
-
-
-        label.setFont(Main.TITLE_FONT);
+        nameLabel = new JLabel();
+        nameLabel.setFont(Main.MIDDLE_FONT);
         button = new JButton("退出");
 
         jPanel.add(Box.createHorizontalStrut(50));
-        jPanel.add(label);
+        jPanel.add(nameLabel);
         jPanel.add(Box.createHorizontalGlue());
         jPanel.add(Box.createHorizontalGlue());
         jPanel.add(button);
@@ -91,15 +93,6 @@ public class SupplierMainView extends BasicView implements ActionListener {
         add(jPanel2, BorderLayout.CENTER);
     }
 
-    //统计报表
-//    private JPanel getjPanel6() {
-//        JPanel jPanel6 = new JPanel(new BorderLayout());
-//        JTable table = new JTable();//TODO： 添加数据模型
-//        table.getTableHeader().setReorderingAllowed(false);
-//        jPanel6.add(new JScrollPane(table));
-//        return jPanel6;
-//    }
-
 
     @Override
     protected void addListener() {
@@ -115,12 +108,15 @@ public class SupplierMainView extends BasicView implements ActionListener {
 
 	@Override
 	public void onShow() {
+        SupplierService supplierService = ServiceUtil.getService(SupplierService.class);
+        Supplier supplier = supplierService.querySupplier(app.useStore().supplierStore.account());
+        nameLabel.setText("姓名：" + supplier.getName());
 
-	}
+    }
 
 	@Override
 	public void onHide() {
-
+        app.useStore().supplierStore = null;
 	}
 
 	@Override

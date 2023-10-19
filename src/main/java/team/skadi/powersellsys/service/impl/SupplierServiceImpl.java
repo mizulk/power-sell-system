@@ -23,10 +23,10 @@ public class SupplierServiceImpl implements SupplierService {
     }
 
     @Override
-    public Supplier login(String name, String password) {
+    public Supplier login(String account, String password) {
         SqlSession sqlSession = SqlSessionUtil.getSqlSession();
         SupplierMapper supplierMapper = sqlSession.getMapper(SupplierMapper.class);
-        Supplier supplier = supplierMapper.getSupplierByAccountAndPassword(name, password);
+        Supplier supplier = supplierMapper.getSupplierByAccountAndPassword(account, password);
         sqlSession.commit();
         sqlSession.close();
         return supplier;
@@ -34,12 +34,18 @@ public class SupplierServiceImpl implements SupplierService {
 
 
     @Override
-    public void register(Supplier supplier) {
+    public String register(Supplier supplier) {
         SqlSession sqlSession = SqlSessionUtil.getSqlSession();
         SupplierMapper supplierMapper = sqlSession.getMapper(SupplierMapper.class);
-        supplierMapper.insertAccount(supplier);
+        supplierMapper.insertNewAccount(supplier);
+        Integer id = supplierMapper.getEmptyAccountId();
+        String account = String.format("%06d", id);
+        supplier.setId(id);
+        supplier.setAccount(account);
+        supplierMapper.updateAccount(supplier);
         sqlSession.commit();
         sqlSession.close();
+        return account;
     }
 
     @Override
@@ -47,13 +53,25 @@ public class SupplierServiceImpl implements SupplierService {
             SqlSession sqlSession = SqlSessionUtil.getSqlSession();
             SupplierMapper supplierMapper = sqlSession.getMapper(SupplierMapper.class);
             Supplier telexists = supplierMapper.getTelexists(tel);
-            if (telexists != null){
-                sqlSession.commit();
-                sqlSession.close();
-                return true;
-            }else{
-                return  false;
-            }
+        if (telexists != null) {
+
+            sqlSession.commit();
+            sqlSession.close();
+            return false;
+        } else {
+
+            return true;
+        }
+    }
+
+    @Override
+    public Supplier querySupplier(String account) {
+        SqlSession sqlSession = SqlSessionUtil.getSqlSession();
+        SupplierMapper supplierMapper = sqlSession.getMapper(SupplierMapper.class);
+        Supplier supplier = supplierMapper.findSupplierByAccount(account);
+        sqlSession.commit();
+        sqlSession.close();
+        return supplier;
     }
 
 }

@@ -10,7 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Supplier {
 	private Integer id;
-	private String name;
+    private String account;
+    private String name;
 	private String password;
 	private String tel;
 	private String address;

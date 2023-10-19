@@ -11,6 +11,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class ShowOrdersPanel extends BasicComponent implements PaginationPanel.OnClickListener, SearchPanel.OnClickListener {
+
+    private JButton btn;
+
     public ShowOrdersPanel(App app) {
         super(app);
     }
@@ -21,15 +24,26 @@ public class ShowOrdersPanel extends BasicComponent implements PaginationPanel.O
         OrdersTableModel ordersTableModel = new OrdersTableModel();
         JTable table = new JTable(ordersTableModel);
         table.getTableHeader().setReorderingAllowed(false);
-        add(new JScrollPane(table),BorderLayout.CENTER);
+        add(new JScrollPane(table), BorderLayout.CENTER);
 
-        PaginationPanel paginationPanel = new PaginationPanel(app,false);
+        JPanel btnpanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridy = 1;
+        gbc.weightx = 1;
+        btn = new JButton("添加库存");
+        btnpanel.add(btn, gbc);
+
+        gbc.gridy++;
+        gbc.gridwidth = 1;
+        PaginationPanel paginationPanel = new PaginationPanel(app, false);
         paginationPanel.addOnclickListener(this);
-        add(paginationPanel,BorderLayout.SOUTH);
+        btnpanel.add(paginationPanel, gbc);
+        add(btnpanel, BorderLayout.SOUTH);
 
-        SearchPanel searchPanel = new SearchPanel(app,new String[]{"电源类型","电源型号","订购日期"});
+        SearchPanel searchPanel = new SearchPanel(app, new String[]{"电源类型", "电源型号", "订购日期"});
         searchPanel.addOnClickListener(this);
-        add(searchPanel,BorderLayout.NORTH);
+        add(searchPanel, BorderLayout.NORTH);
     }
 
     @Override

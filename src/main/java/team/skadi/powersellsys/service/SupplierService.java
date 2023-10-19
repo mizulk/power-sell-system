@@ -9,11 +9,11 @@ public interface SupplierService extends Service{
 
 	List<Supplier> getAllSupplier();
 
-	Supplier login(String name, String password);
+	Supplier login(String account, String password);
 
-	void register(Supplier supplier);
+    String register(Supplier supplier);
 
 	boolean getTelexists(String tel);
 
-
+    Supplier querySupplier(String account);
 }

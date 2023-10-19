@@ -13,7 +13,7 @@ import java.awt.*;
 
 public class SupplierRegisterView extends RegisterView {
 
-    private VerificationTextField<JTextField> accountTextField;
+    private VerificationTextField<JTextField> nameTextField;
     private VerificationTextField<JPasswordField> passwordField;
     private VerificationTextField<JTextField> telTextField;
     private VerificationTextField<JTextField> addressTextField;
@@ -24,26 +24,30 @@ public class SupplierRegisterView extends RegisterView {
         super(app);
     }
 
-	@Override
-	public void onShow() {
+    @Override
+    public void onShow() {
 
-	}
+    }
 
-	@Override
-	public void onHide() {
+    @Override
+    public void onHide() {
+        nameTextField.reset();
+        passwordField.reset();
+        telTextField.reset();
+        addressTextField.reset();
+        zipcodeTextField.reset();
+    }
 
-	}
-
-	@Override
+    @Override
     protected void buildTextField(JPanel centerPanel, GridBagConstraints gbc) {
         gbc.gridy++; // 表示为下一行，每行应该有两个元素
-        accountTextField = new VerificationTextField<>("姓名：", new JTextField(20));
-        centerPanel.add(accountTextField, gbc);// 第二个元素是输入框
-        accountTextField.setVerification(context -> {
+        nameTextField = new VerificationTextField<>("姓名：", new JTextField(20));
+        centerPanel.add(nameTextField, gbc);// 第二个元素是输入框
+        nameTextField.setVerification(context -> {
             if (context.equals("")) {
                 return "姓名不能为空";
-            } else if (context.length() < 4) {
-                return "账号长度小于等于6位";
+            } else if (context.length() > 50) {
+                return "姓名不能超过50个字符";
             } else {
                 return "";
             }
@@ -104,17 +108,20 @@ public class SupplierRegisterView extends RegisterView {
 
     @Override
     protected void register() {
-        Supplier supplier = new Supplier();
-        supplier.setName(accountTextField.getText());
-        supplier.setPassword(String.valueOf(passwordField.getText()));
-        supplier.setTel(telTextField.getText());
-        supplier.setAddress(addressTextField.getText());
-        supplier.setZipCode(zipcodeTextField.getText());
         SupplierService supplierService = ServiceUtil.getService(SupplierService.class);
-        if (accountTextField.isTextValid() && passwordField.isTextValid() && telTextField.isTextValid()) {
-            if (supplierService.getTelexists(telTextField.getText())){
-            supplierService.register(supplier);
-            app.useRouter().showView(ViewName.SUPPLIER_REGISTER_VIEW, ViewName.SUPPLIER_LOGIN_VIEW);
+        if (nameTextField.isTextValid() && passwordField.isTextValid() && telTextField.isTextValid()) {
+            Supplier supplier = new Supplier();
+            supplier.setName(nameTextField.getText());
+            supplier.setPassword(String.valueOf(passwordField.getText()));
+            supplier.setTel(telTextField.getText());
+            supplier.setAddress(addressTextField.getText());
+            supplier.setZipCode(zipcodeTextField.getText());
+            if (supplierService.getTelexists(telTextField.getText())) {
+                String register = supplierService.register(supplier);
+                JOptionPane.showMessageDialog(app, "注册成功你的账号是：" + register);
+                app.useRouter().showView(ViewName.SUPPLIER_REGISTER_VIEW, ViewName.SUPPLIER_LOGIN_VIEW);
+            } else {
+                JOptionPane.showMessageDialog(app, "该电话号码已被注册，请更换");
             }
         } else {
             JOptionPane.showMessageDialog(app, "请检查你的信息是否正确");
