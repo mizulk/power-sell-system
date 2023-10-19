@@ -30,7 +30,7 @@ public class PaginationPanel extends BasicComponent {
 	private JButton nextBtn;
 	private JButton jumpBtn;
 	private OnClickListener l;
-	private int curPage;
+	private int curPage = 1;
 	private int pageSize = 10;
 	private long total;
 	private int pageLength;
@@ -170,6 +170,22 @@ public class PaginationPanel extends BasicComponent {
 	 */
 	public int getPageSize() {
 		return pageSize;
+	}
+
+	/**
+	 * 是否是最后一页
+	 *
+	 * @return true 最后一页
+	 */
+	public boolean isLastPage() {
+		return curPage == pageLength;
+	}
+
+	/**
+	 * 最后一页的剩余的记录数
+	 */
+	public int getLeftRecord() {
+		return (int) (total % pageSize);
 	}
 
 	/** 分页面板点击事件，需要实现并使用{@link #addOnclickListener(OnClickListener)}注册监听才能正常使用 */

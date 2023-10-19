@@ -11,7 +11,6 @@ import team.skadi.powersellsys.components.manager.ManageSupplyPanel;
 import team.skadi.powersellsys.components.manager.ManageUserPanel;
 import team.skadi.powersellsys.pojo.Manager;
 import team.skadi.powersellsys.service.ManagerService;
-import team.skadi.powersellsys.service.UserService;
 import team.skadi.powersellsys.utils.ServiceUtil;
 import team.skadi.powersellsys.view.BasicView;
 
@@ -69,12 +68,12 @@ public class ManagerMainView extends BasicView implements ActionListener, Change
 	private JTabbedPane getCenter() {
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setBorder(BorderFactory.createLoweredBevelBorder());
-		tabbedPane.add("user", new ManageUserPanel(app));
-		tabbedPane.add("supplier", new ManageSupplierPanel(app));
-		tabbedPane.add("goods", new ManageGoodsPanel(app));
-		tabbedPane.add("order", new ManageOrderPanel(app));
-		tabbedPane.add("supply", new ManageSupplyPanel(app));
-		tabbedPane.add("comment", new ManageCommentPanel(app));
+		tabbedPane.add("用户(Users)", new ManageUserPanel(app));
+		tabbedPane.add("供应商(Suppliers)", new ManageSupplierPanel(app));
+		tabbedPane.add("商品(Goods)", new ManageGoodsPanel(app));
+		tabbedPane.add("订单(Orders)", new ManageOrderPanel(app));
+		tabbedPane.add("供应订单(Supplies)", new ManageSupplyPanel(app));
+		tabbedPane.add("评论(Comments)", new ManageCommentPanel(app));
 		return tabbedPane;
 	}
 

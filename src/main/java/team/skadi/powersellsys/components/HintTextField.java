@@ -55,7 +55,7 @@ public class HintTextField extends JTextField implements FocusListener {
 	 * @return true，当前输入框没有内容，否则false
 	 */
 	public boolean isEmpty() {
-		return getText().equals(hint);
+		return getText().equals("");
 	}
 
 	@Override

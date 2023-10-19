@@ -52,6 +52,11 @@ public class ManageGoodsPanel extends ManagePanel{
 	}
 
 	@Override
+	public void refreshData() {
+
+	}
+
+	@Override
 	protected void addListener() {
 
 	}

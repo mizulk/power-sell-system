@@ -1,5 +1,6 @@
 package team.skadi.powersellsys.mapper;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -15,7 +16,7 @@ public interface UserMapper {
 
 	void updateUser(User user);
 
-	@Select("SELECT id FROM users;")
+	@Select("SELECT id FROM users WHERE `account` IS NULL;")
 	int getEmptyAccountId();
 
 	@Insert("INSERT INTO users(`account`, `password`, `name`, sex, age, zip_code, tel, address, balance, create_time, update_time, login_time) " +
@@ -29,4 +30,6 @@ public interface UserMapper {
 	@Select("SELECT id, `account`, `password`, `name`, balance FROM users WHERE `account` = #{account}")
 	User findUserByAccount(@Param("account") String account);
 
+	@Delete("DELETE FROM users WHERE `account` = #{account}")
+	void delUserByAccount(@Param("account") String account);
 }
