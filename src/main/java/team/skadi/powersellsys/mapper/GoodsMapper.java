@@ -8,8 +8,8 @@ import team.skadi.powersellsys.pojo.Supplier;
 import java.util.List;
 
 public interface GoodsMapper {
-//	@Insert(Insert into )
-	List<Goods> page();
+
+	List<Goods> page(Goods goods);
 
 	@Insert("INSERT INTO powers (`name`,`model`,`capacity`,`stock`,`price`,`discount`,`status`,`create_time`,`update_time`) values(#{name},#{model},#{capacity},#{stock},#{price},#{discount},1,#{createTime},#{updateTime})")
 	void putOnShelf(Goods goods);

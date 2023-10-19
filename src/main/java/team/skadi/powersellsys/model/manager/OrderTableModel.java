@@ -9,18 +9,13 @@ public class OrderTableModel extends DataTableModel<Order> {
 
 	private final String[] columnName = new String[]{"用户id", "电源id", "订购数量", "订购金额", "订购日期"};
 
-	public OrderTableModel() {
-		data = new ArrayList<>();
-	}
-
 	@Override
 	public String getColumnName(int column) {
 		return columnName[column];
 	}
 
-	@Override
-	public int getRowCount() {
-		return data.size();
+	public OrderTableModel() {
+		data = new ArrayList<>();
 	}
 
 	@Override

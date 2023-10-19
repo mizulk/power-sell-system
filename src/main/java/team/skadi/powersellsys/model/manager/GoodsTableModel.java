@@ -19,11 +19,6 @@ public class GoodsTableModel extends DataTableModel<Goods> {
 	}
 
 	@Override
-	public int getRowCount() {
-		return data.size();
-	}
-
-	@Override
 	public int getColumnCount() {
 		return columnName.length;
 	}

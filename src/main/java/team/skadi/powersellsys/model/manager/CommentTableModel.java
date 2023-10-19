@@ -19,11 +19,6 @@ public class CommentTableModel extends DataTableModel<Comment> {
 	}
 
 	@Override
-	public int getRowCount() {
-		return data.size();
-	}
-
-	@Override
 	public int getColumnCount() {
 		return columnName.length;
 	}

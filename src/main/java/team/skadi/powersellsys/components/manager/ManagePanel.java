@@ -2,18 +2,24 @@ package team.skadi.powersellsys.components.manager;
 
 import team.skadi.powersellsys.App;
 import team.skadi.powersellsys.components.BasicComponent;
+import team.skadi.powersellsys.components.PaginationPanel;
+import team.skadi.powersellsys.components.SearchPanel;
 import team.skadi.powersellsys.utils.LayoutUtil;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionListener;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
 // 相当于wrapper panel
-public abstract class ManagePanel extends BasicComponent {
+public abstract class ManagePanel extends BasicComponent
+		implements SearchPanel.OnClickListener, PaginationPanel.OnClickListener, ListSelectionListener {
+
+	protected PaginationPanel paginationPanel;
 
 	public ManagePanel(App app) {
 		super(app);
@@ -49,7 +55,9 @@ public abstract class ManagePanel extends BasicComponent {
 	}
 
 	protected JPanel getPaginationPanel() {
-		return new JPanel();
+		paginationPanel = new PaginationPanel(app, false);
+		paginationPanel.addOnclickListener(this);
+		return paginationPanel;
 	}
 
 	abstract protected JPanel getSearchPanel();

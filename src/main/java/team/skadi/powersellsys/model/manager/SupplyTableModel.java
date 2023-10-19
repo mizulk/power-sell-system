@@ -19,11 +19,6 @@ public class SupplyTableModel extends DataTableModel<Supply> {
 	}
 
 	@Override
-	public int getRowCount() {
-		return data.size();
-	}
-
-	@Override
 	public int getColumnCount() {
 		return columnName.length;
 	}

@@ -3,6 +3,53 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="team.skadi.powersellsys.mapper.SupplierMapper">
+	<update id="updateSupplier">
+		UPDATE suppliers
+		<set>
+			<if test="account != null">
+				account = #{account},
+			</if>
+			<if test="name != null">
+				`name` = #{name},
+			</if>
+			<if test="password != null">
+				`password` = #{password},
+			</if>
+			<if test="tel != null">
+				tel = #{tel},
+			</if>
+			<if test="address != null">
+				address = #{address},
+			</if>
+			<if test="zipCode != null">
+				zip_code = #{zipCode}
+			</if>
+		</set>
+		<choose>
+			<when test="id != null">
+				WHERE id = #{id}
+			</when>
+			<otherwise>
+				WHERE account = #{account}
+			</otherwise>
+		</choose>
+	</update>
 
-
+	<select id="page" resultType="team.skadi.powersellsys.pojo.Supplier">
+		SELECT * FROM `suppliers`
+		<where>
+			<if test="account != null">
+				account = #{account}
+			</if>
+			<if test="name != null">
+				AND `name` = #{name}
+			</if>
+			<if test="tel != null">
+				AND tel = #{tel}
+			</if>
+			<if test="address != null">
+				AND address LIKE CONCAT('%',#{address},'%')
+			</if>
+		</where>
+	</select>
 </mapper>

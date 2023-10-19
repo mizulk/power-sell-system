@@ -1,7 +1,6 @@
 package team.skadi.powersellsys.components.manager;
 
 import team.skadi.powersellsys.App;
-import team.skadi.powersellsys.components.PaginationPanel;
 import team.skadi.powersellsys.components.SearchPanel;
 import team.skadi.powersellsys.components.UserInformationPanel;
 import team.skadi.powersellsys.components.dialog.BasicDialog;
@@ -19,15 +18,12 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 
-public class ManageUserPanel extends ManagePanel
-		implements SearchPanel.OnClickListener, PaginationPanel.OnClickListener, ListSelectionListener {
+public class ManageUserPanel extends ManagePanel {
 
 	private UserTableModel userTableModel;
-	private PaginationPanel paginationPanel;
 	private User user;// 全局搜索对象
 	private JButton addUserBtn;
 	private JButton delUserBtn;
@@ -61,13 +57,6 @@ public class ManageUserPanel extends ManagePanel
 		userTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		userTable.getSelectionModel().addListSelectionListener(this);
 		return userTable;
-	}
-
-	@Override
-	protected JPanel getPaginationPanel() {
-		paginationPanel = new PaginationPanel(app, false);
-		paginationPanel.addOnclickListener(this);
-		return paginationPanel;
 	}
 
 	@Override

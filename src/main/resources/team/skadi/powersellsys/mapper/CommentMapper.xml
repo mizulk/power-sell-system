@@ -3,6 +3,22 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="team.skadi.powersellsys.mapper.CommentMapper">
-
+	<select id="page" resultType="team.skadi.powersellsys.pojo.Comment">
+		SELECT * FROM comments
+		<where>
+			<if test="userId != null">
+				user_id = #{userId}
+			</if>
+			<if test="powerId">
+				AND power_id = #{powerId}
+			</if>
+			<if test="content != null">
+				AND content LIKE CONCAT('%',#{content},'%')
+			</if>
+			<if test="star != null">
+				AND star = #{star}
+			</if>
+		</where>
+	</select>
 
 </mapper>

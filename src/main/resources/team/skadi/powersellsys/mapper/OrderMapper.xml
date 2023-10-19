@@ -3,6 +3,25 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="team.skadi.powersellsys.mapper.OrderMapper">
-
+	<select id="page" resultType="team.skadi.powersellsys.pojo.Order">
+		SELECT * FROM orders
+		<where>
+			<if test="userId != null">
+				user_id = #{userId}
+			</if>
+			<if test="powerId != null">
+				AND power_id = #{powerId}
+			</if>
+			<if test="sum != null">
+				AND sum = #{sum}
+			</if>
+			<if test="amount != null">
+				AND amount = #{amount}
+			</if>
+			<if test="count != null">
+				AND count = #{count}
+			</if>
+		</where>
+	</select>
 
 </mapper>

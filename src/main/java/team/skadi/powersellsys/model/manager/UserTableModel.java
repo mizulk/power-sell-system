@@ -15,11 +15,6 @@ public class UserTableModel extends DataTableModel<User> {
 	}
 
 	@Override
-	public int getRowCount() {
-		return data == null ? 0 : data.size();
-	}
-
-	@Override
 	public int getColumnCount() {
 		return columnName.length;
 	}

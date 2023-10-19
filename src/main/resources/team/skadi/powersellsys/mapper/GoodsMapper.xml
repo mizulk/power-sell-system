@@ -5,7 +5,33 @@
 <mapper namespace="team.skadi.powersellsys.mapper.GoodsMapper">
 
 	<select id="page" resultType="team.skadi.powersellsys.pojo.Goods">
-
+		SELECT * FROM goods
+		<where>
+			<if test="type!= null">
+				type = #{type}
+			</if>
+			<if test="name != null">
+				AND `name` = #{name}
+			</if>
+			<if test="model != null">
+				AND model = #{model}
+			</if>
+			<if test="capacity != null">
+				AND capacity = #{capacity}
+			</if>
+			<if test="stock != null">
+				AND stock = #{stock}
+			</if>
+			<if test="price != null">
+				AND price = #{price}
+			</if>
+			<if test="status != null">
+				AND `status` = #{status}
+			</if>
+			<if test="discount != null">
+				AND discount = #{discount}
+			</if>
+		</where>
 	</select>
 
 </mapper>

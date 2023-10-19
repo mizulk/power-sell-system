@@ -1,4 +1,9 @@
 package team.skadi.powersellsys.service;
 
-public interface CommentService extends Service{
+import team.skadi.powersellsys.pojo.Comment;
+import team.skadi.powersellsys.pojo.PageBean;
+
+public interface CommentService extends Service {
+
+	PageBean<Comment> queryComment(int page, int pageSize, Comment comment);
 }

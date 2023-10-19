@@ -1,4 +1,9 @@
 package team.skadi.powersellsys.service;
 
-public interface OrderService extends Service{
+import team.skadi.powersellsys.pojo.Order;
+import team.skadi.powersellsys.pojo.PageBean;
+
+public interface OrderService extends Service {
+
+	PageBean<Order> queryOrder(int page, int pageSize, Order order);
 }

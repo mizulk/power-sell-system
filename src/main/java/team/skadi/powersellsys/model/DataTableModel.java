@@ -18,6 +18,11 @@ public abstract class DataTableModel<T> extends AbstractTableModel {
 
 	protected List<T> data;
 
+	@Override
+	public int getRowCount() {
+		return data == null ? 0 : data.size();
+	}
+
 	/**
 	 * 更新表格数据
 	 *
