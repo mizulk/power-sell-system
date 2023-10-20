@@ -27,7 +27,8 @@ public interface UserMapper {
 			"FROM users WHERE `account` = #{account} AND `password` = #{password}")
 	User findUserByAccountAndPassword(@Param("account") String account, @Param("password") String password);
 
-	@Select("SELECT id, `account`, `password`, `name`, balance FROM users WHERE `account` = #{account}")
+	@Select("SELECT `account`, `password`, `name`, sex, age, zip_code, tel, address, balance, create_time, update_time, login_time" +
+			" FROM users WHERE `account` = #{account}")
 	User findUserByAccount(@Param("account") String account);
 
 	@Delete("DELETE FROM users WHERE `account` = #{account}")

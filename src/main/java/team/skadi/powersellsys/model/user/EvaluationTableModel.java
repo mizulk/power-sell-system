@@ -21,11 +21,6 @@ public class EvaluationTableModel extends DataTableModel<Goods> {
     }
 
     @Override
-    public int getRowCount() {
-        return data == null ? 0 : data.size();
-    }
-
-    @Override
     public int getColumnCount() {
         return columnName.length;
     }

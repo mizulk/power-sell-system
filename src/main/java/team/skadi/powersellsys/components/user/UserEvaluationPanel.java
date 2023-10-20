@@ -11,9 +11,22 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class UserEvaluationPanel extends BasicComponent
-		implements PaginationPanel.OnClickListener, SearchPanel.OnClickListener{
+		implements PaginationPanel.OnClickListener, SearchPanel.OnClickListener, DataPanel{
+
+
+
 	public UserEvaluationPanel(App app) {
 		super(app);
+	}
+
+	@Override
+	public void initData() {
+
+	}
+
+	@Override
+	public void refreshData() {
+
 	}
 
 	@Override

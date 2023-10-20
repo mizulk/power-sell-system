@@ -4,11 +4,10 @@ import team.skadi.powersellsys.App;
 import team.skadi.powersellsys.components.BasicComponent;
 import team.skadi.powersellsys.components.PaginationPanel;
 import team.skadi.powersellsys.components.SearchPanel;
-import team.skadi.powersellsys.components.dialog.BasicDialog;
 import team.skadi.powersellsys.model.user.FavoriteTableModel;
-import team.skadi.powersellsys.pojo.Favorite;
+import team.skadi.powersellsys.pojo.FavoritePower;
 import team.skadi.powersellsys.pojo.PageBean;
-import team.skadi.powersellsys.service.FavoriteService;
+import team.skadi.powersellsys.service.FavoritePowerService;
 import team.skadi.powersellsys.utils.ServiceUtil;
 
 import javax.swing.*;
@@ -16,9 +15,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class UserFavoritePanel extends BasicComponent
-		implements PaginationPanel.OnClickListener, SearchPanel.OnClickListener {
-//TODO
-	private Favorite favorite;
+		implements PaginationPanel.OnClickListener, SearchPanel.OnClickListener, DataPanel {
+
+	private FavoritePower favoritePower;
 	private FavoriteTableModel favoriteTableModel;
 	private PaginationPanel paginationPanel;
 	private JTable favoriteTable;
@@ -30,20 +29,20 @@ public class UserFavoritePanel extends BasicComponent
 	@Override
 	protected void init() {
 		favoriteTableModel = new FavoriteTableModel();
-		favorite = new Favorite();
+		favoritePower = new FavoritePower();
 		super.init();
 	}
 
 	@Override
 	protected void buildLayout() {
 		setLayout(new BorderLayout());
-		FavoriteTableModel favoriteTableModel = new FavoriteTableModel();
+		favoriteTableModel = new FavoriteTableModel();
 		JTable table = new JTable(favoriteTableModel);
+		table.setRowHeight(30);
 		table.getTableHeader().setReorderingAllowed(false);
 		add(new JScrollPane(table), BorderLayout.CENTER);
 
-
-		PaginationPanel paginationPanel = new PaginationPanel(app, false);
+		paginationPanel = new PaginationPanel(app, false);
 		paginationPanel.addOnclickListener(this);
 		add(paginationPanel, BorderLayout.SOUTH);
 
@@ -52,26 +51,23 @@ public class UserFavoritePanel extends BasicComponent
 		add(searchPanel, BorderLayout.NORTH);
 	}
 
-	public void initdate() {
+	@Override
+	public void initData() {
 		if (!favoriteTableModel.hasData()) {
-			FavoriteService favoriteService = ServiceUtil.getService(FavoriteService.class);
-			PageBean<Favorite> favoritePageBean = favoriteService.queryFavorite(1, paginationPanel.getPageSize(), null);
+			FavoritePowerService favoriteService = ServiceUtil.getService(FavoritePowerService.class);
+			PageBean<FavoritePower> favoritePageBean = favoriteService.queryFavorite(1, paginationPanel.getPageSize(), null);
 			paginationPanel.setPageBean(favoritePageBean);
 			favoriteTableModel.updateData(favoritePageBean.getData());
 		}
 	}
 
-//	public void showFavorite() {
-//		BasicDialog favoriteInformationDialog = new BasicDialog(app, "收藏") {
-//			@Override
-//			protected JComponent getCenterLayout() {
-//				FavoriteInformationPanel favoriteInformationPanel = new FavoriteInformationPanel(app);
-//				favoriteInformationPanel.showFavorite(favoriteTableModel.getRow(favoriteTable.getSelectedRow()));
-//				return favoriteInformationPanel;
-//			}
-//		};
-//		favoriteInformationDialog.getOption();
-//	}
+	@Override
+	public void refreshData() {
+		FavoritePowerService favoriteService = ServiceUtil.getService(FavoritePowerService.class);
+		PageBean<FavoritePower> favoritePageBean = favoriteService.queryFavorite(paginationPanel.getCurPage(), paginationPanel.getPageSize(), favoritePower);
+		paginationPanel.setPageBean(favoritePageBean);
+		favoriteTableModel.updateData(favoritePageBean.getData());
+	}
 
 	@Override
 	protected void addListener() {
@@ -85,31 +81,54 @@ public class UserFavoritePanel extends BasicComponent
 
 	@Override
 	public void firstPage(int pageSize) {
-
+		FavoritePowerService favoriteService = ServiceUtil.getService(FavoritePowerService.class);
+		PageBean<FavoritePower> favoritePageBean = favoriteService.queryFavorite(1, pageSize, favoritePower);
+		favoriteTableModel.updateData(favoritePageBean.getData());
 	}
 
 	@Override
 	public void nextPage(int curPage, int pageSize) {
-
+		FavoritePowerService favoriteService = ServiceUtil.getService(FavoritePowerService.class);
+		PageBean<FavoritePower> favoritePageBean = favoriteService.queryFavorite(1, pageSize, favoritePower);
+		favoriteTableModel.updateData(favoritePageBean.getData());
 	}
 
 	@Override
 	public void previousPage(int curPage, int pageSize) {
-
+		FavoritePowerService favoriteService = ServiceUtil.getService(FavoritePowerService.class);
+		PageBean<FavoritePower> favoritePageBean = favoriteService.queryFavorite(1, pageSize, favoritePower);
+		favoriteTableModel.updateData(favoritePageBean.getData());
 	}
 
 	@Override
 	public void jumpTo(int page, int pageSize) {
-
+		FavoritePowerService favoriteService = ServiceUtil.getService(FavoritePowerService.class);
+		PageBean<FavoritePower> favoritePageBean = favoriteService.queryFavorite(1, pageSize, favoritePower);
+		favoriteTableModel.updateData(favoritePageBean.getData());
 	}
 
 	@Override
 	public SearchPanel.SearchResult onSearchButtonClick(int optionIndex, String content) {
-		return null;
+		favoritePower = new FavoritePower();
+		int num;
+		try {
+			num = Integer.parseInt(content);
+		} catch (NumberFormatException e) {
+			return SearchPanel.SearchResult.NAN;
+		}
+		switch (optionIndex) {
+			case 0 -> favoritePower.setUserId(num);
+			case 1 -> favoritePower.setPowerId(num);
+		}
+		PageBean<FavoritePower> favorites = ServiceUtil.getService(FavoritePowerService.class).queryFavorite(1, paginationPanel.getPageSize(), favoritePower);
+		favoriteTableModel.updateData(favorites.getData());
+		paginationPanel.setPageBean(favorites);
+		return favorites.getTotal() == 0 ? SearchPanel.SearchResult.NO_RESULT : SearchPanel.SearchResult.HAVE_RESULT;
 	}
 
 	@Override
 	public void onCloseButtonCLick() {
-
+		PageBean<FavoritePower> favoritePageBean = ServiceUtil.getService(FavoritePowerService.class).queryFavorite(1, paginationPanel.getPageSize(), null);
+		favoriteTableModel.updateData(favoritePageBean.getData());
 	}
 }

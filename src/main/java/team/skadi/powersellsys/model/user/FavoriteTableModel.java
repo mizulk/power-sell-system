@@ -1,13 +1,13 @@
 package team.skadi.powersellsys.model.user;
 
 import team.skadi.powersellsys.model.DataTableModel;
-import team.skadi.powersellsys.pojo.Favorite;
+import team.skadi.powersellsys.pojo.FavoritePower;
 
 import java.util.ArrayList;
 
-public class FavoriteTableModel extends DataTableModel<Favorite> {
+public class FavoriteTableModel extends DataTableModel<FavoritePower> {
 
-	private final String[] columnName = new String[]{"用户id", "电源id"};
+	private final String[] columnName = new String[]{"电源id", "电源库存", "电源价格", "折扣", "容量", "类型", "描述"};
 
 	public FavoriteTableModel() {
 		data = new ArrayList<>();
@@ -18,21 +18,21 @@ public class FavoriteTableModel extends DataTableModel<Favorite> {
 	}
 
 	@Override
-	public int getRowCount() {
-		return data == null ? 0 : data.size();
-	}
-
-	@Override
 	public int getColumnCount() {
 		return columnName.length;
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		Favorite favorite = data.get(rowIndex);
-		return switch (columnIndex){
-			case 0 -> favorite.getUserId();
-			case 1 -> favorite.getPowerId();
+		FavoritePower favorite = data.get(rowIndex);
+		return switch (columnIndex) {
+			case 0 -> favorite.getPowerId();
+			case 1 -> favorite.getStock();
+			case 2 -> favorite.getPrice();
+			case 3 -> favorite.getDiscount() + "%";
+			case 4 -> favorite.getCapacity();
+			case 5 -> favorite.getValue();
+			case 6 -> favorite.getDescribe();
 			default -> null;
 		};
 	}

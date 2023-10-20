@@ -27,6 +27,12 @@ public class UserMainView extends BasicView implements ActionListener {
     private JLabel nameLabel;
     private JLabel balanceLabel;
     private PanelRouter router;
+    private UserPersonalPanel userPersonalPanel;
+    private UserFavoritePanel userFavoritePanel;
+    private UserDetailPanel userDetailPanel;
+    private UserOrderPanel userOrderPanel;
+    private UserCustomPanel userCustomPanel;
+    private UserEvaluationPanel userEvaluationPanel;
 
 
     public UserMainView(App app) {
@@ -87,13 +93,18 @@ public class UserMainView extends BasicView implements ActionListener {
     private JPanel getCenterPanel() {
         JPanel panel = new JPanel();
         router = new PanelRouter(panel);
-
-        panel.add("personal", getWrapper(new UserPersonalPanel(app)));
-        panel.add("favorite", getWrapper(new UserFavoritePanel(app)));
-        panel.add("detail", getWrapper(new UserDetailPanel(app)));
-        panel.add("order", getWrapper(new UserOrderPanel(app)));
-        panel.add("custom", getWrapper(new UserCustomPanel(app)));
-        panel.add("evaluation", getWrapper(new UserEvaluationPanel(app)));
+        userPersonalPanel = new UserPersonalPanel(app);
+        userFavoritePanel = new UserFavoritePanel(app);
+        userDetailPanel = new UserDetailPanel(app);
+        userOrderPanel = new UserOrderPanel(app);
+        userCustomPanel = new UserCustomPanel(app);
+        userEvaluationPanel = new UserEvaluationPanel(app);
+        panel.add("personal", getWrapper(userPersonalPanel));
+        panel.add("favorite", getWrapper(userFavoritePanel));
+        panel.add("detail", getWrapper(userDetailPanel));
+        panel.add("order", getWrapper(userOrderPanel));
+        panel.add("custom", getWrapper(userCustomPanel));
+        panel.add("evaluation", getWrapper(userEvaluationPanel));
 
         return panel;
     }
@@ -121,6 +132,7 @@ public class UserMainView extends BasicView implements ActionListener {
         User user = userService.queryUser(app.useStore().userStore.account());
         nameLabel.setText("昵称：" + user.getName());
         balanceLabel.setText("余额：" + user.getBalance());
+        userPersonalPanel.initData();
 	}
 
 	@Override
@@ -138,6 +150,7 @@ public class UserMainView extends BasicView implements ActionListener {
             router.showPanel("personal");
         } else if (source == favoriteButton) {
             router.showPanel("favorite");
+            userFavoritePanel.initData();
         } else if (source == detailButton) {
             router.showPanel("detail");
         } else if (source == orderButton) {

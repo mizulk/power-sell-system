@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="team.skadi.powersellsys.mapper.FavoritePowerMapper">
+
+    <select id="page" resultType="team.skadi.powersellsys.pojo.FavoritePower">
+        SELECT * FROM favorites_power
+        <where>
+            <if test="userId != null">
+                user_id = #{userId}
+            </if>
+            <if test="powerId != null">
+                AND id = #{powerId}
+            </if>
+            <if test="name != null">
+                AND `name` = #{name}
+            </if>
+            <if test="stock != null">
+                AND stock = #{stock}
+            </if>
+            <if test="price != null">
+                AND price = #{price}
+            </if>
+            <if test="discount != null">
+                AND discount = #{discount}
+            </if>
+            <if test="describe != null">
+                AND `describe` = #{describe}
+            </if>
+            <if test="capacity != null">
+                AND capacity = #{capacity}
+            </if>
+            <if test="value != null">
+                AND `value` = #{value}
+            </if>
+        </where>
+    </select>
+</mapper>

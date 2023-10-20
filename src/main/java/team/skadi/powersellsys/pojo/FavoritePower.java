@@ -4,13 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Favorite {
+public class FavoritePower {
 	private Integer userId;
 	private Integer powerId;
-	private LocalDateTime createTime;
+	private String name;
+	private Integer stock;
+	private Double price;
+	private Byte discount;
+	private String describe;
+	private Integer capacity;
+	private String value;
 }
