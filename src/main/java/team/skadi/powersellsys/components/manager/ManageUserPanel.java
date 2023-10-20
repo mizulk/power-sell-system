@@ -133,11 +133,11 @@ public class ManageUserPanel extends ManagePanel {
 
 	private void addUser() {
 		UserDialog userDialog = new UserDialog(app, UserDialog.ADD_MODE);
-		if (userDialog.getOption() == BasicDialog.CONFIRM_OPTION &&
-				paginationPanel.isLastPage() &&
-				paginationPanel.getLeftRecord() < paginationPanel.getPageSize()
+		if (userDialog.getOption() == BasicDialog.CONFIRM_OPTION
+				&& paginationPanel.isLastPage()
+				&& paginationPanel.getLeftRecord() < paginationPanel.getPageSize()
 		) {// 当分页是最后一页，并且还能往里面塞记录时
-			userTableModel.addRow(userDialog.getUser());
+			userTableModel.addRow(userDialog.getData());
 		}
 	}
 
@@ -145,12 +145,12 @@ public class ManageUserPanel extends ManagePanel {
 		UserDialog userDialog = new UserDialog(app, UserDialog.MODIFY_MODE);
 		userDialog.setData(userTableModel.getRow(userTable.getSelectedRow()));
 		if (userDialog.getOption() == BasicDialog.CONFIRM_OPTION) {
-			userTableModel.modifyRow(userTable.getSelectedRow(), userDialog.getUser());
+			userTableModel.modifyRow(userTable.getSelectedRow(), userDialog.getData());
 		}
 	}
 
 	private void showUser() {
-		BasicDialog userInformationDialog = new BasicDialog(app, "个人信息") {
+		BasicDialog userInformationDialog = new BasicDialog(app, "用户信息") {
 			@Override
 			protected JComponent getCenterLayout() {
 				UserInformationPanel userInformationPanel = new UserInformationPanel(app);

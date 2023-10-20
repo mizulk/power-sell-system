@@ -12,4 +12,8 @@ public class DateUtil {
 		return min % 60 > 45 ? ++hour : hour;
 	}
 
+	public static String replaceT(LocalDateTime time) {
+		return time.toString().replace('T', ' ');
+	}
+
 }

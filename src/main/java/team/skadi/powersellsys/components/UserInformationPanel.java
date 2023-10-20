@@ -2,6 +2,7 @@ package team.skadi.powersellsys.components;
 
 import team.skadi.powersellsys.App;
 import team.skadi.powersellsys.pojo.User;
+import team.skadi.powersellsys.utils.DateUtil;
 
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
@@ -17,12 +18,14 @@ public class UserInformationPanel extends BasicComponent {
 	private JLabel sexLabel;
 	private JLabel zipCodeLabel;
 	private JLabel telLabel;
+	private JLabel balanceLabel;
 	private JLabel addressLabel;
 	private JLabel passwordLabel;
 	private JLabel createTimeLabel;
 	private JLabel updateTimeLabel;
 	private JLabel loginTimeLabel;
 	private ImageButton visibleBtn;
+	private JLabel accountLabel;
 
 	public UserInformationPanel(App app) {
 		super(app);
@@ -30,103 +33,111 @@ public class UserInformationPanel extends BasicComponent {
 
 	@Override
 	protected void buildLayout() {
-		user = new User();
-		user.setPassword("123456");
 		setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.BOTH;
+		gbc.anchor = GridBagConstraints.WEST;
+		gbc.weightx = 1;
 		ImageLabel imageLabel;
 		// (1,1)
 		gbc.gridy = 1;
 		gbc.insets.set(0, 0, 10, 10);
 		imageLabel = new ImageLabel("用户名: ", "/images/user.png");
 		add(imageLabel, gbc);
-		// (2,1)
-		gbc.weightx = 1;
-		gbc.insets.set(0, 0, 10, 50);
+		// (2-4,1)
+		gbc.gridwidth = 3;
 		nameLabel = new JLabel();
 		add(nameLabel, gbc);
 
-		// (3,1)
-		gbc.weightx = 0;
-		gbc.insets.set(0, 0, 10, 10);
+		gbc.gridy++;
+		gbc.gridwidth = 1;
+		// (1,2)
 		imageLabel = new ImageLabel("年龄：", "/images/age.png");
 		add(imageLabel, gbc);
-		// (4,1)
-		gbc.weightx = 1;
+		// (2,2)
 		ageLabel = new JLabel();
 		add(ageLabel, gbc);
 
-		gbc.gridy++;
-		// (1,2)
+		// (3,2)
 		imageLabel = new ImageLabel("性别：", "/images/gender.png");
 		add(imageLabel, gbc);
-		// (2,2)
+		// (4,2)
 		sexLabel = new JLabel();
 		add(sexLabel, gbc);
 
-		// (3,2)
+		gbc.gridy++;
+		// (1,3)
 		imageLabel = new ImageLabel("邮编：", "/images/email.png");
 		add(imageLabel, gbc);
-		// (4,2)
+		// (2,3)
 		zipCodeLabel = new JLabel();
 		add(zipCodeLabel, gbc);
 
+		// (3,3)
+		imageLabel = new ImageLabel("余额：", "/images/balance.png");
+		add(imageLabel, gbc);
+		// (4,3)
+		balanceLabel = new JLabel();
+		add(balanceLabel, gbc);
+
 		gbc.gridy++;
-		gbc.gridwidth = 2;
-		// (1-2,3)
-		gbc.anchor = GridBagConstraints.CENTER;
+		// (1,4)
 		imageLabel = new ImageLabel("电话：", "/images/tel.png");
 		add(imageLabel, gbc);
-		// (2-4,3)
-		gbc.anchor = GridBagConstraints.WEST;
+		// (2,4)
 		telLabel = new JLabel();
 		add(telLabel, gbc);
 
+		// (3,4)
+		imageLabel = new ImageLabel("账号：", "/images/account.png");
+		add(imageLabel, gbc);
+		// (4,4)
+		accountLabel = new JLabel();
+		add(accountLabel, gbc);
+
 		gbc.gridy++;
-		// (1-2,4)
-		gbc.anchor = GridBagConstraints.CENTER;
+		gbc.gridwidth = 2;
+		// (1-2,5)
 		imageLabel = new ImageLabel("地址：", "/images/address.png");
 		add(imageLabel, gbc);
-		// (2-4,4)
-		gbc.anchor = GridBagConstraints.WEST;
+		// (2-4,5)
 		addressLabel = new JLabel();
 		add(addressLabel, gbc);
 
 		gbc.gridy++;
-		// (1,5)
+		// (1,6)
 		gbc.gridwidth = 1;
 		imageLabel = new ImageLabel("密码：", "/images/password.png");
 		add(imageLabel, gbc);
-		// (2,5)
+		// (2,6)
 		visibleBtn = new ImageButton("/images/visible.png");
 		add(visibleBtn, gbc);
-		// (3-4,5)
+		// (3-4,6)
 		gbc.gridwidth = 2;
 		passwordLabel = new JLabel();
 		add(passwordLabel, gbc);
 
 		gbc.gridy++;
-		// (1-2,6)
+		// (1-2,7)
 		imageLabel = new ImageLabel("注册时间：", "/images/time.png");
 		add(imageLabel, gbc);
-		// (3-4,6)
+		// (3-4,7)
 		createTimeLabel = new JLabel();
 		add(createTimeLabel, gbc);
 
 		gbc.gridy++;
-		// (1-2,7)
+		// (1-2,8)
 		imageLabel = new ImageLabel("修改时间：", "/images/update-time.png");
 		add(imageLabel, gbc);
-		// (2-4,7)
+		// (2-4,8)
 		updateTimeLabel = new JLabel();
 		add(updateTimeLabel, gbc);
 
 		gbc.gridy++;
-		// (1-2,8)
+		// (1-2,9)
 		imageLabel = new ImageLabel("最近登录：", "/images/login-time.png");
 		add(imageLabel, gbc);
-		// (2-4,8)
+		// (2-4,9)
 		loginTimeLabel = new JLabel();
 		add(loginTimeLabel, gbc);
 	}
@@ -138,12 +149,14 @@ public class UserInformationPanel extends BasicComponent {
 		sexLabel.setText(user.getSex() == 0 ? "女" : "男");
 		zipCodeLabel.setText(user.getZipCode() == null ? "未填写" : user.getZipCode());
 		telLabel.setText(user.getTel());
+		accountLabel.setText(user.getAccount());
+		balanceLabel.setText(String.valueOf(user.getBalance()));
 		addressLabel.setText(user.getAddress());
 		passwordLabel.setText("******");
-		createTimeLabel.setText(user.getCreateTime().toString().replace('T', ' '));
-		updateTimeLabel.setText(user.getUpdateTime().toString().replace('T', ' '));
+		createTimeLabel.setText(DateUtil.replaceT(user.getCreateTime()));
+		updateTimeLabel.setText(DateUtil.replaceT(user.getUpdateTime()));
 		if (user.getLoginTime() != null)
-			loginTimeLabel.setText(user.getLoginTime().toString().replace('T', ' '));
+			loginTimeLabel.setText(DateUtil.replaceT(user.getLoginTime()));
 		else
 			loginTimeLabel.setText("尚未登录");
 	}

@@ -2,6 +2,10 @@ package team.skadi.powersellsys.components.manager;
 
 import team.skadi.powersellsys.App;
 import team.skadi.powersellsys.components.SearchPanel;
+import team.skadi.powersellsys.components.SupplierInformationPanel;
+import team.skadi.powersellsys.components.dialog.BasicDialog;
+import team.skadi.powersellsys.components.dialog.EditDialog;
+import team.skadi.powersellsys.components.dialog.SupplierDialog;
 import team.skadi.powersellsys.model.manager.SupplierTableModel;
 import team.skadi.powersellsys.pojo.PageBean;
 import team.skadi.powersellsys.pojo.Supplier;
@@ -9,6 +13,7 @@ import team.skadi.powersellsys.service.SupplierService;
 import team.skadi.powersellsys.utils.ServiceUtil;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -71,7 +76,7 @@ public class ManageSupplierPanel extends ManagePanel {
 		delSupplierBtn.setEnabled(false);
 		supplierBtnPanel.add(delSupplierBtn, gbc);
 
-		modifySupplierBtn = new JButton("删除供应商");
+		modifySupplierBtn = new JButton("修改供应商");
 		modifySupplierBtn.setEnabled(false);
 		supplierBtnPanel.add(modifySupplierBtn, gbc);
 
@@ -129,9 +134,23 @@ public class ManageSupplierPanel extends ManagePanel {
 	}
 
 	private void showSupplier() {
+		BasicDialog basicDialog = new BasicDialog(app, "供应商资料") {
+			@Override
+			protected JComponent getCenterLayout() {
+				SupplierInformationPanel supplierInformationPanel = new SupplierInformationPanel(app);
+				supplierInformationPanel.showSupplier(supplierTableModel.getRow(supplierTable.getSelectedRow()));
+				return supplierInformationPanel;
+			}
+		};
+		basicDialog.getOption();
 	}
 
 	private void modifySupplier() {
+		SupplierDialog supplierDialog = new SupplierDialog(app, EditDialog.MODIFY_MODE);
+		supplierDialog.setData(supplierTableModel.getRow(supplierTable.getSelectedRow()));
+		if (supplierDialog.getOption() == BasicDialog.CONFIRM_OPTION) {
+			supplierTableModel.modifyRow(supplierTable.getSelectedRow(), supplierDialog.getData());
+		}
 	}
 
 	private void delUser() {
@@ -147,6 +166,13 @@ public class ManageSupplierPanel extends ManagePanel {
 	}
 
 	private void addSupplier() {
+		SupplierDialog supplierDialog = new SupplierDialog(app, EditDialog.ADD_MODE);
+		if (supplierDialog.getOption() == BasicDialog.CONFIRM_OPTION
+				&& paginationPanel.isLastPage()
+				&& paginationPanel.getLeftRecord() < paginationPanel.getPageSize()
+		) {
+			supplierTableModel.addRow(supplierDialog.getData());
+		}
 	}
 
 	@Override
