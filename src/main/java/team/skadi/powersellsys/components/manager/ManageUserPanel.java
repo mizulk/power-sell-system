@@ -207,7 +207,6 @@ public class ManageUserPanel extends ManagePanel {
 		PageBean<User> userPageBean = ServiceUtil.getService(UserService.class).queryUser(1, paginationPanel.getPageSize(), null);
 		userTableModel.updateData(userPageBean.getData());
 	}
-
 	@Override
 	public void firstPage(int pageSize) {
 		UserService userService = ServiceUtil.getService(UserService.class);
