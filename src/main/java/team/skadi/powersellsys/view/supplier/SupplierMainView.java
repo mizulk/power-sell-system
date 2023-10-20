@@ -8,6 +8,7 @@ import team.skadi.powersellsys.pojo.Supplier;
 import team.skadi.powersellsys.router.PanelRouter;
 import team.skadi.powersellsys.service.SupplierService;
 import team.skadi.powersellsys.store.SupplierStore;
+import team.skadi.powersellsys.utils.LayoutUtil;
 import team.skadi.powersellsys.utils.ServiceUtil;
 import team.skadi.powersellsys.view.BasicView;
 
@@ -30,6 +31,12 @@ public class SupplierMainView extends BasicView implements ActionListener {
     private PanelRouter router;
     private JPanel jPanel2;
     private JLabel nameLabel;
+    private ShowViewPanel jPanel4;
+    private ShowGoodsPanel jPanel3;
+    private ShowOrdersPanel jPanel5;
+    private ShowStatementPanel jPanel6;
+    private ShowPricePanel jPanel7;
+    private ShowDescribePanel jPanel8;
 
     public SupplierMainView(App app) {
         super(app);
@@ -67,30 +74,32 @@ public class SupplierMainView extends BasicView implements ActionListener {
         jPanel1.add(button4);
         jPanel1.add(button5);
         jPanel1.add(button6);
-        add(jPanel1, BorderLayout.WEST);
+
+        add(LayoutUtil.createWrapper(jPanel1,15), BorderLayout.WEST);
 
         jPanel2 = new JPanel();
         router = new PanelRouter(jPanel2);
 
-        JPanel jPanel3 = new ShowGoodsPanel(app);
+        jPanel3 = new ShowGoodsPanel(app);
         jPanel2.add("panel3", jPanel3);
 
-        JPanel jPanel4 = new ShowViewPanel(app);
+        jPanel4 = new ShowViewPanel(app);
         jPanel2.add("panel4", jPanel4);
 
-        JPanel jPanel5 = new ShowOrdersPanel(app);
+        jPanel5 = new ShowOrdersPanel(app);
         jPanel2.add("panel5", jPanel5);
 
-        JPanel jPanel6 = new ShowStatementPanel(app);
+        jPanel6 = new ShowStatementPanel(app);
         jPanel2.add("panel6", jPanel6);
 
-        JPanel jPanel7 = new ShowPricePanel(app);
+        jPanel7 = new ShowPricePanel(app);
         jPanel2.add("panel7", jPanel7);
 
-        JPanel jPanel8 = new ShowDescribePanel(app);
+        jPanel8 = new ShowDescribePanel(app);
         jPanel2.add("panel8", jPanel8);
 
-        add(jPanel2, BorderLayout.CENTER);
+        jPanel2.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.BLACK));
+        add(LayoutUtil.createWrapper(jPanel2,15,0,15,15), BorderLayout.CENTER);
     }
 
 
@@ -111,12 +120,13 @@ public class SupplierMainView extends BasicView implements ActionListener {
         SupplierService supplierService = ServiceUtil.getService(SupplierService.class);
         Supplier supplier = supplierService.querySupplier(app.useStore().supplierStore.account());
         nameLabel.setText("姓名：" + supplier.getName());
-
+        jPanel3.initData();
     }
 
 	@Override
 	public void onHide() {
         app.useStore().supplierStore = null;
+        router.showPanel("panel3");
 	}
 
 	@Override
@@ -126,8 +136,10 @@ public class SupplierMainView extends BasicView implements ActionListener {
             app.useRouter().showPreviousView();
         } else if (source == button1) {
             router.showPanel("panel3");
+            jPanel3.initData();
         } else if (source == button2) {
             router.showPanel("panel4");
+            jPanel4.initData();
         } else if (source == button3) {
             router.showPanel("panel5");
         } else if (source == button4) {

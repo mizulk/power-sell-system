@@ -25,12 +25,12 @@ public class SupplierLoginView extends LoginView {
 
     @Override
     public void onShow() {
-
+        accountTextField.reset();
     }
 
     @Override
     public void onHide() {
-
+        passwordField.reset();
     }
 
     @Override
