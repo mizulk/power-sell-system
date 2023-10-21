@@ -11,7 +11,7 @@
  Target Server Version : 80034
  File Encoding         : 65001
 
- Date: 21/10/2023 21:23:34
+ Date: 22/10/2023 03:07:09
 */
 
 SET NAMES utf8mb4;
@@ -22,17 +22,19 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `comments`;
 CREATE TABLE `comments`  (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
   `user_id` int NOT NULL COMMENT '用户id',
   `power_id` int NOT NULL COMMENT '电源id',
   `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '评论内容',
   `star` tinyint NOT NULL DEFAULT 1 COMMENT '好评星级',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '评论时间'
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '评论时间',
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of comments
 -- ----------------------------
-INSERT INTO `comments` VALUES (1, 4, '牛逼，老牛逼了', 5, '2023-10-21 21:08:31');
+INSERT INTO `comments` VALUES (1, 1, 5, '1233', 5, '2023-10-21 21:08:31');
 
 -- ----------------------------
 -- Table structure for favorites
@@ -49,6 +51,7 @@ CREATE TABLE `favorites`  (
 -- ----------------------------
 INSERT INTO `favorites` VALUES (1, 4, '2023-10-21 21:04:10');
 INSERT INTO `favorites` VALUES (1, 5, '2023-10-21 21:04:39');
+INSERT INTO `favorites` VALUES (1, 6, '2023-10-22 00:41:54');
 
 -- ----------------------------
 -- Table structure for manager
@@ -218,7 +221,7 @@ CREATE TABLE `users`  (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (1, '00000001', '123456', 'otto', 1, 24, '123456', '12345678910', 'cccccc', 123, '2023-10-16 01:20:59', '2023-10-16 01:21:02', '2023-10-16 01:21:05');
+INSERT INTO `users` VALUES (1, '00000001', '123456', 'otto', 1, 24, '123456', '12345678910', 'cccccc', 123, '2023-10-16 01:20:59', '2023-10-16 01:21:02', '2023-10-22 01:06:44');
 
 -- ----------------------------
 -- View structure for favorites_power
