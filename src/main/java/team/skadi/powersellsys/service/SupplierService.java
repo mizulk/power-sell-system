@@ -21,4 +21,6 @@ public interface SupplierService extends Service {
 	void updateSupplier(Supplier supplier);
 
 	Supplier querySupplier(String account);
+
+	String getSupplierNameById(Integer id);
 }

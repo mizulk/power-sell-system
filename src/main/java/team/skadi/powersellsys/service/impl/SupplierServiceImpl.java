@@ -77,6 +77,17 @@ public class SupplierServiceImpl implements SupplierService {
 	}
 
 	@Override
+	public String getSupplierNameById(Integer id) {
+		log.info("通过id获取供应商的名称，id：{}", id);
+		SqlSession sqlSession = SqlSessionUtil.getSqlSession();
+		SupplierMapper supplierMapper = sqlSession.getMapper(SupplierMapper.class);
+		String name = supplierMapper.findSupplierNameById(id);
+		sqlSession.commit();
+		sqlSession.close();
+		return name;
+	}
+
+	@Override
 	public PageBean<Supplier> querySupplier(int page, int pageSize, Supplier supplier) {
 		log.info("供应商列表查询：page：{}，pageSize：{}，supplier：{}", page, pageSize, supplier);
 		SqlSession sqlSession = SqlSessionUtil.getSqlSession();

@@ -9,8 +9,8 @@ import team.skadi.powersellsys.pojo.Supplier;
 import java.util.List;
 
 public interface SupplierMapper {
-    @Select("SELECT * FROM suppliers;")
-    List<Supplier> selectAll();
+	@Select("SELECT * FROM suppliers;")
+	List<Supplier> selectAll();
 
 	@Select("SELECT * FROM suppliers WHERE `account` = #{account} AND `password` = #{password}")
 	Supplier getSupplierByAccountAndPassword(@Param("account") String account, @Param("password") String password);
@@ -29,6 +29,9 @@ public interface SupplierMapper {
 
 	@Select("SELECT id,`account`,`name`,`password`,`tel`,`address`,`zip_code` FROM suppliers WHERE `account`= #{account}")
 	Supplier findSupplierByAccount(@Param("account") String account);
+
+	@Select("SELECT `name` FROM suppliers WHERE id = #{id}")
+	String findSupplierNameById(@Param("id") Integer id);
 
 	List<Supplier> page(Supplier supplier);
 

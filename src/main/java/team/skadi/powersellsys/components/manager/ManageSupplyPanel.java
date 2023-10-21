@@ -2,6 +2,10 @@ package team.skadi.powersellsys.components.manager;
 
 import team.skadi.powersellsys.App;
 import team.skadi.powersellsys.components.SearchPanel;
+import team.skadi.powersellsys.components.SupplyInformationPanel;
+import team.skadi.powersellsys.components.dialog.BasicDialog;
+import team.skadi.powersellsys.components.dialog.EditDialog;
+import team.skadi.powersellsys.components.dialog.SupplyDialog;
 import team.skadi.powersellsys.model.manager.SupplyTableModel;
 import team.skadi.powersellsys.pojo.PageBean;
 import team.skadi.powersellsys.pojo.Supply;
@@ -9,6 +13,7 @@ import team.skadi.powersellsys.service.SupplyService;
 import team.skadi.powersellsys.utils.ServiceUtil;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -106,14 +111,41 @@ public class ManageSupplyPanel extends ManagePanel {
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
 		if (source == addSupplyBtn) {
-
+			addSupply();
 		} else if (source == showSupplyBtn) {
-
+			showSupply();
 		} else if (source == modifySupplyBtn) {
-
+			modifySupply();
 		} else if (source == refreshBtn) {
 			refreshData();
 		}
+	}
+
+	private void showSupply() {
+		BasicDialog basicDialog = new BasicDialog(app, "供应订单详细信息") {
+			@Override
+			protected JComponent getCenterLayout() {
+				SupplyInformationPanel supplyInformationPanel = new SupplyInformationPanel(app);
+				supplyInformationPanel.showSupply(supplyTableModel.getRow(supplyTable.getSelectedRow()));
+				return supplyInformationPanel;
+			}
+		};
+		basicDialog.getOption();
+	}
+
+	private void modifySupply() {
+		SupplyDialog supplyDialog = new SupplyDialog(app, EditDialog.MODIFY_MODE);
+		supplyDialog.setData(supplyTableModel.getRow(supplyTable.getSelectedRow()));
+		if (supplyDialog.getOption() == BasicDialog.CONFIRM_OPTION)
+			supplyTableModel.modifyRow(supplyTable.getSelectedRow(), supplyDialog.getData());
+	}
+
+	private void addSupply() {
+		SupplyDialog supplyDialog = new SupplyDialog(app, EditDialog.ADD_MODE);
+		if (supplyDialog.getOption() == BasicDialog.CONFIRM_OPTION
+				&& paginationPanel.isLastPage()
+				&& paginationPanel.getLeftRecord() < paginationPanel.getPageSize())
+			supplyTableModel.addRow(supply);
 	}
 
 	@Override

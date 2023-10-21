@@ -16,4 +16,13 @@ public class DateUtil {
 		return time.toString().replace('T', ' ');
 	}
 
+	/**
+	 * @param text string like "2007-12-03 10:15:30"
+	 * @return {@link LocalDateTime}
+	 * @see LocalDateTime#parse(CharSequence)
+	 */
+	public static LocalDateTime parse(String text) {
+		return LocalDateTime.parse(text.replace(' ', 'T'));
+	}
+
 }

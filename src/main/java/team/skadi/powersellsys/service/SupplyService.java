@@ -6,4 +6,8 @@ import team.skadi.powersellsys.pojo.Supply;
 public interface SupplyService extends Service {
 
 	PageBean<Supply> querySupply(int page, int pageSize, Supply supply);
+
+	void updateSupply(Supply supply);
+
+	void addNewSupply(Supply supply);
 }
