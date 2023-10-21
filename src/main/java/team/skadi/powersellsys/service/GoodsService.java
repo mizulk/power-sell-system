@@ -19,4 +19,6 @@ public interface GoodsService extends Service {
 	void addNewGoods(Goods goods);
 
 	void putOffShelf(Goods goods);
+
+	PageBean<Goods> getRank(int page, int pageSize);
 }

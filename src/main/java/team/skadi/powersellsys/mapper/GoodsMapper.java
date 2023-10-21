@@ -29,4 +29,7 @@ public interface GoodsMapper {
 	void insertNewPower(Goods goods);
 
 	void updatePower(Goods goods);
+
+	@Select("SELECT id,`name`,price FROM goods ORDER BY price DESC")
+	List<Goods> selectPriceRank();
 }

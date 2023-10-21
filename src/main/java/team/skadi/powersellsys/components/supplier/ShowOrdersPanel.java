@@ -23,6 +23,7 @@ public class ShowOrdersPanel extends BasicComponent implements PaginationPanel.O
         setLayout(new BorderLayout());
         OrdersTableModel ordersTableModel = new OrdersTableModel();
         JTable table = new JTable(ordersTableModel);
+        table.setRowHeight(30);
         table.getTableHeader().setReorderingAllowed(false);
         add(new JScrollPane(table), BorderLayout.CENTER);
 

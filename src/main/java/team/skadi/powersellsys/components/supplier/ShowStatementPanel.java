@@ -21,6 +21,7 @@ public class ShowStatementPanel extends BasicComponent implements PaginationPane
         setLayout(new BorderLayout());
         StatementTableModel statementTableModel = new StatementTableModel();
         JTable table = new JTable(statementTableModel);
+        table.setRowHeight(30);
         table.getTableHeader().setReorderingAllowed(false);
         add(new JScrollPane(table), BorderLayout.CENTER);
 

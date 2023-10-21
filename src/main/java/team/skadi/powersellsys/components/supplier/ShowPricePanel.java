@@ -5,24 +5,47 @@ import team.skadi.powersellsys.components.BasicComponent;
 import team.skadi.powersellsys.components.PaginationPanel;
 import team.skadi.powersellsys.components.SearchPanel;
 import team.skadi.powersellsys.model.supplier.PriceTableModel;
+import team.skadi.powersellsys.pojo.Goods;
+import team.skadi.powersellsys.pojo.PageBean;
+import team.skadi.powersellsys.service.GoodsService;
+import team.skadi.powersellsys.utils.ServiceUtil;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-public class ShowPricePanel extends BasicComponent implements PaginationPanel.OnClickListener, SearchPanel.OnClickListener {
+public class ShowPricePanel extends SupplierPanel implements PaginationPanel.OnClickListener, SearchPanel.OnClickListener {
+
+    private PaginationPanel paginationPanel;
+    private PriceTableModel priceTableModel;
+    private JTable table;
+
     public ShowPricePanel(App app) {
         super(app);
     }
 
     @Override
+    public void initData() {
+        GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
+        PageBean<Goods> rank = goodsService.getRank(1, paginationPanel.getPageSize());
+        paginationPanel.setPageBean(rank);
+        priceTableModel.updateData(rank.getData());
+    }
+
+    @Override
+    public void refreshData() {
+
+    }
+
+    @Override
     protected void buildLayout() {
         setLayout(new BorderLayout());
-        PriceTableModel priceTableModel = new PriceTableModel();
-        JTable table = new JTable(priceTableModel);
+        priceTableModel = new PriceTableModel();
+        table = new JTable(priceTableModel);
+        table.setRowHeight(30);
         add(new JScrollPane(table),BorderLayout.CENTER);
 
-        PaginationPanel paginationPanel = new PaginationPanel(app,false);
+        paginationPanel = new PaginationPanel(app,false);
         paginationPanel.addOnclickListener(this);
         add(paginationPanel,BorderLayout.SOUTH);
 

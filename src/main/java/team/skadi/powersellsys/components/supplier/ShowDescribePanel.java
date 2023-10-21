@@ -23,6 +23,7 @@ public class ShowDescribePanel extends BasicComponent implements PaginationPanel
         JudgeTableModel judgeTableModel = new JudgeTableModel();
         JTable table = new JTable(judgeTableModel);
         table.getTableHeader().setReorderingAllowed(false);
+        table.setRowHeight(30);
         add(new JScrollPane(table),BorderLayout.CENTER);
 
         PaginationPanel paginationPanel = new PaginationPanel(app,false);

@@ -24,7 +24,7 @@ public class PriceTableModel extends DataTableModel<Goods> {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Goods goods = data.get(rowIndex);
-        return switch (rowIndex){
+        return switch (columnIndex){
             case 0 -> goods.getId();
             case 1 -> goods.getName();
             case 2 -> goods.getPrice();

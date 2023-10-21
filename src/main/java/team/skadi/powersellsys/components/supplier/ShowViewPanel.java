@@ -34,6 +34,7 @@ public class ShowViewPanel extends SupplierPanel
         setLayout(new BorderLayout());
         visitTableModel = new VisitTableModel();
         table = new JTable(visitTableModel);
+        table.setRowHeight(30);
         table.getTableHeader().setReorderingAllowed(false);
         table.getSelectionModel().addListSelectionListener(this);
         add(new JScrollPane(table),BorderLayout.CENTER);
