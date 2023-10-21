@@ -1,27 +1,50 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-		"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="team.skadi.powersellsys.mapper.CommentMapper">
-	<select id="page" resultType="team.skadi.powersellsys.pojo.Comment">
-		SELECT * FROM comments
-		<where>
-			<if test="userId != null">
-				user_id = #{userId}
-			</if>
-			<if test="powerId">
-				AND power_id = #{powerId}
-			</if>
-			<if test="content != null">
-				AND content LIKE CONCAT('%',#{content},'%')
-			</if>
-			<if test="star != null">
-				AND star = #{star}
-			</if>
-			<if test="createTime != null">
-				AND createTime = #{createTime}
-			</if>
-		</where>
-	</select>
+
+    <update id="updateComment">
+        UPDATE comments
+        <set>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="powerId != null">
+                power_id = #{powerId},
+            </if>
+            <if test="content != null">
+                content = #{content},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="star != null">
+                star = #{star}
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <select id="page" resultType="team.skadi.powersellsys.pojo.Comment">
+        SELECT * FROM comments
+        <where>
+            <if test="userId != null">
+                user_id = #{userId}
+            </if>
+            <if test="powerId">
+                AND power_id = #{powerId}
+            </if>
+            <if test="content != null">
+                AND content LIKE CONCAT('%',#{content},'%')
+            </if>
+            <if test="star != null">
+                AND star = #{star}
+            </if>
+            <if test="createTime != null">
+                AND createTime = #{createTime}
+            </if>
+        </where>
+    </select>
 
 </mapper>
