@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class OrderTableModel extends DataTableModel<Goods> {
 
-	private final String[] columnName = new String[]{"名称", "型号", "单价", "折扣", "总价"};
+	private final String[] columnName = new String[]{"名称", "型号", "单价", "折扣", "查看次数"};
 
 	public OrderTableModel() {
 		data = new ArrayList<>();
