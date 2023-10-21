@@ -90,12 +90,14 @@ public class ImageButton extends JButton {
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				setContentAreaFilled(true);
+				if (isEnabled())
+					setContentAreaFilled(true);
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				setContentAreaFilled(false);
+				if (isEnabled())
+					setContentAreaFilled(false);
 			}
 		});
 	}
