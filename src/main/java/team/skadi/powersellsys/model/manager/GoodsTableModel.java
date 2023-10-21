@@ -32,8 +32,8 @@ public class GoodsTableModel extends DataTableModel<Goods> {
 			case 2 -> goods.getCapacity();
 			case 3 -> goods.getStock();
 			case 4 -> goods.getPrice();
-			case 5 -> goods.getDiscount();
-			case 6 -> goods.getStatus();
+			case 5 -> goods.getDiscount() == 0 ? "无" : String.format("-%%%doff", goods.getDiscount());
+			case 6 -> goods.getStatus() == 1 ? "售卖中" : "已下架";
 			default -> null;
 		};
 	}

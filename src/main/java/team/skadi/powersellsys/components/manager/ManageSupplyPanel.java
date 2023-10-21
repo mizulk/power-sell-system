@@ -154,16 +154,14 @@ public class ManageSupplyPanel extends ManagePanel {
 	@Override
 	public SearchPanel.SearchResult onSearchButtonClick(int optionIndex, String content) {
 		supply = new Supply();
-		int num;
 		try {
-			num = Integer.parseInt(content);
+			switch (optionIndex) {
+				case 0 -> supply.setSupplierId(Integer.parseInt(content));
+				case 1 -> supply.setPowerId(Integer.parseInt(content));
+				case 2 -> supply.setSum(Integer.parseInt(content));
+			}
 		} catch (NumberFormatException e) {
 			return SearchPanel.SearchResult.NAN;
-		}
-		switch (optionIndex) {
-			case 0 -> supply.setSupplierId(num);
-			case 1 -> supply.setPowerId(num);
-			case 2 -> supply.setSum(num);
 		}
 		PageBean<Supply> supplyPageBean = ServiceUtil.getService(SupplyService.class).querySupply(1, paginationPanel.getPageSize(), supply);
 		paginationPanel.setPageBean(supplyPageBean);

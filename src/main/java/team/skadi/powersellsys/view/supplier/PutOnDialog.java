@@ -79,18 +79,18 @@ public class PutOnDialog extends BasicDialog {
                 priceTextField.getText() != "" &&
                 discountTextField.getText() != ""
         ) {
-            Goods goods = new Goods();
-            goods.setName(nameTextField.getText());
-            goods.setModel(modelTextField.getText());
-            goods.setCapacity(Integer.valueOf(capTextField.getText()));
-            goods.setStock(Integer.valueOf(stockTextField.getText()));
-            goods.setPrice(Double.parseDouble(priceTextField.getText()));
-            goods.setDiscount(Byte.valueOf(discountTextField.getText()));
-            goods.setCreateTime(LocalDateTime.now());
-            goods.setUpdateTime(LocalDateTime.now());
-            goodsService.putOnShelf(goods);
-            return super.onConfirmButtonClick();
-        } else {
+			Goods goods = new Goods();
+			goods.setName(nameTextField.getText());
+			goods.setModel(modelTextField.getText());
+			goods.setCapacity(Integer.valueOf(capTextField.getText()));
+			goods.setStock(Integer.valueOf(stockTextField.getText()));
+			goods.setPrice(Float.parseFloat(priceTextField.getText()));
+			goods.setDiscount(Byte.valueOf(discountTextField.getText()));
+			goods.setCreateTime(LocalDateTime.now());
+			goods.setUpdateTime(LocalDateTime.now());
+			goodsService.putOnShelf(goods);
+			return super.onConfirmButtonClick();
+		} else {
             JOptionPane.showMessageDialog(getParent(), "请填写完整");
             return false;
         }

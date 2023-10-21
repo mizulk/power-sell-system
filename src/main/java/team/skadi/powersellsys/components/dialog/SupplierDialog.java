@@ -5,9 +5,7 @@ import team.skadi.powersellsys.service.SupplierService;
 import team.skadi.powersellsys.utils.ServiceUtil;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import java.util.Objects;
@@ -21,37 +19,25 @@ public class SupplierDialog extends EditDialog<Supplier> {
 	private JTextField zipCodeField;
 
 	public SupplierDialog(JFrame frame, int mode) {
-		super(frame, mode == ADD_MODE ? "添加供应商" : "编辑供应商");
+		super(frame, mode == ADD_MODE ? "添加供应商" : "编辑供应商", mode);
 	}
 
 	@Override
-	protected void buildInputLayout(JPanel inputPanel) {
-		JLabel label;
-
-		label = new JLabel("姓名(必填)：");
-		inputPanel.add(label);
+	protected void buildInputLayout() {
 		nameField = new JTextField(TEXT_FIELD_COLUMNS);
-		inputPanel.add(nameField);
+		addField("姓名(必填)：", nameField);
 
-		label = new JLabel("密码(必填)：");
-		inputPanel.add(label);
 		passwordField = new JPasswordField(TEXT_FIELD_COLUMNS);
-		inputPanel.add(passwordField);
+		addField("密码(必填)：", passwordField);
 
-		label = new JLabel("电话(必填)：");
-		inputPanel.add(label);
 		telField = new JTextField(TEXT_FIELD_COLUMNS);
-		inputPanel.add(telField);
+		addField("电话(必填)：", telField);
 
-		label = new JLabel("地址(必填)：");
-		inputPanel.add(label);
 		addressField = new JTextField(TEXT_FIELD_COLUMNS);
-		inputPanel.add(addressField);
+		addField("地址(必填)：", addressField);
 
-		label = new JLabel("邮编(必填)：");
-		inputPanel.add(label);
 		zipCodeField = new JTextField(TEXT_FIELD_COLUMNS);
-		inputPanel.add(zipCodeField);
+		addField("邮编(必填)：", zipCodeField);
 	}
 
 	@Override

@@ -155,25 +155,15 @@ public class ManageOrderPanel extends ManagePanel {
 	@Override
 	public SearchPanel.SearchResult onSearchButtonClick(int optionIndex, String content) {
 		order = new Order();
-		int num;
 		try {
-			num = Integer.parseInt(content);
+			switch (optionIndex) {
+				case 1 -> order.setUserId(Integer.parseInt(content));
+				case 2 -> order.setPowerId(Integer.parseInt(content));
+				case 3 -> order.setSum(Integer.parseInt(content));
+				case 4 -> order.setAmount(Double.parseDouble(content));
+			}
 		} catch (NumberFormatException e) {
 			return SearchPanel.SearchResult.NAN;
-		}
-		switch (optionIndex) {
-			case 1 -> order.setUserId(num);
-			case 2 -> order.setPowerId(num);
-			case 3 -> order.setSum(num);
-			case 4 -> {
-				double amount;
-				try {
-					amount = Double.parseDouble(content);
-				} catch (NumberFormatException e) {
-					return SearchPanel.SearchResult.NAN;
-				}
-				order.setAmount(amount);
-			}
 		}
 		PageBean<Order> orderPageBean = ServiceUtil.getService(OrderService.class).queryOrder(1, paginationPanel.getPageSize(), order);
 		orderTableModel.updateData(orderPageBean.getData());

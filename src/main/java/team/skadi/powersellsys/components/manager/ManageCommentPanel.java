@@ -179,25 +179,23 @@ public class ManageCommentPanel extends ManagePanel {
 	@Override
 	public SearchPanel.SearchResult onSearchButtonClick(int optionIndex, String content) {
 		comment = new Comment();
-		int num;
 		try {
-			num = Integer.parseInt(content);
+			switch (optionIndex) {
+				case 0 -> comment.setUserId(Integer.parseInt(content));
+				case 1 -> comment.setPowerId(Integer.parseInt(content));
+				case 2 -> comment.setContent(content);
+				case 3 -> {
+					byte star;
+					try {
+						star = Byte.parseByte(content);
+					} catch (NumberFormatException e) {
+						return SearchPanel.SearchResult.NAN;
+					}
+					comment.setStar(star);
+				}
+			}
 		} catch (NumberFormatException e) {
 			return SearchPanel.SearchResult.NAN;
-		}
-		switch (optionIndex) {
-			case 0 -> comment.setUserId(num);
-			case 1 -> comment.setPowerId(num);
-			case 2 -> comment.setContent(content);
-			case 3 -> {
-				byte star;
-				try {
-					star = Byte.parseByte(content);
-				} catch (NumberFormatException e) {
-					return SearchPanel.SearchResult.NAN;
-				}
-				comment.setStar(star);
-			}
 		}
 		PageBean<Comment> commentPageBean = ServiceUtil.getService(CommentService.class).queryComment(1, paginationPanel.getPageSize(), comment);
 		paginationPanel.setPageBean(commentPageBean);

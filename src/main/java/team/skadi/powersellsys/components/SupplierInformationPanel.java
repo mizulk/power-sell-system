@@ -35,7 +35,7 @@ public class SupplierInformationPanel extends BasicComponent {
 
 		gbc.gridy = 1;
 		// (1,1)
-		imageLabel = new ImageLabel("供应商名: ", "/images/user.png");
+		imageLabel = new ImageLabel("供应商名: ", "/images/supplier.png");
 		add(imageLabel, gbc);
 		// (2-4,1)
 		gbc.gridwidth = 3;

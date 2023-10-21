@@ -4,7 +4,12 @@ import team.skadi.powersellsys.pojo.User;
 import team.skadi.powersellsys.service.UserService;
 import team.skadi.powersellsys.utils.ServiceUtil;
 
-import javax.swing.*;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JPasswordField;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import java.util.Objects;
 
 public class UserDialog extends EditDialog<User> {
@@ -20,47 +25,31 @@ public class UserDialog extends EditDialog<User> {
 	private JTextField addressField;
 
 	public UserDialog(JFrame frame, int mode) {
-		super(frame, mode == ADD_MODE ? "添加用户" : "修改用户");
+		super(frame, mode == ADD_MODE ? "添加用户" : "修改用户", mode);
 	}
 
 	@Override
-	protected void buildInputLayout(JPanel inputPanel) {
-		JLabel label;
-
-		label = new JLabel("用户名(必填)：");
-		inputPanel.add(label);
+	protected void buildInputLayout() {
 		nameField = new JTextField(TEXT_FIELD_COLUMNS);
-		inputPanel.add(nameField);
+		addField("用户名(必填)：", nameField);
 
-		label = new JLabel("密码(必填)：");
-		inputPanel.add(label);
 		passwordField = new JPasswordField(TEXT_FIELD_COLUMNS);
-		inputPanel.add(passwordField);
+		addField("密码(必填)：", passwordField);
 
-		label = new JLabel("性别：");
-		inputPanel.add(label);
 		sexComboBox = new JComboBox<>(new String[]{"女", "男"});
-		inputPanel.add(sexComboBox);
+		addField("性别：", sexComboBox);
 
-		label = new JLabel("年龄：");
-		inputPanel.add(label);
 		ageSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 200, 1));
-		inputPanel.add(ageSpinner);
+		addField("年龄：", ageSpinner);
 
-		label = new JLabel("邮政编码：");
-		inputPanel.add(label);
 		zipCodeField = new JTextField(TEXT_FIELD_COLUMNS);
-		inputPanel.add(zipCodeField);
+		addField("邮政编码：", zipCodeField);
 
-		label = new JLabel("手机号(必填)：");
-		inputPanel.add(label);
 		telField = new JTextField(TEXT_FIELD_COLUMNS);
-		inputPanel.add(telField);
+		addField("手机号(必填)：", telField);
 
-		label = new JLabel("地址(必填)：");
-		inputPanel.add(label);
 		addressField = new JTextField(TEXT_FIELD_COLUMNS);
-		inputPanel.add(addressField);
+		addField("地址(必填)：", addressField);
 	}
 
 	public void setData(User data) {
@@ -81,8 +70,7 @@ public class UserDialog extends EditDialog<User> {
 				&& telField.getText().equals("")
 				&& addressField.getText().equals("")
 		) {
-			JOptionPane.showMessageDialog(getParent(), "请输入必填项");
-			return false;
+			return error("请输入必填项");
 		} else {
 			// TODO：检验手机号，地址长度，密码长度
 			User user = new User();
@@ -96,6 +84,7 @@ public class UserDialog extends EditDialog<User> {
 			user.setZipCode(zipCodeField.getText().equals("") ? null : zipCodeField.getText().trim());
 			user.setTel(telField.getText().equals("") ? null : telField.getText().trim());
 			user.setAddress(addressField.getText().equals("") ? null : addressField.getText().trim());
+
 			UserService userService = ServiceUtil.getService(UserService.class);
 
 			if (data != null
@@ -106,10 +95,8 @@ public class UserDialog extends EditDialog<User> {
 					&& user.getZipCode().equals(data.getZipCode())
 					&& user.getTel().equals(data.getTel())
 					&& user.getAddress().equals(data.getAddress())
-			) {
-				JOptionPane.showMessageDialog(getParent(), "信息未修改");
-				return false;
-			}
+			) return error("信息未修改");
+
 			if (Objects.nonNull(data)) {
 				data.setName(user.getName());
 				data.setPassword(user.getPassword());
@@ -119,13 +106,12 @@ public class UserDialog extends EditDialog<User> {
 				data.setTel(user.getTel());
 				data.setAddress(user.getAddress());
 				userService.updateUser(data);
-				JOptionPane.showMessageDialog(getParent(), "修改成功");
-				return super.onConfirmButtonClick();
+				return successAndExit("修改成功");
+			} else {
+				data = user;
 			}
 			String register = userService.register(user);
-			if (data == null) data = user;
-			JOptionPane.showMessageDialog(getParent(), "添加成功，新的用户账号为：" + register);
-			return super.onConfirmButtonClick();
+			return successAndExit("添加成功，新的用户账号为：" + register);
 		}
 	}
 }

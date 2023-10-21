@@ -2,6 +2,9 @@ package team.skadi.powersellsys.service;
 
 import team.skadi.powersellsys.pojo.Goods;
 import team.skadi.powersellsys.pojo.PageBean;
+import team.skadi.powersellsys.pojo.PowerType;
+
+import java.util.List;
 
 public interface GoodsService extends Service {
 
@@ -9,7 +12,11 @@ public interface GoodsService extends Service {
 
 	PageBean<Goods> queryGoods(int page, int pageSize, Goods goods);
 
-	void puyOffShelf(Goods goods);
+	List<PowerType> getAllPowerType();
 
+	void updateGoods(Goods goods);
 
+	void addNewGoods(Goods goods);
+
+	void putOffShelf(Goods goods);
 }

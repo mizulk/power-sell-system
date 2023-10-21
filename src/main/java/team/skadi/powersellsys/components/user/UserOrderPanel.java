@@ -110,9 +110,9 @@ public class UserOrderPanel extends BasicComponent
 	@Override
 	public SearchPanel.SearchResult onSearchButtonClick(int optionIndex, String content) {
 		goods = new Goods();
-		double num ;
+		float num;
 		try{
-			num = Double.parseDouble(content);
+			num = Float.parseFloat(content);
 		}catch (NumberFormatException e) {
 			return SearchPanel.SearchResult.NAN;
 		}

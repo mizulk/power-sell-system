@@ -17,7 +17,7 @@ public class Goods {
 	private String model;
 	private Integer capacity;
 	private Integer stock;
-	private Double price;
+	private Float price;
 	private Byte discount;
 	private Integer status;
 	private LocalDateTime createTime;

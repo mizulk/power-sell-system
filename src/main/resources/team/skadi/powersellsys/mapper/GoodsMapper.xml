@@ -3,6 +3,48 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="team.skadi.powersellsys.mapper.GoodsMapper">
+	<update id="updatePower">
+		UPDATE powers
+		<set>
+			<if test="name != null">
+				`name` = #{name},
+			</if>
+			<if test="typeId != null">
+				type = #{typeId},
+			</if>
+			<if test="model != null">
+				model = #{model},
+			</if>
+			<if test="capacity != null">
+				capacity = #{capacity},
+			</if>
+			<if test="stock != null">
+				stock = #{stock},
+			</if>
+			<if test="price!= null">
+				price = #{price},
+			</if>
+			<if test="discount != null">
+				discount = #{discount},
+			</if>
+			<if test="status != null">
+				`status` = #{status},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+			<if test="describe != null">
+				`describe` = #{describe},
+			</if>
+			<if test="sum != null">
+				sum = #{sum}
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
 
 	<select id="page" resultType="team.skadi.powersellsys.pojo.Goods">
 		SELECT * FROM goods
@@ -11,7 +53,7 @@
 				type = #{type}
 			</if>
 			<if test="name != null">
-				AND `name` = #{name}
+				AND `name` LIKE CONCAT('%',#{name},'%')
 			</if>
 			<if test="model != null">
 				AND model = #{model}
