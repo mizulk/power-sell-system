@@ -14,10 +14,6 @@ public class OrderTableModel extends DataTableModel<Order> {
 		return columnName[column];
 	}
 
-	public OrderTableModel() {
-		data = new ArrayList<>();
-	}
-
 	@Override
 	public int getColumnCount() {
 		return columnName.length;

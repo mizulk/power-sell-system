@@ -10,6 +10,8 @@ import team.skadi.powersellsys.pojo.PageBean;
 import team.skadi.powersellsys.service.CommentService;
 import team.skadi.powersellsys.utils.SqlSessionUtil;
 
+import java.time.LocalDateTime;
+
 @Slf4j
 @SuppressWarnings("unused")
 public class CommentServiceImpl implements CommentService {
@@ -26,13 +28,14 @@ public class CommentServiceImpl implements CommentService {
 
 	@Override
 	public void updateComment(Comment comment) {
+		log.info("更新评论：{}", comment);
 		SqlSession sqlSession = SqlSessionUtil.getSqlSession();
 		try {
 			CommentMapper commentMapper = sqlSession.getMapper(CommentMapper.class);
 			commentMapper.updateComment(comment);
 			sqlSession.commit();
 		} catch (Exception e) {
-			log.error("更新评论时出错，数据库回滚。",e);
+			log.error("更新评论时出错，数据库回滚。", e);
 			sqlSession.rollback();
 		} finally {
 			sqlSession.close();
@@ -41,16 +44,36 @@ public class CommentServiceImpl implements CommentService {
 
 	@Override
 	public void addNewComment(Comment comment) {
+		log.info("添加评论：{}", comment);
 		SqlSession sqlSession = SqlSessionUtil.getSqlSession();
 		try {
 			CommentMapper commentMapper = sqlSession.getMapper(CommentMapper.class);
+			comment.setCreateTime(LocalDateTime.now());
 			commentMapper.insertNewComment(comment);
 			sqlSession.commit();
 		} catch (Exception e) {
-			log.error("添加新评论时出错，数据库回滚。",e);
+			log.error("添加新评论时出错，数据库回滚。", e);
 			sqlSession.rollback();
 		} finally {
 			sqlSession.close();
 		}
+	}
+
+	@Override
+	public boolean delComment(Comment comment) {
+		log.info("删除评论，comment：{}", comment);
+		SqlSession sqlSession = SqlSessionUtil.getSqlSession();
+		try {
+			CommentMapper commentMapper = sqlSession.getMapper(CommentMapper.class);
+			commentMapper.deleteComment(comment);
+			sqlSession.commit();
+		} catch (Exception e) {
+			log.error("删除评论时出错，数据库回滚。", e);
+			sqlSession.rollback();
+			return false;
+		} finally {
+			sqlSession.close();
+		}
+		return true;
 	}
 }

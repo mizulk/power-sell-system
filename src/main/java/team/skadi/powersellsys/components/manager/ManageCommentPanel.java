@@ -1,7 +1,11 @@
 package team.skadi.powersellsys.components.manager;
 
 import team.skadi.powersellsys.App;
+import team.skadi.powersellsys.components.CommentInformationPanel;
 import team.skadi.powersellsys.components.SearchPanel;
+import team.skadi.powersellsys.components.dialog.BasicDialog;
+import team.skadi.powersellsys.components.dialog.CommentDialog;
+import team.skadi.powersellsys.components.dialog.EditDialog;
 import team.skadi.powersellsys.model.manager.CommentTableModel;
 import team.skadi.powersellsys.pojo.Comment;
 import team.skadi.powersellsys.pojo.PageBean;
@@ -9,6 +13,7 @@ import team.skadi.powersellsys.service.CommentService;
 import team.skadi.powersellsys.utils.ServiceUtil;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -125,19 +130,34 @@ public class ManageCommentPanel extends ManagePanel {
 	}
 
 	private void addComment() {
-
+		CommentDialog commentDialog = new CommentDialog(app, EditDialog.ADD_MODE);
+		if (commentDialog.getOption() == BasicDialog.CONFIRM_OPTION
+				&& paginationPanel.isLastPage()
+				&& paginationPanel.getLeftRecord() < paginationPanel.getPageSize())
+			commentTableModel.addRow(commentDialog.getData());
 	}
 
 	private void delComment() {
-
+		commentTableModel.delRow(commentTable.getSelectedRow());
 	}
 
 	private void modifyComment() {
-
+		CommentDialog commentDialog = new CommentDialog(app, EditDialog.MODIFY_MODE);
+		commentDialog.setData(commentTableModel.getRow(commentTable.getSelectedRow()));
+		if (commentDialog.getOption() == BasicDialog.CONFIRM_OPTION)
+			commentTableModel.modifyRow(commentTable.getSelectedRow(), commentDialog.getData());
 	}
 
 	private void showComment() {
-
+		BasicDialog basicDialog = new BasicDialog(app, "评论详细信息") {
+			@Override
+			protected JComponent getCenterLayout() {
+				CommentInformationPanel commentInformationPanel = new CommentInformationPanel(app);
+				commentInformationPanel.showComment(commentTableModel.getRow(commentTable.getSelectedRow()));
+				return commentInformationPanel;
+			}
+		};
+		basicDialog.getOption();
 	}
 
 	@Override

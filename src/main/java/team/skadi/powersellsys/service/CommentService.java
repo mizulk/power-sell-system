@@ -10,4 +10,6 @@ public interface CommentService extends Service {
 	void updateComment(Comment comment);
 
 	void addNewComment(Comment comment);
+
+	boolean delComment(Comment comment);
 }

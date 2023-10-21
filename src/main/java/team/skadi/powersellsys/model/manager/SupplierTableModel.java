@@ -9,10 +9,6 @@ public class SupplierTableModel extends DataTableModel<Supplier> {
 
 	private final String[] columnName = new String[]{"姓名", "电话", "邮编", "地址"};
 
-	public SupplierTableModel() {
-		data = new ArrayList<>();
-	}
-
 	@Override
 	public String getColumnName(int column) {
 		return columnName[column];
