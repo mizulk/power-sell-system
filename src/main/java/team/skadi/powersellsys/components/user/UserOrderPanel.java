@@ -110,16 +110,14 @@ public class UserOrderPanel extends BasicComponent
 	@Override
 	public SearchPanel.SearchResult onSearchButtonClick(int optionIndex, String content) {
 		goods = new Goods();
-		float num;
-		try{
-			num = Float.parseFloat(content);
-		}catch (NumberFormatException e) {
+		try {
+			switch (optionIndex) {
+				case 0 -> goods.setName(content);
+				case 1 -> goods.setModel(content);
+				case 2 -> goods.setPrice(Float.parseFloat(content));
+			}
+		} catch (NumberFormatException e) {
 			return SearchPanel.SearchResult.NAN;
-		}
-		switch (optionIndex) {
-			case 0 -> goods.setName(content);
-			case 1 -> goods.setModel(content);
-			case 2 -> goods.setPrice(num);
 		}
 		PageBean<Goods> goodsPageBean = ServiceUtil.getService(GoodsService.class).queryGoods(1, paginationPanel.getPageSize(), goods);
 		orderTableModel.updateData(goodsPageBean.getData());

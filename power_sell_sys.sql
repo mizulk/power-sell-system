@@ -11,7 +11,7 @@
  Target Server Version : 80034
  File Encoding         : 65001
 
- Date: 21/10/2023 20:00:01
+ Date: 21/10/2023 21:23:34
 */
 
 SET NAMES utf8mb4;
@@ -32,6 +32,7 @@ CREATE TABLE `comments`  (
 -- ----------------------------
 -- Records of comments
 -- ----------------------------
+INSERT INTO `comments` VALUES (1, 4, '牛逼，老牛逼了', 5, '2023-10-21 21:08:31');
 
 -- ----------------------------
 -- Table structure for favorites
@@ -46,6 +47,8 @@ CREATE TABLE `favorites`  (
 -- ----------------------------
 -- Records of favorites
 -- ----------------------------
+INSERT INTO `favorites` VALUES (1, 4, '2023-10-21 21:04:10');
+INSERT INTO `favorites` VALUES (1, 5, '2023-10-21 21:04:39');
 
 -- ----------------------------
 -- Table structure for manager

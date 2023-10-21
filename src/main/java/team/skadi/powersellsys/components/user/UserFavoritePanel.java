@@ -110,15 +110,13 @@ public class UserFavoritePanel extends BasicComponent
 	@Override
 	public SearchPanel.SearchResult onSearchButtonClick(int optionIndex, String content) {
 		favoritePower = new FavoritePower();
-		int num;
 		try {
-			num = Integer.parseInt(content);
+			switch (optionIndex) {
+				case 0 -> favoritePower.setUserId(Integer.parseInt(content));
+				case 1 -> favoritePower.setPowerId(Integer.parseInt(content));
+			}
 		} catch (NumberFormatException e) {
 			return SearchPanel.SearchResult.NAN;
-		}
-		switch (optionIndex) {
-			case 0 -> favoritePower.setUserId(num);
-			case 1 -> favoritePower.setPowerId(num);
 		}
 		PageBean<FavoritePower> favorites = ServiceUtil.getService(FavoritePowerService.class).queryFavorite(1, paginationPanel.getPageSize(), favoritePower);
 		favoriteTableModel.updateData(favorites.getData());

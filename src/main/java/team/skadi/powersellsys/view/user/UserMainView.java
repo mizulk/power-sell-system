@@ -153,13 +153,16 @@ public class UserMainView extends BasicView implements ActionListener {
             userFavoritePanel.initData();
         } else if (source == detailButton) {
             router.showPanel("detail");
+            userDetailPanel.initData();
         } else if (source == orderButton) {
             router.showPanel("order");
             userOrderPanel.initData();
         } else if (source == customButton) {
             router.showPanel("custom");
+            userCustomPanel.initData();
         } else if (source == evaluationButton) {
             router.showPanel("evaluation");
+            userEvaluationPanel.initData();
         }
     }
 }

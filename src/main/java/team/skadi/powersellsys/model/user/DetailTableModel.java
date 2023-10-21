@@ -15,13 +15,9 @@ public class DetailTableModel extends DataTableModel<Goods> {
 		data = new ArrayList<>();
 	}
 
+	@Override
 	public String getColumnName(int column) {
 		return columnName[column];
-	}
-
-	@Override
-	public int getRowCount() {
-		return data == null ? 0 : data.size();
 	}
 
 	@Override

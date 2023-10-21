@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class CustomTableModel extends DataTableModel<Goods> {
 
-    private final String[] columnName = new String[]{"颜色", "型号", "折扣", "总价"};
+    private final String[] columnName = new String[]{"类型", "型号", "折扣"};
 
     public CustomTableModel() {
         data = new ArrayList<>();
@@ -36,7 +36,6 @@ public class CustomTableModel extends DataTableModel<Goods> {
             case 0 -> custom.getType();
             case 1 -> custom.getModel();
             case 2 -> custom.getDiscount();
-            case 3 -> custom.getSum();
 
             default -> null;
         };

@@ -3,6 +3,7 @@ package team.skadi.powersellsys.model.user;
 import team.skadi.powersellsys.model.DataTableModel;
 import team.skadi.powersellsys.pojo.Comment;
 import team.skadi.powersellsys.pojo.Goods;
+import team.skadi.powersellsys.utils.DateUtil;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class EvaluationTableModel extends DataTableModel<Comment> {
         return switch (columnIndex) {
             case 0 -> evaluation.getPowerId();
             case 1 -> evaluation.getContent();
-            case 2 -> evaluation.getCreateTime();
+            case 2 -> DateUtil.replaceT(evaluation.getCreateTime());
             case 3 -> evaluation.getStar();
             default -> null;
         };
