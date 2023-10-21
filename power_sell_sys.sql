@@ -11,7 +11,7 @@
  Target Server Version : 80034 (8.0.34)
  File Encoding         : 65001
 
- Date: 19/10/2023 23:29:39
+ Date: 21/10/2023 19:50:48
 */
 
 SET NAMES utf8mb4;
@@ -137,7 +137,7 @@ CREATE TABLE `power_types`
     `value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '类型',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 1
+  AUTO_INCREMENT = 2
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci
   ROW_FORMAT = DYNAMIC;
@@ -145,6 +145,8 @@ CREATE TABLE `power_types`
 -- ----------------------------
 -- Records of power_types
 -- ----------------------------
+INSERT INTO `power_types`
+VALUES (1, '移动端');
 
 -- ----------------------------
 -- Table structure for powers
@@ -167,7 +169,7 @@ CREATE TABLE `powers`
     `sum`         int                                                           NULL DEFAULT NULL COMMENT '访问数量',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 1
+  AUTO_INCREMENT = 9
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci
   ROW_FORMAT = DYNAMIC;
@@ -175,6 +177,26 @@ CREATE TABLE `powers`
 -- ----------------------------
 -- Records of powers
 -- ----------------------------
+INSERT INTO `powers`
+VALUES (1, '野兽电源', 1, 'senbasuki', 40000, 10, 114.50, 14, 1, '2023-10-21 02:52:45', '2023-10-21 02:52:48',
+        '野兽电源，更持久，更耐用', 514);
+INSERT INTO `powers`
+VALUES (2, '金轮电源', 1, 'v520', 4000, 10, 50.00, 0, 1, '2023-10-21 17:25:19', '2023-10-21 17:25:19', '金轮电源，值得信赖，所有芜湖人都在用',
+        0);
+INSERT INTO `powers`
+VALUES (3, '野兽电源v2', 1, 'senbasukiv2', 1000, 50, 5.00, 0, 1, '2023-10-21 17:32:17', '2023-10-21 17:32:17',
+        '野兽电源全新升级，更小巧', 0);
+INSERT INTO `powers`
+VALUES (4, '金轮电源v2', 1, 'wuhu', 10000, 7, 105.00, 15, 1, '2023-10-21 17:36:19', '2023-10-21 17:36:19', '更大容量，更持久', 0);
+INSERT INTO `powers`
+VALUES (5, '乔桑电源', 1, 'A10', 15000, 50, 100.00, 10, 1, '2023-10-21 17:39:37', '2023-10-21 17:39:37', '超大容量', 0);
+INSERT INTO `powers`
+VALUES (6, '乔桑电源', 1, 'A113', 100000, 1, 1000.00, 0, 1, '2023-10-21 17:40:53', '2023-10-21 17:40:53', '巨大', 0);
+INSERT INTO `powers`
+VALUES (7, 'ipower', 1, 'A114', 100, 1000, 10.00, 0, 1, '2023-10-21 17:45:01', '2023-10-21 17:45:01', 'cnmios', 0);
+INSERT INTO `powers`
+VALUES (8, 'ipower', 1, 'A514', 2100, 5, 500.00, 10, 1, '2023-10-21 19:26:35', '2023-10-21 19:26:35',
+        'ipower new good.', 0);
 
 -- ----------------------------
 -- Table structure for suppliers
@@ -191,7 +213,7 @@ CREATE TABLE `suppliers`
     `zip_code` char(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci      NULL DEFAULT NULL COMMENT '邮编',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 10
+  AUTO_INCREMENT = 2
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci
   ROW_FORMAT = DYNAMIC;
@@ -199,6 +221,8 @@ CREATE TABLE `suppliers`
 -- ----------------------------
 -- Records of suppliers
 -- ----------------------------
+INSERT INTO `suppliers`
+VALUES (1, '000001', '张桑', '123456789', '12345678910', '下北泽', '114514');
 
 -- ----------------------------
 -- Table structure for supplies
@@ -282,6 +306,11 @@ where (`t`.`id` = `p`.`type`);
 -- View structure for judge
 -- ----------------------------
 DROP VIEW IF EXISTS `judge`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `judge` AS select `users`.`account` AS `u_account`,`powers`.`name` AS `p_name`,`powers`.`capacity` AS `p_capacity`,`powers`.`describe` AS `p_describe` from (`users` join `powers`);
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `judge` AS
+select `users`.`account`   AS `u_account`,
+       `powers`.`name`     AS `p_name`,
+       `powers`.`capacity` AS `p_capacity`,
+       `powers`.`describe` AS `p_describe`
+from (`users` join `powers`);
 
 SET FOREIGN_KEY_CHECKS = 1;
