@@ -124,4 +124,19 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	@Override
+	public void updateLoginTime(String account) {
+		SqlSession sqlSession = SqlSessionUtil.getSqlSession();
+		try {
+			UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+			mapper.updateLoginTimeByUserId(account);
+			sqlSession.commit();
+		} catch (Exception e) {
+			log.error("更新用户登录时间时出现错误，数据库回滚", e);
+			sqlSession.rollback();
+		} finally {
+			sqlSession.close();
+		}
+	}
+
 }

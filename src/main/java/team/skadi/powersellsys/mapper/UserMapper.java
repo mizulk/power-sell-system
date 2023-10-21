@@ -1,9 +1,6 @@
 package team.skadi.powersellsys.mapper;
 
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import team.skadi.powersellsys.pojo.User;
 
 import java.util.List;
@@ -36,4 +33,7 @@ public interface UserMapper {
 
 	@Delete("DELETE FROM users WHERE `account` = #{account}")
 	void delUserByAccount(@Param("account") String account);
+
+	@Update("UPDATE users SET login_time = NOW() WHERE account = #{account}")
+	void updateLoginTimeByUserId(@Param("account") String account);
 }

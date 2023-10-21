@@ -10,4 +10,8 @@ public interface FavoritePowerService extends Service{
 	FavoritePower queryUserId(Integer userId);
 
 	FavoritePower queryPowerId(Integer powerId);
+
+	void updateFavorite(FavoritePower favoritePower);
+
+	void addNewFavorite(FavoritePower favoritePower);
 }

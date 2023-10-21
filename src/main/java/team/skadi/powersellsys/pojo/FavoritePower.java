@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FavoritePower {
+	private Integer id;
 	private Integer userId;
 	private Integer powerId;
 	private String name;

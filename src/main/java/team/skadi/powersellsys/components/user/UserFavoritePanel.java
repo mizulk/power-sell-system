@@ -53,12 +53,11 @@ public class UserFavoritePanel extends BasicComponent
 
 	@Override
 	public void initData() {
-		if (!favoriteTableModel.hasData()) {
-			FavoritePowerService favoriteService = ServiceUtil.getService(FavoritePowerService.class);
-			PageBean<FavoritePower> favoritePageBean = favoriteService.queryFavorite(1, paginationPanel.getPageSize(), null);
-			paginationPanel.setPageBean(favoritePageBean);
-			favoriteTableModel.updateData(favoritePageBean.getData());
-		}
+		FavoritePowerService favoriteService = ServiceUtil.getService(FavoritePowerService.class);
+		PageBean<FavoritePower> favoritePageBean = favoriteService.queryFavorite(1, paginationPanel.getPageSize(), null);
+		paginationPanel.setPageBean(favoritePageBean);
+		favoriteTableModel.updateData(favoritePageBean.getData());
+
 	}
 
 	@Override
@@ -78,6 +77,11 @@ public class UserFavoritePanel extends BasicComponent
 	public void actionPerformed(ActionEvent e) {
 
 	}
+
+//	public void addFavorite() {
+//		FavoriteDialog favoriteDialog = new FavoriteDialog(app);
+//		favoriteTableModel.addRow(favoriteDialog.getData());
+//	}
 
 	@Override
 	public void firstPage(int pageSize) {

@@ -76,6 +76,7 @@ public class UserLoginView extends LoginView {
 			if (user != null) {
 				app.useStore().userStore = new UserStore(user.getAccount());
 				JOptionPane.showMessageDialog(app, "登录成功，欢迎使用你," + user.getName());
+				userService.updateLoginTime(user.getAccount());
 				app.useRouter().showView(ViewName.USER_LOGIN_VIEW, ViewName.USER_MAIN_VIEW);
 				passwordField.reset();
 			} else {

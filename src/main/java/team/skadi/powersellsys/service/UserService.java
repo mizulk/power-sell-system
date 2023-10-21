@@ -18,4 +18,6 @@ public interface UserService extends Service {
 	boolean delUser(String userAccount);
 
 	void updateUser(User user);
+
+	void updateLoginTime(String account);
 }

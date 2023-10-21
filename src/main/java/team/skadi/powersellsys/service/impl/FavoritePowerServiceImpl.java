@@ -38,4 +38,34 @@ public class FavoritePowerServiceImpl implements FavoritePowerService {
 		FavoritePower favoritePower = favoritePowerMapper.getFavoritePowerByUserid(powerId);
 		return favoritePower;
 	}
+
+	@Override
+	public void updateFavorite(FavoritePower favoritePower) {
+		SqlSession sqlSession = SqlSessionUtil.getSqlSession();
+		try {
+			FavoritePowerMapper favoritePowerMapper = sqlSession.getMapper(FavoritePowerMapper.class);
+			favoritePowerMapper.updateFavorite(favoritePower);
+			sqlSession.commit();
+		} catch (Exception e) {
+			log.error("更新收藏时出错，数据库回滚。",e);
+			sqlSession.rollback();
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+	@Override
+	public void addNewFavorite(FavoritePower favoritePower) {
+		SqlSession sqlSession = SqlSessionUtil.getSqlSession();
+		try {
+			FavoritePowerMapper favoritePowerMapper = sqlSession.getMapper(FavoritePowerMapper.class);
+			favoritePowerMapper.insertNewFavorite(favoritePower);
+			sqlSession.commit();
+		} catch (Exception e) {
+			log.error("添加新收藏时出错，数据库回滚。",e);
+			sqlSession.rollback();
+		} finally {
+			sqlSession.close();
+		}
+	}
 }

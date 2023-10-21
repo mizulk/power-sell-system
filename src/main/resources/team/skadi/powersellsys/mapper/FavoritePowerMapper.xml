@@ -4,6 +4,16 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="team.skadi.powersellsys.mapper.FavoritePowerMapper">
 
+    <update id="updateFavorite">
+       UPDATE favorites
+       <set>
+           <if test="powerId != null">
+               powerId = #{powerId}
+           </if>
+       </set>>
+       WHERE id = #{id}
+   </update>
+
     <select id="page" resultType="team.skadi.powersellsys.pojo.FavoritePower">
         SELECT * FROM favorites_power
         <where>
