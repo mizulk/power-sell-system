@@ -13,6 +13,8 @@ public interface UserService extends Service {
 
 	User queryUser(String account);
 
+	String getUserNameById(Integer id);
+
 	boolean delUser(String userAccount);
 
 	void updateUser(User user);

@@ -1,6 +1,7 @@
 package team.skadi.powersellsys.mapper;
 
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import team.skadi.powersellsys.pojo.Goods;
@@ -32,4 +33,7 @@ public interface GoodsMapper {
 
 	@Select("SELECT id,`name`,price FROM goods ORDER BY price DESC")
 	List<Goods> selectPriceRank();
+
+	@Select("SELECT `name` FROM powers WHERE id = #{id}")
+	String findGoodsNameById(@Param("id") Integer id);
 }

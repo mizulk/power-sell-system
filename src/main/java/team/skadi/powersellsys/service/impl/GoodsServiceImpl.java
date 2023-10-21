@@ -40,6 +40,16 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 
 	@Override
+	public String getGoodsNameById(Integer id) {
+		SqlSession sqlSession = SqlSessionUtil.getSqlSession();
+		GoodsMapper goodsMapper = sqlSession.getMapper(GoodsMapper.class);
+		String goodsName = goodsMapper.findGoodsNameById(id);
+		sqlSession.commit();
+		sqlSession.close();
+		return goodsName;
+	}
+
+	@Override
 	public List<PowerType> getAllPowerType() {
 		log.info("获取所有电源类型");
 		SqlSession sqlSession = SqlSessionUtil.getSqlSession();

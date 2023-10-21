@@ -1,7 +1,11 @@
 package team.skadi.powersellsys.components.manager;
 
 import team.skadi.powersellsys.App;
+import team.skadi.powersellsys.components.OrderInformationPane;
 import team.skadi.powersellsys.components.SearchPanel;
+import team.skadi.powersellsys.components.dialog.BasicDialog;
+import team.skadi.powersellsys.components.dialog.EditDialog;
+import team.skadi.powersellsys.components.dialog.OrderDialog;
 import team.skadi.powersellsys.model.manager.OrderTableModel;
 import team.skadi.powersellsys.pojo.Order;
 import team.skadi.powersellsys.pojo.PageBean;
@@ -9,6 +13,7 @@ import team.skadi.powersellsys.service.OrderService;
 import team.skadi.powersellsys.utils.ServiceUtil;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -57,8 +62,8 @@ public class ManageOrderPanel extends ManagePanel {
 	protected JPanel getBtnPanel() {
 		JPanel orderBtnPanel = createBtnPanel();
 		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.gridx = 1;
 		gbc.insets.set(0, 20, 30, 20);
+		gbc.gridx = 1;
 
 		addOrderBtn = new JButton("添加订单");
 		orderBtnPanel.add(addOrderBtn, gbc);
@@ -107,13 +112,41 @@ public class ManageOrderPanel extends ManagePanel {
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
 		if (source == addOrderBtn) {
-
+			addOrder();
 		} else if (source == showOrderBtn) {
-
+			showOrder();
 		} else if (source == modifyOrderBtn) {
-
+			modifyOrder();
 		} else if (source == refreshBtn) {
 			refreshData();
+		}
+	}
+
+	private void showOrder() {
+		BasicDialog basicDialog = new BasicDialog(app, "商品详细信息") {
+			@Override
+			protected JComponent getCenterLayout() {
+				OrderInformationPane orderInformationPane = new OrderInformationPane(app);
+				orderInformationPane.showOrder(orderTableModel.getRow(orderTable.getSelectedRow()));
+				return orderInformationPane;
+			}
+		};
+		basicDialog.getOption();
+	}
+
+	private void modifyOrder() {
+		OrderDialog orderDialog = new OrderDialog(app, EditDialog.MODIFY_MODE);
+		orderDialog.setData(orderTableModel.getRow(orderTable.getSelectedRow()));
+		if (orderDialog.getOption() == BasicDialog.CONFIRM_OPTION)
+			orderTableModel.modifyRow(orderTable.getSelectedRow(), orderDialog.getData());
+	}
+
+	private void addOrder() {
+		OrderDialog orderDialog = new OrderDialog(app, EditDialog.ADD_MODE);
+		if (orderDialog.getOption() == BasicDialog.CONFIRM_OPTION
+				&& paginationPanel.isLastPage()
+				&& paginationPanel.getLeftRecord() < paginationPanel.getPageSize()) {
+			orderTableModel.addRow(orderDialog.getData());
 		}
 	}
 
@@ -160,7 +193,7 @@ public class ManageOrderPanel extends ManagePanel {
 				case 1 -> order.setUserId(Integer.parseInt(content));
 				case 2 -> order.setPowerId(Integer.parseInt(content));
 				case 3 -> order.setSum(Integer.parseInt(content));
-				case 4 -> order.setAmount(Double.parseDouble(content));
+				case 4 -> order.setAmount(Float.parseFloat(content));
 			}
 		} catch (NumberFormatException e) {
 			return SearchPanel.SearchResult.NAN;

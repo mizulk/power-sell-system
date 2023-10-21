@@ -12,6 +12,8 @@ public interface GoodsService extends Service {
 
 	PageBean<Goods> queryGoods(int page, int pageSize, Goods goods);
 
+	String getGoodsNameById(Integer id);
+
 	List<PowerType> getAllPowerType();
 
 	void updateGoods(Goods goods);

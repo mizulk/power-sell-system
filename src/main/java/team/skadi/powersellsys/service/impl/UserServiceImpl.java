@@ -78,6 +78,16 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public String getUserNameById(Integer id) {
+		SqlSession sqlSession = SqlSessionUtil.getSqlSession();
+		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+		String userName = userMapper.findUserNameById(id);
+		sqlSession.commit();
+		sqlSession.close();
+		return userName;
+	}
+
+	@Override
 	public boolean delUser(String userAccount) {
 		log.info("删除用户，账号：{}", userAccount);
 		SqlSession sqlSession = SqlSessionUtil.getSqlSession();

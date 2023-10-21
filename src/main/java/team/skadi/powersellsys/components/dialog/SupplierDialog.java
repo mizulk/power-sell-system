@@ -5,7 +5,6 @@ import team.skadi.powersellsys.service.SupplierService;
 import team.skadi.powersellsys.utils.ServiceUtil;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import java.util.Objects;
@@ -58,8 +57,7 @@ public class SupplierDialog extends EditDialog<Supplier> {
 				&& addressField.getText().equals("")
 				&& zipCodeField.getText().equals("")
 		) {
-			JOptionPane.showMessageDialog(getParent(), "请输入必填项");
-			return false;
+			return error("请输入必填项");
 		} else {
 			Supplier supplier = new Supplier();
 			supplier.setName(nameField.getText().trim());
@@ -75,10 +73,8 @@ public class SupplierDialog extends EditDialog<Supplier> {
 					&& supplier.getTel().equals(data.getTel())
 					&& supplier.getAddress().equals(data.getAddress())
 					&& supplier.getZipCode().equals(data.getZipCode())
-			) {
-				JOptionPane.showMessageDialog(getParent(), "信息未修改");
-				return false;
-			}
+			) return error("信息未修改");
+
 			if (Objects.nonNull(data)) {
 				data.setName(supplier.getName());
 				data.setPassword(supplier.getPassword());
@@ -86,13 +82,11 @@ public class SupplierDialog extends EditDialog<Supplier> {
 				data.setAddress(supplier.getAddress());
 				data.setZipCode(supplier.getZipCode());
 				supplierService.updateSupplier(data);
-				JOptionPane.showMessageDialog(getParent(), "修改成功");
-				return super.onConfirmButtonClick();
+				return successAndExit("修改成功");
 			}
 			String register = supplierService.register(supplier);
 			if (Objects.isNull(data)) data = supplier;
-			JOptionPane.showMessageDialog(getParent(), "添加成功，新的供应商账号为：" + register);
-			return super.onConfirmButtonClick();
+			return successAndExit("添加成功，新的供应商账号为：" + register);
 		}
 	}
 }

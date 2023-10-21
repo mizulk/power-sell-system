@@ -31,6 +31,9 @@ public interface UserMapper {
 			" FROM users WHERE `account` = #{account}")
 	User findUserByAccount(@Param("account") String account);
 
+	@Select("SELECT `name` FROM users WHERE id = #{userId}")
+	String findUserNameById(@Param("userId") Integer userId);
+
 	@Delete("DELETE FROM users WHERE `account` = #{account}")
 	void delUserByAccount(@Param("account") String account);
 }

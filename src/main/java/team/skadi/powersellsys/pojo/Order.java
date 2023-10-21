@@ -14,7 +14,7 @@ public class Order {
 	private Integer userId;
 	private Integer powerId;
 	private Integer sum;
-	private Double amount;
+	private Float amount;
 	private LocalDateTime createTime;
 	private Integer count;
 }

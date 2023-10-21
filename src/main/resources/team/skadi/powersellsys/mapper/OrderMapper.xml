@@ -3,6 +3,32 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="team.skadi.powersellsys.mapper.OrderMapper">
+
+	<update id="updateOrder">
+		UPDATE orders
+		<set>
+			<if test="userId != null">
+				user_id = #{userId},
+			</if>
+			<if test="powerId != null">
+				power_id = #{powerId},
+			</if>
+			<if test="sum != null">
+				sum = #{sum},
+			</if>
+			<if test="amount != null">
+				amount = #{amount},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+			<if test="count != null">
+				count = #{count}
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
 	<select id="page" resultType="team.skadi.powersellsys.pojo.Order">
 		SELECT * FROM orders
 		<where>
