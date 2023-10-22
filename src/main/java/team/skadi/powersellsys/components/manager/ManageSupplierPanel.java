@@ -212,6 +212,14 @@ public class ManageSupplierPanel extends ManagePanel {
 	}
 
 	@Override
+	public void pageSizeChange(int pageSize) {
+		SupplierService supplierService = ServiceUtil.getService(SupplierService.class);
+		PageBean<Supplier> supplierPageBean = supplierService.querySupplier(1, pageSize, supplier);
+		paginationPanel.setPageBean(supplierPageBean);
+		supplierTableModel.updateData(supplierPageBean.getData());
+	}
+
+	@Override
 	public SearchPanel.SearchResult onSearchButtonClick(int optionIndex, String content) {
 		supplier = new Supplier();
 		switch (optionIndex) {

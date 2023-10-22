@@ -223,6 +223,13 @@ public class ManageGoodsPanel extends ManagePanel {
 	}
 
 	@Override
+	public void pageSizeChange(int pageSize) {
+		GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
+		PageBean<Goods> goodsPageBean = goodsService.queryGoods(paginationPanel.getCurPage(), paginationPanel.getPageSize(), goods);
+		goodsTableModel.updateData(goodsPageBean.getData());
+	}
+
+	@Override
 	public SearchPanel.SearchResult onSearchButtonClick(int optionIndex, String content) {
 		goods = new Goods();
 		try {

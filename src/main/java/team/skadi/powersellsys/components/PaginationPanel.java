@@ -96,6 +96,7 @@ public class PaginationPanel extends BasicComponent {
 			pageSize = (pageSizeComboBox.getSelectedIndex() + 2) * 5;
 			pageSizeChange();
 			updateLabel();
+			l.pageSizeChange(pageSize);
 		} else if (source == firstBtn) {
 			firstPage();
 		} else if (source == previousBtn) {
@@ -220,5 +221,13 @@ public class PaginationPanel extends BasicComponent {
 		 * @param pageSize 每页含有记录数
 		 */
 		void jumpTo(int page, int pageSize);
+
+		/**
+		 * 当每页记录数改变时调用
+		 *
+		 * @param pageSize 新的记录数
+		 */
+		void pageSizeChange(int pageSize);
+
 	}
 }

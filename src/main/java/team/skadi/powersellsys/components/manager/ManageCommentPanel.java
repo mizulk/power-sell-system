@@ -197,6 +197,13 @@ public class ManageCommentPanel extends ManagePanel {
 	}
 
 	@Override
+	public void pageSizeChange(int pageSize) {
+		CommentService commentService = ServiceUtil.getService(CommentService.class);
+		PageBean<Comment> commentPageBean = commentService.queryComment(1, pageSize, comment);
+		commentTableModel.updateData(commentPageBean.getData());
+	}
+
+	@Override
 	public SearchPanel.SearchResult onSearchButtonClick(int optionIndex, String content) {
 		comment = new Comment();
 		try {

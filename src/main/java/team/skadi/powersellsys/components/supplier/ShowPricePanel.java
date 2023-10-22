@@ -74,23 +74,28 @@ public class ShowPricePanel extends SupplierPanel implements PaginationPanel.OnC
 
     }
 
-    @Override
-    public void previousPage(int curPage, int pageSize) {
+	@Override
+	public void previousPage(int curPage, int pageSize) {
 
-    }
+	}
 
-    @Override
-    public void jumpTo(int page, int pageSize) {
+	@Override
+	public void jumpTo(int page, int pageSize) {
 
-    }
+	}
 
-    @Override
-    public SearchPanel.SearchResult onSearchButtonClick(int optionIndex, String content) {
-        return null;
-    }
+	@Override
+	public void pageSizeChange(int pageSize) {
 
-    @Override
-    public void onCloseButtonCLick() {
+	}
 
-    }
+	@Override
+	public SearchPanel.SearchResult onSearchButtonClick(int optionIndex, String content) {
+		return null;
+	}
+
+	@Override
+	public void onCloseButtonCLick() {
+
+	}
 }

@@ -236,6 +236,13 @@ public class ManageUserPanel extends ManagePanel {
 	}
 
 	@Override
+	public void pageSizeChange(int pageSize) {
+		UserService userService = ServiceUtil.getService(UserService.class);
+		PageBean<User> userPageBean = userService.queryUser(1, pageSize, user);
+		userTableModel.updateData(userPageBean.getData());
+	}
+
+	@Override
 	public void valueChanged(ListSelectionEvent e) {
 		boolean b = userTable.getSelectedRow() != -1;
 		delUserBtn.setEnabled(b);

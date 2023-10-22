@@ -96,6 +96,7 @@ public class ManageSupplyPanel extends ManagePanel {
 	public void refreshData() {
 		SupplyService supplyService = ServiceUtil.getService(SupplyService.class);
 		PageBean<Supply> supplyPageBean = supplyService.querySupply(paginationPanel.getCurPage(), paginationPanel.getPageSize(), supply);
+		paginationPanel.setPageBean(supplyPageBean);
 		supplyTableModel.updateData(supplyPageBean.getData());
 	}
 
@@ -180,6 +181,13 @@ public class ManageSupplyPanel extends ManagePanel {
 	public void jumpTo(int page, int pageSize) {
 		SupplyService supplyService = ServiceUtil.getService(SupplyService.class);
 		PageBean<Supply> supplyPageBean = supplyService.querySupply(page, pageSize, supply);
+		supplyTableModel.updateData(supplyPageBean.getData());
+	}
+
+	@Override
+	public void pageSizeChange(int pageSize) {
+		SupplyService supplyService = ServiceUtil.getService(SupplyService.class);
+		PageBean<Supply> supplyPageBean = supplyService.querySupply(1, pageSize, supply);
 		supplyTableModel.updateData(supplyPageBean.getData());
 	}
 

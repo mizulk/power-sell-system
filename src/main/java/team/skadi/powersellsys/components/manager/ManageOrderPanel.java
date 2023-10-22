@@ -186,6 +186,13 @@ public class ManageOrderPanel extends ManagePanel {
 	}
 
 	@Override
+	public void pageSizeChange(int pageSize) {
+		OrderService orderService = ServiceUtil.getService(OrderService.class);
+		PageBean<Order> orderPageBean = orderService.queryOrder(1, pageSize, order);
+		orderTableModel.updateData(orderPageBean.getData());
+	}
+
+	@Override
 	public SearchPanel.SearchResult onSearchButtonClick(int optionIndex, String content) {
 		order = new Order();
 		try {

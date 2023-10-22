@@ -167,26 +167,33 @@ public class ShowGoodsPanel extends SupplierPanel
     public void previousPage(int curPage, int pageSize) {
         GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
         PageBean<Goods> goodsPageBean = goodsService.queryGoods(curPage, pageSize, goods);
-        goodsTableModel.updateData(goodsPageBean.getData());
-    }
+		goodsTableModel.updateData(goodsPageBean.getData());
+	}
 
-    @Override
-    public void jumpTo(int page, int pageSize) {
-        GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
-        PageBean<Goods> goodsPageBean = goodsService.queryGoods(page, pageSize, goods);
-        goodsTableModel.updateData(goodsPageBean.getData());
-    }
+	@Override
+	public void jumpTo(int page, int pageSize) {
+		GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
+		PageBean<Goods> goodsPageBean = goodsService.queryGoods(page, pageSize, goods);
+		goodsTableModel.updateData(goodsPageBean.getData());
+	}
 
-    @Override
-    public void valueChanged(ListSelectionEvent e) {
-        boolean b = table.getSelectedRow() != -1;
-        if (b) {
-            int bin = 0;
-            for (int i : table.getSelectedRows()) {
-                Goods row = goodsTableModel.getRow(i);
-                bin |= row.getStatus();
-            }
-            btn2.setText(bin == 1 ? "下架商品" : "上架商品");
-        }
+	@Override
+	public void pageSizeChange(int pageSize) {
+		GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
+		PageBean<Goods> goodsPageBean = goodsService.queryGoods(1, pageSize, goods);
+		goodsTableModel.updateData(goodsPageBean.getData());
+	}
+
+	@Override
+	public void valueChanged(ListSelectionEvent e) {
+		boolean b = table.getSelectedRow() != -1;
+		if (b) {
+			int bin = 0;
+			for (int i : table.getSelectedRows()) {
+				Goods row = goodsTableModel.getRow(i);
+				bin |= row.getStatus();
+			}
+			btn2.setText(bin == 1 ? "下架商品" : "上架商品");
+		}
     }
 }

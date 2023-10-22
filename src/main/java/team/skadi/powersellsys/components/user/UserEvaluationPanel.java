@@ -83,26 +83,33 @@ public class UserEvaluationPanel extends BasicComponent
 	@Override
 	public void firstPage(int pageSize) {
 		CommentService commentService = ServiceUtil.getService(CommentService.class);
-		PageBean<Comment> commentPageBean = commentService.queryComment(1, pageSize, null);
+		PageBean<Comment> commentPageBean = commentService.queryComment(1, pageSize, comment);
 		evaluationTableModel.updateData(commentPageBean.getData());
 	}
 
 	@Override
 	public void nextPage(int curPage, int pageSize) {
 		CommentService commentService = ServiceUtil.getService(CommentService.class);
-		PageBean<Comment> commentPageBean = commentService.queryComment(1, pageSize, null);
+		PageBean<Comment> commentPageBean = commentService.queryComment(curPage, pageSize, comment);
 		evaluationTableModel.updateData(commentPageBean.getData());
 	}
 
 	@Override
 	public void previousPage(int curPage, int pageSize) {
 		CommentService commentService = ServiceUtil.getService(CommentService.class);
-		PageBean<Comment> commentPageBean = commentService.queryComment(1, pageSize, null);
+		PageBean<Comment> commentPageBean = commentService.queryComment(curPage, pageSize, comment);
 		evaluationTableModel.updateData(commentPageBean.getData());
 	}
 
 	@Override
 	public void jumpTo(int page, int pageSize) {
+		CommentService commentService = ServiceUtil.getService(CommentService.class);
+		PageBean<Comment> commentPageBean = commentService.queryComment(page, pageSize, comment);
+		evaluationTableModel.updateData(commentPageBean.getData());
+	}
+
+	@Override
+	public void pageSizeChange(int pageSize) {
 		CommentService commentService = ServiceUtil.getService(CommentService.class);
 		PageBean<Comment> commentPageBean = commentService.queryComment(1, pageSize, null);
 		evaluationTableModel.updateData(commentPageBean.getData());
