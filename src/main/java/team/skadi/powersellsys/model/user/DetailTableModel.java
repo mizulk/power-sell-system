@@ -34,7 +34,7 @@ public class DetailTableModel extends DataTableModel<Goods> {
 			case 2 -> detail.getModel();
 			case 3 -> detail.getCapacity();
 			case 4 -> detail.getPrice();
-			case 5 -> detail.getDiscount();
+			case 5 -> detail.getDiscount() == 0 ? "无" : String.format("-%d%%off", detail.getDiscount());
 			default -> null;
 		};
 	}

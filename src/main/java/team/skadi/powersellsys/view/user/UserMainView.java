@@ -74,11 +74,11 @@ public class UserMainView extends BasicView implements ActionListener {
         JPanel panel = new JPanel(new GridLayout(6, 1, 10, 20));
 
         personalButton = new JButton("个人信息");
-        favoriteButton = new JButton("收藏");
+        favoriteButton = new JButton("我的收藏");
         detailButton = new JButton("商品详情");
         orderButton = new JButton("提交订单");
-        customButton = new JButton("定制");
-        evaluationButton = new JButton("评价");
+        customButton = new JButton("我的定制");
+        evaluationButton = new JButton("我的评价");
         panel.add(personalButton);
         panel.add(favoriteButton);
         panel.add(detailButton);

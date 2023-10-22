@@ -42,7 +42,7 @@
                 AND star = #{star}
             </if>
             <if test="createTime != null">
-                AND createTime = #{createTime}
+                AND createTime LIKE CONCAT('%',#{createTime},'%')
             </if>
         </where>
     </select>

@@ -2,12 +2,11 @@ package team.skadi.powersellsys.model.user;
 
 import team.skadi.powersellsys.model.DataTableModel;
 import team.skadi.powersellsys.pojo.Comment;
-import team.skadi.powersellsys.pojo.Goods;
+import team.skadi.powersellsys.service.CommentService;
 import team.skadi.powersellsys.utils.DateUtil;
+import team.skadi.powersellsys.utils.ServiceUtil;
 
-import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
-import java.util.List;
 
 public class EvaluationTableModel extends DataTableModel<Comment> {
 
@@ -37,5 +36,13 @@ public class EvaluationTableModel extends DataTableModel<Comment> {
             case 3 -> evaluation.getStar();
             default -> null;
         };
+    }
+
+    @Override
+    public boolean delRow(int rowIndex) {
+        CommentService service = ServiceUtil.getService(CommentService.class);
+        boolean b = service.delComment(getRow(rowIndex));
+        super.delRow(rowIndex);
+        return b;
     }
 }

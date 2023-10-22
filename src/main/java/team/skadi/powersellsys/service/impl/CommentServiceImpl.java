@@ -21,9 +21,11 @@ public class CommentServiceImpl implements CommentService {
 		SqlSession sqlSession = SqlSessionUtil.getSqlSession();
 		CommentMapper commentMapper = sqlSession.getMapper(CommentMapper.class);
 		Page<Comment> p = PageHelper.startPage(page, pageSize).doSelectPage(() -> commentMapper.page(comment == null ? new Comment() : comment));
+		PageBean<Comment> commentPageBean = new PageBean<>(p.getTotal(), p.getResult());
 		sqlSession.commit();
 		sqlSession.close();
-		return new PageBean<>(p.getTotal(), p.getResult());
+		p.close();
+		return commentPageBean;
 	}
 
 	@Override

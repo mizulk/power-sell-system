@@ -5,12 +5,12 @@ import team.skadi.powersellsys.components.BasicComponent;
 import team.skadi.powersellsys.components.ImageButton;
 import team.skadi.powersellsys.components.PaginationPanel;
 import team.skadi.powersellsys.components.SearchPanel;
+import team.skadi.powersellsys.components.dialog.BasicDialog;
+import team.skadi.powersellsys.components.dialog.edit.EditDialog;
 import team.skadi.powersellsys.components.dialog.edit.FavoriteDialog;
+import team.skadi.powersellsys.components.dialog.edit.UserCommentDialog;
 import team.skadi.powersellsys.model.user.DetailTableModel;
-import team.skadi.powersellsys.pojo.FavoritePower;
-import team.skadi.powersellsys.pojo.Goods;
-import team.skadi.powersellsys.pojo.PageBean;
-import team.skadi.powersellsys.pojo.PowerType;
+import team.skadi.powersellsys.pojo.*;
 import team.skadi.powersellsys.service.FavoritePowerService;
 import team.skadi.powersellsys.service.GoodsService;
 import team.skadi.powersellsys.utils.ServiceUtil;
@@ -107,6 +107,8 @@ public class UserDetailPanel extends BasicComponent
 		Object source = e.getSource();
 		if (source == favoriteBtn) {
 			addFavorite();
+		} else if (source == evaluationBtn) {
+			addEvalution();
 		}
 	}
 
@@ -125,7 +127,22 @@ public class UserDetailPanel extends BasicComponent
 		}
 	}
 
+	public void addEvalution(){
+		UserCommentDialog userCommentDialog = new UserCommentDialog(app, UserCommentDialog.ADD_MODE);
+		Comment comment =new Comment();
+		comment.setPowerId(detailTableModel.getRow(detailTable.getSelectedRow()).getId());
+		comment.setUserId(app.useStore().userStore.id());
+		userCommentDialog.setData(comment);
+		if (userCommentDialog.getOption() == BasicDialog.CONFIRM_OPTION){
+			JOptionPane.showMessageDialog(app,"评论成功");
+		}else {
+			JOptionPane.showMessageDialog(app,"以取消");
+		}
+
+	}
+
 	@Override
+
 	public void firstPage(int pageSize) {
 		GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
 		PageBean<Goods> goodsPageBean = goodsService.queryGoods(1, pageSize, goods);

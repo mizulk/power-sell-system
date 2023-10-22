@@ -4,11 +4,7 @@ import team.skadi.powersellsys.pojo.Comment;
 import team.skadi.powersellsys.service.CommentService;
 import team.skadi.powersellsys.utils.ServiceUtil;
 
-import javax.swing.JFrame;
-import javax.swing.JSpinner;
-import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
-import java.util.Objects;
+import javax.swing.*;
 
 public class UserCommentDialog extends EditDialog<Comment> {
 
@@ -37,8 +33,10 @@ public class UserCommentDialog extends EditDialog<Comment> {
 	public void setData(Comment data) {
 		super.setData(data);
 		powerIdField.setText(String.valueOf(data.getPowerId()));
-		contentField.setText(data.getContent());
-		starSpinner.setValue(data.getStar());
+		if (data.getContent() != null)
+			contentField.setText(data.getContent());
+		if (data.getStar() != null)
+			starSpinner.setValue(data.getStar());
 
 		if (mode == MODIFY_MODE) {
 			powerIdField.setEditable(false);
@@ -55,15 +53,12 @@ public class UserCommentDialog extends EditDialog<Comment> {
 
 			if (isModify(comment)) return error("信息未修改");
 
-			if (Objects.nonNull(data)) {
-				modifyData(comment);
+			modifyData(comment);
+			if (mode == MODIFY_MODE)
 				commentService.updateComment(data);
-				return successAndExit("修改成功");
-			} else {
-				data = comment;
-			}
-			commentService.addNewComment(comment);
-			return successAndExit("添加成功");
+			else
+				commentService.addNewComment(data);
+			return super.onConfirmButtonClick();
 		}
 	}
 
