@@ -54,6 +54,7 @@ public class ManageSupplyPanel extends ManagePanel {
 	protected JTable getTable() {
 		supplyTable = new JTable(supplyTableModel);
 		supplyTable.setRowHeight(30);
+		supplyTable.getTableHeader().setReorderingAllowed(false);
 		supplyTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		supplyTable.getSelectionModel().addListSelectionListener(this);
 		return supplyTable;

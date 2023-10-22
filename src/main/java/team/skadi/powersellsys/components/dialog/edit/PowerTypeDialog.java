@@ -64,7 +64,7 @@ public class PowerTypeDialog extends EditDialog<PowerType> {
 		if (isInputted()) {
 			return error("请输入电源种类名称");
 		} else {
-			PowerType powerType = new PowerType();
+			PowerType powerType = createData();
 
 			if (isModify(powerType)) {
 				return error("未修改任何信息");
@@ -73,6 +73,7 @@ public class PowerTypeDialog extends EditDialog<PowerType> {
 			GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
 
 			if (data != null) {
+				modifyData(powerType);
 				goodsService.updatePowerType(data);
 				return successAndExit("修改成功");
 			} else {

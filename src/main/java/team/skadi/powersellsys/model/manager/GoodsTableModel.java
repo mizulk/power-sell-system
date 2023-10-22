@@ -6,7 +6,7 @@ import team.skadi.powersellsys.utils.StringUtil;
 
 public class GoodsTableModel extends DataTableModel<Goods> {
 
-	private final String[] columnName = new String[]{"名称", "型号", "容量", "库存", "单价", "折扣", "状态"};
+	private final String[] columnName = new String[]{"名称", "型号", "容量mA•h", "库存", "单价", "折扣", "状态"};
 
 	@Override
 	public String getColumnName(int column) {

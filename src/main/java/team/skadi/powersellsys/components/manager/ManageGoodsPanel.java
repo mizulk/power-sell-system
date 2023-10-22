@@ -57,6 +57,7 @@ public class ManageGoodsPanel extends ManagePanel {
 		goodsTableModel = new GoodsTableModel();
 		goodsTable = new JTable(goodsTableModel);
 		goodsTable.setRowHeight(30);
+		goodsTable.getTableHeader().setReorderingAllowed(false);
 		goodsTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		goodsTable.getSelectionModel().addListSelectionListener(this);
 		return goodsTable;

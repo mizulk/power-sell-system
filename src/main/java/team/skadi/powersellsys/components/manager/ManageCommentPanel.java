@@ -54,6 +54,7 @@ public class ManageCommentPanel extends ManagePanel {
 	protected JTable getTable() {
 		commentTable = new JTable(commentTableModel);
 		commentTable.setRowHeight(30);
+		commentTable.getTableHeader().setReorderingAllowed(false);
 		commentTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		commentTable.getSelectionModel().addListSelectionListener(this);
 		return commentTable;

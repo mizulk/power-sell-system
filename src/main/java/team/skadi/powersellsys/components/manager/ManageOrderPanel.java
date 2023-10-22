@@ -53,6 +53,7 @@ public class ManageOrderPanel extends ManagePanel {
 	protected JTable getTable() {
 		orderTable = new JTable(orderTableModel);
 		orderTable.setRowHeight(30);
+		orderTable.getTableHeader().setReorderingAllowed(false);
 		orderTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		orderTable.getSelectionModel().addListSelectionListener(this);
 		return orderTable;

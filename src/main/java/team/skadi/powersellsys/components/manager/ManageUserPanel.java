@@ -54,6 +54,7 @@ public class ManageUserPanel extends ManagePanel {
 	protected JTable getTable() {
 		userTable = new JTable(userTableModel);
 		userTable.setRowHeight(30);
+		userTable.getTableHeader().setReorderingAllowed(false);
 		userTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		userTable.getSelectionModel().addListSelectionListener(this);
 		return userTable;
