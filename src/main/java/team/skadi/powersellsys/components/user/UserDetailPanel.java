@@ -6,19 +6,30 @@ import team.skadi.powersellsys.components.ImageButton;
 import team.skadi.powersellsys.components.PaginationPanel;
 import team.skadi.powersellsys.components.SearchPanel;
 import team.skadi.powersellsys.components.dialog.BasicDialog;
-import team.skadi.powersellsys.components.dialog.edit.EditDialog;
 import team.skadi.powersellsys.components.dialog.edit.FavoriteDialog;
 import team.skadi.powersellsys.components.dialog.edit.UserCommentDialog;
+import team.skadi.powersellsys.components.information.GoodsInformationPanel;
 import team.skadi.powersellsys.model.user.DetailTableModel;
-import team.skadi.powersellsys.pojo.*;
+import team.skadi.powersellsys.pojo.Comment;
+import team.skadi.powersellsys.pojo.FavoritePower;
+import team.skadi.powersellsys.pojo.Goods;
+import team.skadi.powersellsys.pojo.PageBean;
 import team.skadi.powersellsys.service.FavoritePowerService;
 import team.skadi.powersellsys.service.GoodsService;
 import team.skadi.powersellsys.utils.ServiceUtil;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 
 public class UserDetailPanel extends BasicComponent
@@ -30,6 +41,7 @@ public class UserDetailPanel extends BasicComponent
 	private JTable detailTable;
 	private JButton favoriteBtn;
 	private JButton evaluationBtn;
+	private ImageButton viewBtn;
 
 
 	public UserDetailPanel(App app) {
@@ -40,6 +52,7 @@ public class UserDetailPanel extends BasicComponent
 	protected void init() {
 		detailTableModel = new DetailTableModel();
 		goods = new Goods();
+		goods.setStatus(1);
 		super.init();
 	}
 
@@ -68,8 +81,12 @@ public class UserDetailPanel extends BasicComponent
 		evaluationBtn.setEnabled(false);
 		btnPanel.add(evaluationBtn, gbc);
 
+		viewBtn = new ImageButton("查看详细", "/images/view.png");
+		viewBtn.setEnabled(false);
+		btnPanel.add(viewBtn, gbc);
+
 		gbc.gridy++;
-		gbc.gridwidth = 2;
+		gbc.gridwidth = 3;
 		paginationPanel = new PaginationPanel(app, false);
 		paginationPanel.addOnclickListener(this);
 		btnPanel.add(paginationPanel, gbc);
@@ -83,7 +100,7 @@ public class UserDetailPanel extends BasicComponent
 	@Override
 	public void initData() {
 		GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
-		PageBean<Goods> goodsPageBean = goodsService.queryGoods(1, paginationPanel.getPageSize(), null);
+		PageBean<Goods> goodsPageBean = goodsService.queryGoods(1, paginationPanel.getPageSize(), goods);
 		paginationPanel.setPageBean(goodsPageBean);
 		detailTableModel.updateData(goodsPageBean.getData());
 	}
@@ -100,6 +117,7 @@ public class UserDetailPanel extends BasicComponent
 	protected void addListener() {
 		favoriteBtn.addActionListener(this);
 		evaluationBtn.addActionListener(this);
+		viewBtn.addActionListener(this);
 	}
 
 	@Override
@@ -109,7 +127,24 @@ public class UserDetailPanel extends BasicComponent
 			addFavorite();
 		} else if (source == evaluationBtn) {
 			addEvalution();
+		} else if (source == viewBtn) {
+			viewGoods();
 		}
+	}
+
+	private void viewGoods() {
+		Goods row = detailTableModel.getRow(detailTable.getSelectedRow());
+		BasicDialog basicDialog = new BasicDialog(app, "商品详细") {
+			@Override
+			protected JComponent getCenterLayout() {
+				GoodsInformationPanel goodsInformationPanel = new GoodsInformationPanel(app);
+				goodsInformationPanel.showGoods(row);
+				return goodsInformationPanel;
+			}
+		};
+		basicDialog.getOption();
+		row.setSum(row.getSum() + 1);
+		ServiceUtil.getService(GoodsService.class).updateGoods(row);
 	}
 
 	public void addFavorite() {
@@ -127,16 +162,16 @@ public class UserDetailPanel extends BasicComponent
 		}
 	}
 
-	public void addEvalution(){
+	public void addEvalution() {
 		UserCommentDialog userCommentDialog = new UserCommentDialog(app, UserCommentDialog.ADD_MODE);
-		Comment comment =new Comment();
+		Comment comment = new Comment();
 		comment.setPowerId(detailTableModel.getRow(detailTable.getSelectedRow()).getId());
 		comment.setUserId(app.useStore().userStore.id());
 		userCommentDialog.setData(comment);
-		if (userCommentDialog.getOption() == BasicDialog.CONFIRM_OPTION){
-			JOptionPane.showMessageDialog(app,"评论成功");
-		}else {
-			JOptionPane.showMessageDialog(app,"已取消");
+		if (userCommentDialog.getOption() == BasicDialog.CONFIRM_OPTION) {
+			JOptionPane.showMessageDialog(app, "评论成功");
+		} else {
+			JOptionPane.showMessageDialog(app, "已取消");
 		}
 
 	}
@@ -180,6 +215,7 @@ public class UserDetailPanel extends BasicComponent
 	@Override
 	public SearchPanel.SearchResult onSearchButtonClick(int optionIndex, String content) {
 		goods = new Goods();
+		goods.setStatus(1);
 		try {
 			switch (optionIndex) {
 				case 0 -> goods.setName(content);
@@ -197,7 +233,10 @@ public class UserDetailPanel extends BasicComponent
 
 	@Override
 	public void onCloseButtonCLick() {
-		PageBean<Goods> goodsPageBean = ServiceUtil.getService(GoodsService.class).queryGoods(1, paginationPanel.getPageSize(), null);
+		goods = new Goods();
+		goods.setStatus(1);
+		PageBean<Goods> goodsPageBean = ServiceUtil.getService(GoodsService.class).queryGoods(1, paginationPanel.getPageSize(), goods);
+		paginationPanel.setPageBean(goodsPageBean);
 		detailTableModel.updateData(goodsPageBean.getData());
 	}
 
@@ -206,5 +245,6 @@ public class UserDetailPanel extends BasicComponent
 		boolean b = detailTable.getSelectedRow() != -1;
 		favoriteBtn.setEnabled(b);
 		evaluationBtn.setEnabled(b);
+		viewBtn.setEnabled(b);
 	}
 }
