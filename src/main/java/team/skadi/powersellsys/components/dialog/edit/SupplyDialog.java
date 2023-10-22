@@ -15,7 +15,7 @@ public class SupplyDialog extends SupplierSupplyDialog {
 	private JTextField supplierIdField;
 
 	public SupplyDialog(JFrame frame, int mode) {
-		super(frame, mode == ADD_MODE ? "添加供应订单" : "修正订单", mode);
+		super(frame, mode);
 	}
 
 	@Override
