@@ -28,7 +28,7 @@ public interface GoodsService extends Service {
 
 	void putOffShelf(Goods goods);
 
-	PageBean<Goods> getRank(int page, int pageSize);
+	PageBean<Goods> getRank(int page, int pageSize, Goods goods);
 
 	boolean isGoodsExist(Integer id);
 }

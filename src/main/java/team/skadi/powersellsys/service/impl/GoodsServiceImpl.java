@@ -148,10 +148,10 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 
 	@Override
-	public PageBean<Goods> getRank(int page, int pageSize) {
+	public PageBean<Goods> getRank(int page, int pageSize,Goods goods) {
 		SqlSession sqlSession = SqlSessionUtil.getSqlSession();
 		GoodsMapper goodsMapper = sqlSession.getMapper(GoodsMapper.class);
-		try (Page<Goods> ranks = PageHelper.startPage(page, pageSize).doSelectPage(goodsMapper::selectPriceRank)) {
+		try (Page<Goods> ranks = PageHelper.startPage(page, pageSize).doSelectPage(()-> goodsMapper.selectPriceRank(goods==null ? new Goods() : goods))) {
 			return new PageBean<>(ranks.getTotal(), ranks.getResult());
 		}
 	}

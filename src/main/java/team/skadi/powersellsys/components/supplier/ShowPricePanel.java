@@ -16,6 +16,7 @@ import java.awt.event.ActionEvent;
 
 public class ShowPricePanel extends SupplierPanel implements PaginationPanel.OnClickListener, SearchPanel.OnClickListener {
 
+    private Goods goods;
     private PaginationPanel paginationPanel;
     private PriceTableModel priceTableModel;
     private JTable table;
@@ -25,16 +26,25 @@ public class ShowPricePanel extends SupplierPanel implements PaginationPanel.OnC
     }
 
     @Override
+    protected void init() {
+        goods = new Goods();
+        super.init();
+    }
+
+    @Override
     public void initData() {
         GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
-        PageBean<Goods> rank = goodsService.getRank(1, paginationPanel.getPageSize());
+        PageBean<Goods> rank = goodsService.getRank(1, paginationPanel.getPageSize(), null);
         paginationPanel.setPageBean(rank);
         priceTableModel.updateData(rank.getData());
     }
 
     @Override
     public void refreshData() {
-
+        GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
+        PageBean<Goods> rank = goodsService.getRank(1, paginationPanel.getPageSize(), goods);
+        paginationPanel.setPageBean(rank);
+        priceTableModel.updateData(rank.getData());
     }
 
     @Override
@@ -43,15 +53,15 @@ public class ShowPricePanel extends SupplierPanel implements PaginationPanel.OnC
         priceTableModel = new PriceTableModel();
         table = new JTable(priceTableModel);
         table.setRowHeight(30);
-        add(new JScrollPane(table),BorderLayout.CENTER);
+        add(new JScrollPane(table), BorderLayout.CENTER);
 
-        paginationPanel = new PaginationPanel(app,false);
+        paginationPanel = new PaginationPanel(app, false);
         paginationPanel.addOnclickListener(this);
-        add(paginationPanel,BorderLayout.SOUTH);
+        add(paginationPanel, BorderLayout.SOUTH);
 
-        SearchPanel searchPanel = new SearchPanel(app,new String[]{"商品名称","商品价格"});
+        SearchPanel searchPanel = new SearchPanel(app, new String[]{"商品名称", "商品价格"});
         searchPanel.addOnClickListener(this);
-        add(searchPanel,BorderLayout.NORTH);
+        add(searchPanel, BorderLayout.NORTH);
     }
 
     @Override
@@ -66,36 +76,61 @@ public class ShowPricePanel extends SupplierPanel implements PaginationPanel.OnC
 
     @Override
     public void firstPage(int pageSize) {
-
+        GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
+        PageBean<Goods> rank = goodsService.getRank(1, pageSize, goods);
+        priceTableModel.updateData(rank.getData());
     }
 
     @Override
     public void nextPage(int curPage, int pageSize) {
+        GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
+        PageBean<Goods> rank = goodsService.getRank(curPage, pageSize, goods);
+        priceTableModel.updateData(rank.getData());
+    }
+
+    @Override
+    public void previousPage(int curPage, int pageSize) {
+        GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
+        PageBean<Goods> rank = goodsService.getRank(curPage, pageSize, goods);
+        priceTableModel.updateData(rank.getData());
+    }
+
+    @Override
+    public void jumpTo(int page, int pageSize) {
+        GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
+        PageBean<Goods> rank = goodsService.getRank(page, pageSize, goods);
+        priceTableModel.updateData(rank.getData());
+    }
+
+    @Override
+    public void pageSizeChange(int pageSize) {
+        GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
+        PageBean<Goods> rank = goodsService.getRank(1, pageSize, goods);
+        priceTableModel.updateData(rank.getData());
+    }
+
+    @Override
+    public SearchPanel.SearchResult onSearchButtonClick(int optionIndex, String content) {
+        goods = new Goods();
+        try {
+            switch (optionIndex) {
+                case 0 -> goods.setName(content);
+                case 1 -> goods.setPrice(Float.parseFloat(content));
+            }
+        } catch (NumberFormatException e) {
+            return SearchPanel.SearchResult.NAN;
+        }
+        PageBean<Goods> goodss = ServiceUtil.getService(GoodsService.class).getRank(1, paginationPanel.getPageSize(), goods);
+        priceTableModel.updateData(goodss.getData());
+        paginationPanel.setPageBean(goodss); // 更新分页面板
+        return goodss.getTotal() == 0 ? SearchPanel.SearchResult.NO_RESULT : SearchPanel.SearchResult.HAVE_RESULT;
 
     }
 
-	@Override
-	public void previousPage(int curPage, int pageSize) {
-
-	}
-
-	@Override
-	public void jumpTo(int page, int pageSize) {
-
-	}
-
-	@Override
-	public void pageSizeChange(int pageSize) {
-
-	}
-
-	@Override
-	public SearchPanel.SearchResult onSearchButtonClick(int optionIndex, String content) {
-		return null;
-	}
-
-	@Override
-	public void onCloseButtonCLick() {
-
-	}
+    @Override
+    public void onCloseButtonCLick() {
+        GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
+        PageBean<Goods> rank = goodsService.getRank(1, paginationPanel.getPageSize(), null);
+        priceTableModel.updateData(rank.getData());
+    }
 }

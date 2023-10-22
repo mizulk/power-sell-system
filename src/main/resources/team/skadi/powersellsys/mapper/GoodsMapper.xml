@@ -75,5 +75,17 @@
 			</if>
 		</where>
 	</select>
+	<select id="selectPriceRank" resultType="team.skadi.powersellsys.pojo.Goods">
+		SELECT id,`name`,price FROM goods
+		<where>
+			<if test="name != null">
+				`name` LIKE CONCAT('%',#{name},'%')
+			</if>
+			<if test="price != null">
+				AND price = #{price}
+			</if>
+		</where>
+		ORDER BY price DESC
+	</select>
 
 </mapper>

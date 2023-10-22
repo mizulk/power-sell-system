@@ -142,6 +142,7 @@ public class SupplierMainView extends BasicView implements ActionListener {
             jPanel4.initData();
         } else if (source == button3) {
             router.showPanel("panel5");
+            jPanel5.initData();
         } else if (source == button4) {
             router.showPanel("panel6");
         } else if (source == button5) {

@@ -47,8 +47,7 @@ public interface GoodsMapper {
 
 	void updatePower(Goods goods);
 
-	@Select("SELECT id,`name`,price FROM goods ORDER BY price DESC")
-	List<Goods> selectPriceRank();
+	List<Goods> selectPriceRank(Goods goods);
 
 	@Select("SELECT `name` FROM powers WHERE id = #{id}")
 	String findGoodsNameById(@Param("id") Integer id);
