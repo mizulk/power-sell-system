@@ -1,4 +1,4 @@
-package team.skadi.powersellsys.components.dialog;
+package team.skadi.powersellsys.components.dialog.edit;
 
 import team.skadi.powersellsys.pojo.Order;
 import team.skadi.powersellsys.service.OrderService;

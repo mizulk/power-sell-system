@@ -1,5 +1,6 @@
-package team.skadi.powersellsys.components.dialog;
+package team.skadi.powersellsys.components.dialog.edit;
 
+import team.skadi.powersellsys.components.dialog.BasicDialog;
 import team.skadi.powersellsys.pojo.Goods;
 import team.skadi.powersellsys.pojo.PowerType;
 import team.skadi.powersellsys.service.GoodsService;
@@ -7,7 +8,6 @@ import team.skadi.powersellsys.utils.ServiceUtil;
 
 import javax.swing.*;
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
 import java.util.Objects;
 
 public class GoodsDialog extends EditDialog<Goods> {
@@ -79,7 +79,7 @@ public class GoodsDialog extends EditDialog<Goods> {
 		super.addListener();
 		addTypeBtn.addActionListener((e) -> {
 			PowerTypeDialog powerTypeDialog = new PowerTypeDialog(this, EditDialog.ADD_MODE);
-			if (powerTypeDialog.getOption() == CONFIRM_OPTION) {
+			if (powerTypeDialog.getOption() == BasicDialog.CONFIRM_OPTION) {
 				powerTypComboBoxModel.addElement(powerTypeDialog.getData());
 			}
 		});

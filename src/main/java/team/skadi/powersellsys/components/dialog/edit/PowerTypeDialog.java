@@ -1,4 +1,4 @@
-package team.skadi.powersellsys.components.dialog;
+package team.skadi.powersellsys.components.dialog.edit;
 
 import team.skadi.powersellsys.pojo.PowerType;
 import team.skadi.powersellsys.service.GoodsService;
@@ -6,7 +6,6 @@ import team.skadi.powersellsys.utils.ServiceUtil;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class PowerTypeDialog extends EditDialog<PowerType> {

@@ -1,6 +1,8 @@
-package team.skadi.powersellsys.components;
+package team.skadi.powersellsys.components.information;
 
 import team.skadi.powersellsys.App;
+import team.skadi.powersellsys.components.BasicComponent;
+import team.skadi.powersellsys.components.ImageLabel;
 import team.skadi.powersellsys.pojo.Order;
 import team.skadi.powersellsys.service.GoodsService;
 import team.skadi.powersellsys.service.UserService;

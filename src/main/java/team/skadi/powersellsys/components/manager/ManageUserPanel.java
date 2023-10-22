@@ -2,9 +2,9 @@ package team.skadi.powersellsys.components.manager;
 
 import team.skadi.powersellsys.App;
 import team.skadi.powersellsys.components.SearchPanel;
-import team.skadi.powersellsys.components.UserInformationPanel;
+import team.skadi.powersellsys.components.information.UserInformationPanel;
 import team.skadi.powersellsys.components.dialog.BasicDialog;
-import team.skadi.powersellsys.components.dialog.UserDialog;
+import team.skadi.powersellsys.components.dialog.edit.UserDialog;
 import team.skadi.powersellsys.model.manager.UserTableModel;
 import team.skadi.powersellsys.pojo.PageBean;
 import team.skadi.powersellsys.pojo.User;

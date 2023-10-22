@@ -2,10 +2,10 @@ package team.skadi.powersellsys.components.manager;
 
 import team.skadi.powersellsys.App;
 import team.skadi.powersellsys.components.SearchPanel;
-import team.skadi.powersellsys.components.SupplierInformationPanel;
+import team.skadi.powersellsys.components.information.SupplierInformationPanel;
 import team.skadi.powersellsys.components.dialog.BasicDialog;
-import team.skadi.powersellsys.components.dialog.EditDialog;
-import team.skadi.powersellsys.components.dialog.SupplierDialog;
+import team.skadi.powersellsys.components.dialog.edit.EditDialog;
+import team.skadi.powersellsys.components.dialog.edit.SupplierDialog;
 import team.skadi.powersellsys.model.manager.SupplierTableModel;
 import team.skadi.powersellsys.pojo.PageBean;
 import team.skadi.powersellsys.pojo.Supplier;

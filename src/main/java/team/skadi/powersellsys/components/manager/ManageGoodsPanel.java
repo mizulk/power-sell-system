@@ -1,11 +1,11 @@
 package team.skadi.powersellsys.components.manager;
 
 import team.skadi.powersellsys.App;
-import team.skadi.powersellsys.components.GoodsInformationPanel;
+import team.skadi.powersellsys.components.information.GoodsInformationPanel;
 import team.skadi.powersellsys.components.SearchPanel;
 import team.skadi.powersellsys.components.dialog.BasicDialog;
-import team.skadi.powersellsys.components.dialog.EditDialog;
-import team.skadi.powersellsys.components.dialog.GoodsDialog;
+import team.skadi.powersellsys.components.dialog.edit.EditDialog;
+import team.skadi.powersellsys.components.dialog.edit.GoodsDialog;
 import team.skadi.powersellsys.model.manager.GoodsTableModel;
 import team.skadi.powersellsys.pojo.Goods;
 import team.skadi.powersellsys.pojo.PageBean;

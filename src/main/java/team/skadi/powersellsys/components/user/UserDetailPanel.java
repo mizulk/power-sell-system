@@ -5,7 +5,7 @@ import team.skadi.powersellsys.components.BasicComponent;
 import team.skadi.powersellsys.components.ImageButton;
 import team.skadi.powersellsys.components.PaginationPanel;
 import team.skadi.powersellsys.components.SearchPanel;
-import team.skadi.powersellsys.components.dialog.FavoriteDialog;
+import team.skadi.powersellsys.components.dialog.edit.FavoriteDialog;
 import team.skadi.powersellsys.model.user.DetailTableModel;
 import team.skadi.powersellsys.pojo.Goods;
 import team.skadi.powersellsys.pojo.PageBean;

@@ -4,15 +4,13 @@ import team.skadi.powersellsys.App;
 import team.skadi.powersellsys.components.PaginationPanel;
 import team.skadi.powersellsys.components.SearchPanel;
 import team.skadi.powersellsys.components.dialog.BasicDialog;
-import team.skadi.powersellsys.components.dialog.EditDialog;
-import team.skadi.powersellsys.components.dialog.GoodsDialog;
+import team.skadi.powersellsys.components.dialog.edit.EditDialog;
+import team.skadi.powersellsys.components.dialog.edit.GoodsDialog;
 import team.skadi.powersellsys.model.supplier.GoodsTableModel;
 import team.skadi.powersellsys.pojo.Goods;
 import team.skadi.powersellsys.pojo.PageBean;
 import team.skadi.powersellsys.service.GoodsService;
 import team.skadi.powersellsys.utils.ServiceUtil;
-import team.skadi.powersellsys.view.supplier.PutOffDialog;
-import team.skadi.powersellsys.view.supplier.PutOnDialog;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;

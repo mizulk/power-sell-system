@@ -1,4 +1,4 @@
-package team.skadi.powersellsys.components.dialog;
+package team.skadi.powersellsys.components.dialog.edit;
 
 import team.skadi.powersellsys.pojo.Supply;
 import team.skadi.powersellsys.service.SupplyService;

@@ -1,6 +1,9 @@
-package team.skadi.powersellsys.components;
+package team.skadi.powersellsys.components.information;
 
 import team.skadi.powersellsys.App;
+import team.skadi.powersellsys.components.BasicComponent;
+import team.skadi.powersellsys.components.ImageButton;
+import team.skadi.powersellsys.components.ImageLabel;
 import team.skadi.powersellsys.pojo.User;
 import team.skadi.powersellsys.utils.DateUtil;
 

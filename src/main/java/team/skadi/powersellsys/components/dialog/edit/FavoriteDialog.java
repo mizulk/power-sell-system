@@ -1,4 +1,4 @@
-package team.skadi.powersellsys.components.dialog;
+package team.skadi.powersellsys.components.dialog.edit;
 
 import team.skadi.powersellsys.pojo.FavoritePower;
 import team.skadi.powersellsys.service.FavoritePowerService;
@@ -6,7 +6,7 @@ import team.skadi.powersellsys.utils.ServiceUtil;
 
 import javax.swing.*;
 
-public class FavoriteDialog extends EditDialog<FavoritePower>{
+public class FavoriteDialog extends EditDialog<FavoritePower> {
 
 	private JSpinner powerId;
 
@@ -16,8 +16,8 @@ public class FavoriteDialog extends EditDialog<FavoritePower>{
 
 	@Override
 	protected void buildInputLayout() {
-		powerId = new JSpinner(new SpinnerNumberModel(0,0,Integer.MAX_VALUE,1));
-		addField("收藏的电源id：",powerId);
+		powerId = new JSpinner(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
+		addField("收藏的电源id：", powerId);
 	}
 
 	@Override
@@ -30,8 +30,6 @@ public class FavoriteDialog extends EditDialog<FavoritePower>{
 		FavoritePower favorite = new FavoritePower();
 		if (powerId.getValue() instanceof Integer p) {
 			favorite.setPowerId(p);
-		}else {
-			favorite.setPowerId(((Integer) powerId.getValue()).intValue());
 		}
 
 		FavoritePowerService favoritePowerService = ServiceUtil.getService(FavoritePowerService.class);

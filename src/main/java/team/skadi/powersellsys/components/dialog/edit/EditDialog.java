@@ -1,4 +1,6 @@
-package team.skadi.powersellsys.components.dialog;
+package team.skadi.powersellsys.components.dialog.edit;
+
+import team.skadi.powersellsys.components.dialog.BasicDialog;
 
 import javax.swing.JComponent;
 import javax.swing.JDialog;
