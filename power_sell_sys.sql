@@ -295,6 +295,6 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `goods` AS select `t`.`va
 -- View structure for judge
 -- ----------------------------
 DROP VIEW IF EXISTS `judge`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `judge` AS select `users`.`account` AS `u_account`,`powers`.`name` AS `p_name`,`powers`.`capacity` AS `p_capacity`,`powers`.`describe` AS `p_describe` from (`users` join `powers`);
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `judge` AS select `p`.`name` AS `power_name`,`u`.`account` AS `user_account`,`c`.`star` AS `star`,`c`.`content` AS `content`,`c`.`create_time` AS `create_time` from ((`powers` `p` join `comments` `c`) join `users` `u`) where ((`c`.`user_id` = `u`.`id`) and (`c`.`power_id` = `p`.`id`));
 
 SET FOREIGN_KEY_CHECKS = 1;
