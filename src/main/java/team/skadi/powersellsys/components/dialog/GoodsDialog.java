@@ -5,12 +5,9 @@ import team.skadi.powersellsys.pojo.PowerType;
 import team.skadi.powersellsys.service.GoodsService;
 import team.skadi.powersellsys.utils.ServiceUtil;
 
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JSpinner;
-import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
+import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
 import java.util.Objects;
 
 public class GoodsDialog extends EditDialog<Goods> {
@@ -23,10 +20,13 @@ public class GoodsDialog extends EditDialog<Goods> {
 	private JSpinner priceSpinner;
 	private JSpinner discountSpinner;
 	private JTextField describeField;
+	private JButton addTypeBtn;
+	private DefaultComboBoxModel<PowerType> powerTypComboBoxModel;
 
 	public GoodsDialog(JFrame frame, int mode) {
 		super(frame, mode == ADD_MODE ? "添加商品" : "修正商品", mode);
 	}
+
 
 	@Override
 	protected void buildInputLayout() {
@@ -34,8 +34,13 @@ public class GoodsDialog extends EditDialog<Goods> {
 		addField("电源名称(必填)：", nameField);
 
 		GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
-		typeComboBox = new JComboBox<>(new DefaultComboBoxModel<>(goodsService.getAllPowerType().toArray(new PowerType[]{})));
-		addField("电源类型：", typeComboBox);
+		JPanel typePanel = new JPanel(new BorderLayout(0, 5));
+		powerTypComboBoxModel = new DefaultComboBoxModel<>(goodsService.getAllPowerType().toArray(new PowerType[]{}));
+		typeComboBox = new JComboBox<>(powerTypComboBoxModel);
+		typePanel.add(typeComboBox, BorderLayout.CENTER);
+		addTypeBtn = new JButton("+");
+		typePanel.add(addTypeBtn, BorderLayout.EAST);
+		addField("电源类型：", typePanel);
 
 		modelField = new JTextField(TEXT_FIELD_COLUMNS);
 		addField("型号(必填)：", modelField);
@@ -46,7 +51,7 @@ public class GoodsDialog extends EditDialog<Goods> {
 		stockSpinner = new JSpinner(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
 		addField("库存：", stockSpinner);
 
-		priceSpinner = new JSpinner(new SpinnerNumberModel(1.0f, 0.01f, Integer.MAX_VALUE, 0.05f));
+		priceSpinner = new JSpinner(new SpinnerNumberModel(1.0, 0.01, Integer.MAX_VALUE, 0.05));
 		addField("单价：", priceSpinner);
 
 		discountSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 99, 1));
@@ -67,6 +72,17 @@ public class GoodsDialog extends EditDialog<Goods> {
 		priceSpinner.setValue(data.getPrice());
 		discountSpinner.setValue(data.getDiscount());
 		describeField.setText(data.getDescribe() == null ? "暂无描述" : data.getDescribe());
+	}
+
+	@Override
+	protected void addListener() {
+		super.addListener();
+		addTypeBtn.addActionListener((e) -> {
+			PowerTypeDialog powerTypeDialog = new PowerTypeDialog(this, EditDialog.ADD_MODE);
+			if (powerTypeDialog.getOption() == CONFIRM_OPTION) {
+				powerTypComboBoxModel.addElement(powerTypeDialog.getData());
+			}
+		});
 	}
 
 	@Override

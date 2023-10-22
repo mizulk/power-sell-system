@@ -61,6 +61,52 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 
 	@Override
+	public boolean addNewPowerType(PowerType powerType) {
+		log.info("添加新电源类型：{}", powerType);
+		try (SqlSession sqlSession = SqlSessionUtil.getSqlSession()) {
+			GoodsMapper goodsMapper = sqlSession.getMapper(GoodsMapper.class);
+			int count = goodsMapper.selectPowerTypeValueCount(powerType);
+			if (count == 0) {
+				goodsMapper.insertNewPowerType(powerType);
+				int typeId = goodsMapper.findPowerTypeById(powerType);
+				powerType.setId(typeId);
+				sqlSession.commit();
+				return true;
+			}
+			sqlSession.commit();
+			return false;
+		}
+	}
+
+	@Override
+	public boolean delPowerType(PowerType powerType) {
+		log.info("删除电源类型：{}", powerType);
+		SqlSession sqlSession = SqlSessionUtil.getSqlSession();
+		try {
+			GoodsMapper goodsMapper = sqlSession.getMapper(GoodsMapper.class);
+			goodsMapper.deletePowerType(powerType);
+			sqlSession.commit();
+			return true;
+		} catch (Exception e) {
+			log.error("删除电源信息时出现错误，数据库回滚。", e);
+			sqlSession.rollback();
+		} finally {
+			sqlSession.close();
+		}
+		return false;
+	}
+
+	@Override
+	public void updatePowerType(PowerType powerType) {
+		log.info("更新电源类型：{}", powerType);
+		SqlSession sqlSession = SqlSessionUtil.getSqlSession();
+		GoodsMapper goodsMapper = sqlSession.getMapper(GoodsMapper.class);
+		goodsMapper.updatePowerType(powerType);
+		sqlSession.commit();
+		sqlSession.close();
+	}
+
+	@Override
 	public void updateGoods(Goods goods) {
 		log.info("更新电源：{}", goods);
 		SqlSession sqlSession = SqlSessionUtil.getSqlSession();
@@ -72,7 +118,7 @@ public class GoodsServiceImpl implements GoodsService {
 
 	@Override
 	public void addNewGoods(Goods goods) {
-		log.info("");
+		log.info("添加新电源：{}", goods);
 		SqlSession sqlSession = SqlSessionUtil.getSqlSession();
 		try {
 			GoodsMapper goodsMapper = sqlSession.getMapper(GoodsMapper.class);
@@ -105,8 +151,9 @@ public class GoodsServiceImpl implements GoodsService {
 	public PageBean<Goods> getRank(int page, int pageSize) {
 		SqlSession sqlSession = SqlSessionUtil.getSqlSession();
 		GoodsMapper goodsMapper = sqlSession.getMapper(GoodsMapper.class);
-		Page<Goods> ranks = PageHelper.startPage(page, pageSize).doSelectPage(() -> goodsMapper.selectPriceRank());
-		return new PageBean<>(ranks.getTotal(), ranks.getResult());
+		try (Page<Goods> ranks = PageHelper.startPage(page, pageSize).doSelectPage(goodsMapper::selectPriceRank)) {
+			return new PageBean<>(ranks.getTotal(), ranks.getResult());
+		}
 	}
 
 }

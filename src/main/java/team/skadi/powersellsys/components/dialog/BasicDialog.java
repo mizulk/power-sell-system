@@ -26,6 +26,11 @@ public abstract class BasicDialog extends JDialog implements ActionListener {
 		init();
 	}
 
+	public BasicDialog(JDialog owner, String title) {
+		super(owner, title, true);
+		init();
+	}
+
 	public int getOption() {
 		setVisible(true);
 		return option;

@@ -16,6 +16,12 @@ public interface GoodsService extends Service {
 
 	List<PowerType> getAllPowerType();
 
+	boolean addNewPowerType(PowerType powerType);
+
+	boolean delPowerType(PowerType powerType);
+
+	void updatePowerType(PowerType powerType);
+
 	void updateGoods(Goods goods);
 
 	void addNewGoods(Goods goods);

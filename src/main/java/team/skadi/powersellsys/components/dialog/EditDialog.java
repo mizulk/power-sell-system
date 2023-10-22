@@ -1,6 +1,7 @@
 package team.skadi.powersellsys.components.dialog;
 
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -24,6 +25,11 @@ public abstract class EditDialog<T> extends BasicDialog {
 
 	public EditDialog(JFrame frame, String title, int mode) {
 		super(frame, title);
+		this.mode = mode;
+	}
+
+	public EditDialog(JDialog owner, String title, int mode) {
+		super(owner, title);
 		this.mode = mode;
 	}
 
