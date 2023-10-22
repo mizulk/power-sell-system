@@ -1,11 +1,11 @@
 package team.skadi.powersellsys.model.supplier;
 
 import team.skadi.powersellsys.model.DataTableModel;
-import team.skadi.powersellsys.pojo.Order;
+import team.skadi.powersellsys.pojo.Statement;
 
-public class StatementTableModel extends DataTableModel<Order> {
+public class StatementTableModel extends DataTableModel<Statement> {
 
-    private final String[] columnName = new String[]{"电源类型", "电源型号", "订购日期", "订购人数"};
+    private final String[] columnName = new String[]{"电源id", "电源名称", "订购数量", "订购金额"};
 
     @Override
     public String getColumnName(int column) {
@@ -24,10 +24,12 @@ public class StatementTableModel extends DataTableModel<Order> {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Order order = data.get(rowIndex);
-        return switch (columnIndex){
-            case 0 -> order.getCreateTime();
-            case 1 -> order.getCount();
+        Statement statement = data.get(rowIndex);
+        return switch (columnIndex) {
+            case 0 -> statement.getPowerId();
+            case 1 -> statement.getPowerName();
+            case 2 -> statement.getSum();
+            case 3 -> statement.getTotalPrice();
             default -> null;
         };
     }

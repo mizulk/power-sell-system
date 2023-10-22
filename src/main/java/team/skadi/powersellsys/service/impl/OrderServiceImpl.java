@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import team.skadi.powersellsys.mapper.OrderMapper;
 import team.skadi.powersellsys.pojo.Order;
 import team.skadi.powersellsys.pojo.PageBean;
+import team.skadi.powersellsys.pojo.Statement;
 import team.skadi.powersellsys.service.OrderService;
 import team.skadi.powersellsys.utils.SqlSessionUtil;
 
@@ -58,5 +59,18 @@ public class OrderServiceImpl implements OrderService {
 		} finally {
 			sqlSession.close();
 		}
+	}
+
+	@Override
+	public PageBean<Statement> queryStatement(int page, int pageSize, Statement statement) {
+		log.info("报表列表查询，page：{}，pageSize：{}，statement：{}", page, pageSize, statement);
+		SqlSession sqlSession = SqlSessionUtil.getSqlSession();
+		OrderMapper orderMapper = sqlSession.getMapper(OrderMapper.class);
+		Page<Statement> p = PageHelper.startPage(page, pageSize).doSelectPage(() -> orderMapper.pageStatement(statement == null ? new Statement() : statement));
+		PageBean<Statement> pageBean = new PageBean<>(p.getTotal(), p.getResult());
+		sqlSession.commit();
+		sqlSession.close();
+		p.close();
+		return pageBean;
 	}
 }

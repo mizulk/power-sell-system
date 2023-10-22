@@ -39,15 +39,34 @@
 				AND power_id = #{powerId}
 			</if>
 			<if test="sum != null">
-				AND sum = #{sum}
-			</if>
-			<if test="amount != null">
-				AND amount = #{amount}
-			</if>
-			<if test="count != null">
-				AND count = #{count}
-			</if>
-		</where>
-	</select>
+                AND sum = #{sum}
+            </if>
+            <if test="amount != null">
+                AND amount = #{amount}
+            </if>
+            <if test="count != null">
+                AND count = #{count}
+            </if>
+        </where>
+    </select>
+    <select id="pageStatement" resultType="team.skadi.powersellsys.pojo.Statement">
+        SELECT p.id AS power_id, p.`name` AS power_name, SUM(o.sum) AS sum, SUM(o.amount) AS total_price
+        FROM `orders` AS o, powers AS p
+        WHERE p.id = o.power_id GROUP BY p.`name`,p.id
+        <trim prefix="HAVING" prefixOverrides="AND">
+            <if test="sum != null">
+                SUM(o.sum) = #{sum}
+            </if>
+            <if test="totalPrice != null">
+                AND SUM(o.amount) = #{totalPrice}
+            </if>
+            <if test="powerId != null">
+                AND power_id = #{powerId}
+            </if>
+            <if test="powerName != null">
+                AND power_name LIKE CONCAT('%', #{powerName}, '%')
+            </if>
+        </trim>
+    </select>
 
 </mapper>
