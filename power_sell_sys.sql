@@ -11,7 +11,7 @@
  Target Server Version : 80034
  File Encoding         : 65001
 
- Date: 22/10/2023 03:07:09
+ Date: 22/10/2023 18:04:21
 */
 
 SET NAMES utf8mb4;
@@ -41,17 +41,19 @@ INSERT INTO `comments` VALUES (1, 1, 5, '1233', 5, '2023-10-21 21:08:31');
 -- ----------------------------
 DROP TABLE IF EXISTS `favorites`;
 CREATE TABLE `favorites`  (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
   `user_id` int NOT NULL,
   `power_id` int NOT NULL,
-  `create_time` datetime(0) NOT NULL
+  `create_time` datetime(0) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of favorites
 -- ----------------------------
-INSERT INTO `favorites` VALUES (1, 4, '2023-10-21 21:04:10');
-INSERT INTO `favorites` VALUES (1, 5, '2023-10-21 21:04:39');
-INSERT INTO `favorites` VALUES (1, 6, '2023-10-22 00:41:54');
+INSERT INTO `favorites` VALUES (2, 1, 6, '2023-10-21 21:04:39');
+INSERT INTO `favorites` VALUES (3, 1, 7, '2023-10-22 00:41:54');
+INSERT INTO `favorites` VALUES (5, 1, 4, '2023-10-22 16:39:09');
 
 -- ----------------------------
 -- Table structure for manager
@@ -221,13 +223,13 @@ CREATE TABLE `users`  (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (1, '00000001', '123456', 'otto', 1, 24, '123456', '12345678910', 'cccccc', 123, '2023-10-16 01:20:59', '2023-10-16 01:21:02', '2023-10-22 01:06:44');
+INSERT INTO `users` VALUES (1, '00000001', '123456', 'otto', 1, 24, '123456', '12345678910', '下北泽', 123, '2023-10-16 01:20:59', '2023-10-16 01:21:02', '2023-10-22 18:02:06');
 
 -- ----------------------------
 -- View structure for favorites_power
 -- ----------------------------
 DROP VIEW IF EXISTS `favorites_power`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `favorites_power` AS select `p`.`name` AS `name`,`p`.`stock` AS `stock`,`p`.`price` AS `price`,`p`.`discount` AS `discount`,`p`.`describe` AS `describe`,`f`.`user_id` AS `user_id`,`p`.`capacity` AS `capacity`,`pt`.`value` AS `value`,`p`.`id` AS `power_id` from ((`powers` `p` join `favorites` `f` on((`p`.`id` = `f`.`power_id`))) join `power_types` `pt` on((`p`.`type` = `pt`.`id`)));
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `favorites_power` AS select `p`.`name` AS `name`,`p`.`stock` AS `stock`,`p`.`price` AS `price`,`p`.`discount` AS `discount`,`p`.`describe` AS `describe`,`f`.`user_id` AS `user_id`,`p`.`capacity` AS `capacity`,`pt`.`value` AS `value`,`p`.`id` AS `power_id`,`f`.`id` AS `id` from ((`powers` `p` join `favorites` `f` on((`p`.`id` = `f`.`power_id`))) join `power_types` `pt` on((`p`.`type` = `pt`.`id`)));
 
 -- ----------------------------
 -- View structure for goods
