@@ -53,7 +53,7 @@ public class UserOrderDialog extends EditDialog<Order> implements ChangeListener
 		order.setPowerId(Integer.valueOf(powerIdField.getText()));
 		order.setSum((Integer) sumSpinner.getValue());
 		order.setAmount(Float.valueOf(amountField.getText()));
-		return null;
+		return order;
 	}
 
 	@Override
@@ -94,10 +94,13 @@ public class UserOrderDialog extends EditDialog<Order> implements ChangeListener
 	public void setData(Order data) {
 		super.setData(data);
 		powerIdField.setText(String.valueOf(data.getPowerId()));
-		sumSpinner.setValue(data.getSum());
-		priceSpinner.setValue(data.getAmount() / data.getSum());
+		if (data.getSum() != null)
+			sumSpinner.setValue(data.getSum());
+		if (data.getAmount() != null) {
+			amountField.setText(String.valueOf(data.getAmount()));
+			priceSpinner.setValue(data.getAmount() / data.getSum());
+		}
 		priceSpinner.setEnabled(false);
-		amountField.setText(String.valueOf(data.getAmount()));
 	}
 
 	@Override

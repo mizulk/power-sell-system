@@ -3,13 +3,15 @@ package team.skadi.powersellsys.model.user;
 
 import team.skadi.powersellsys.model.DataTableModel;
 import team.skadi.powersellsys.pojo.Goods;
+import team.skadi.powersellsys.pojo.Order;
+import team.skadi.powersellsys.utils.DateUtil;
 
 import java.util.ArrayList;
 
 
-public class CustomTableModel extends DataTableModel<Goods> {
+public class CustomTableModel extends DataTableModel<Order> {
 
-    private final String[] columnName = new String[]{"类型", "型号", "折扣"};
+    private final String[] columnName = new String[]{"电源id", "总数", "总价", "下单时间"};
 
     public CustomTableModel() {
         data = new ArrayList<>();
@@ -31,12 +33,12 @@ public class CustomTableModel extends DataTableModel<Goods> {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Goods custom = data.get(rowIndex);
+        Order custom = data.get(rowIndex);
         return switch (columnIndex) {
-            case 0 -> custom.getType();
-            case 1 -> custom.getModel();
-            case 2 -> custom.getDiscount();
-
+            case 0 -> custom.getPowerId();
+            case 1 -> custom.getSum();
+            case 2 -> custom.getAmount();
+            case 3 -> DateUtil.replaceT(custom.getCreateTime());
             default -> null;
         };
     }

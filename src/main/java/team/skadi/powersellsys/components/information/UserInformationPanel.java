@@ -78,7 +78,7 @@ public class UserInformationPanel extends BasicComponent {
 		add(zipCodeLabel, gbc);
 
 		// (3,3)
-		imageLabel = new ImageLabel("余额：", "/images/balance.png");
+		imageLabel = new ImageLabel("积分：", "/images/point.png");
 		add(imageLabel, gbc);
 		// (4,3)
 		balanceLabel = new JLabel();

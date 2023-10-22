@@ -40,10 +40,10 @@ public class UserRegisterView extends RegisterView {
     protected void buildTextField(JPanel centerPanel, GridBagConstraints gbc) {
 
         gbc.gridy++;
-        nameTextField = new VerificationTextField<>("姓名：", new JTextField(20));
+        nameTextField = new VerificationTextField<>("昵称：", new JTextField(20));
         nameTextField.setVerification(context -> {
             if (context.equals("")) {
-                return "请输入姓名";
+                return "请输入昵称";
             } else if (context.length() > 20) {
                 return "名字不能超过20个字符";
             } else {
@@ -68,7 +68,7 @@ public class UserRegisterView extends RegisterView {
         centerPanel.add(passwordTextField, gbc);
 
         gbc.gridy++;
-        telTextField = new VerificationTextField<>("手机：", new JTextField(20));
+        telTextField = new VerificationTextField<>("电话：", new JTextField(20));
         telTextField.setVerification(context -> {
             if (context.equals("")) {
                 return "请输入电话号码！";

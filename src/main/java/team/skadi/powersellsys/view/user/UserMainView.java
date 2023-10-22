@@ -58,7 +58,7 @@ public class UserMainView extends BasicView implements ActionListener {
 		panel.add(nameLabel);
 		panel.add(Box.createHorizontalGlue());
 
-		balanceLabel = new JLabel("余额：");
+		balanceLabel = new JLabel("");
 		panel.add(balanceLabel);
 		panel.add(Box.createHorizontalGlue());
 
@@ -134,7 +134,7 @@ public class UserMainView extends BasicView implements ActionListener {
 		UserService userService = ServiceUtil.getService(UserService.class);
 		User user = userService.queryUser(app.useStore().userStore.account());
 		nameLabel.setText("昵称：" + user.getName());
-		balanceLabel.setText("余额：" + user.getBalance());
+//		balanceLabel.setText("余额：" + user.getBalance());
 		userPersonalPanel.initData();
 	}
 

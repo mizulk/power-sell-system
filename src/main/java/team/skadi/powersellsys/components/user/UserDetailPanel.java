@@ -136,7 +136,7 @@ public class UserDetailPanel extends BasicComponent
 		if (userCommentDialog.getOption() == BasicDialog.CONFIRM_OPTION){
 			JOptionPane.showMessageDialog(app,"评论成功");
 		}else {
-			JOptionPane.showMessageDialog(app,"以取消");
+			JOptionPane.showMessageDialog(app,"已取消");
 		}
 
 	}
