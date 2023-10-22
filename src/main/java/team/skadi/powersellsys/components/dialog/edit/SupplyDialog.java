@@ -4,23 +4,15 @@ import team.skadi.powersellsys.pojo.Supply;
 import team.skadi.powersellsys.service.GoodsService;
 import team.skadi.powersellsys.service.SupplierService;
 import team.skadi.powersellsys.service.SupplyService;
-import team.skadi.powersellsys.utils.DateUtil;
 import team.skadi.powersellsys.utils.ServiceUtil;
 
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
-import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
-import java.text.SimpleDateFormat;
 import java.util.Objects;
 
-public class SupplyDialog extends EditDialog<Supply> {
+public class SupplyDialog extends SupplierSupplyDialog {
 
 	private JTextField supplierIdField;
-	private JTextField powerIdField;
-	private JSpinner sumSpinner;
-	private JFormattedTextField supplyTimeField;
 
 	public SupplyDialog(JFrame frame, int mode) {
 		super(frame, mode == ADD_MODE ? "添加供应订单" : "修正订单", mode);
@@ -31,37 +23,22 @@ public class SupplyDialog extends EditDialog<Supply> {
 		supplierIdField = new JTextField(TEXT_FIELD_COLUMNS);
 		addField("供应商id(必填)：", supplierIdField);
 
-		powerIdField = new JTextField(TEXT_FIELD_COLUMNS);
-		addField("电源id(必填)：", powerIdField);
-
-		sumSpinner = new JSpinner(new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1));
-		addField("供应数量：", sumSpinner);
-
-		supplyTimeField = new JFormattedTextField(new SimpleDateFormat("yyyy-dd-MM hh:mm:ss"));
-		addField("供应日期：", supplyTimeField);
+		super.buildInputLayout();
 	}
 
 	@Override
 	public void setData(Supply data) {
 		super.setData(data);
 		supplierIdField.setText(String.valueOf(data.getSupplierId()));
-		powerIdField.setText(String.valueOf(data.getPowerId()));
-		sumSpinner.setValue(data.getSum());
-		if (data.getSupplyTime() != null)
-			supplyTimeField.setText(DateUtil.replaceT(data.getSupplyTime()));
+
 	}
 
 	@Override
 	protected boolean onConfirmButtonClick() {
-		if (supplierIdField.getText().equals("")
-				&& powerIdField.getText().equals("")) {
+		if (isInputted()) {
 			return error("请输入必填项");
 		} else {
-			Supply supply = new Supply();
-			supply.setSupplierId(Integer.valueOf(supplierIdField.getText()));
-			supply.setPowerId(Integer.valueOf(powerIdField.getText()));
-			supply.setSum((Integer) sumSpinner.getValue());
-			supply.setSupplyTime(supplyTimeField.getText().equals("") ? null : DateUtil.parse(supplyTimeField.getText()));
+			Supply supply = createData();
 
 			SupplyService supplyService = ServiceUtil.getService(SupplyService.class);
 
@@ -73,25 +50,42 @@ public class SupplyDialog extends EditDialog<Supply> {
 				return error("不存在id为" + supply.getPowerId() + "的供应商");
 			}
 
-			if (data != null
-					&& supply.getSupplierId().equals(data.getSupplierId())
-					&& supply.getPowerId().equals(data.getPowerId())
-					&& supply.getSum().equals(data.getSum())
-					&& supply.getSupplyTime().equals(data.getSupplyTime())
-			) return error("信息未修改");
+			if (isModify(supply)) return error("信息未修改");
 
 			if (Objects.nonNull(data)) {
-				data.setSupplierId(supply.getSupplierId());
-				data.setPowerId(supply.getPowerId());
-				data.setSum(supply.getSum());
-				data.setSupplyTime(supply.getSupplyTime());
+				modifyData(supply);
 				supplyService.updateSupply(data);
 				return successAndExit("修改成功");
 			} else {
 				data = supply;
 			}
+
 			supplyService.addNewSupply(supply);
 			return successAndExit("添加成功");
 		}
+	}
+
+	@Override
+	protected boolean isInputted() {
+		return super.isInputted() && supplierIdField.getText().equals("");
+	}
+
+	@Override
+	protected Supply createData() {
+		Supply supply = super.createData();
+		supply.setSupplierId(Integer.valueOf(supplierIdField.getText()));
+		return supply;
+	}
+
+	@Override
+	protected boolean isModify(Supply supply) {
+		return super.isModify(supply)
+				&& supply.getSupplierId().equals(data.getSupplierId());
+	}
+
+	@Override
+	protected void modifyData(Supply supply) {
+		super.modifyData(supply);
+		data.setSupplierId(supply.getSupplierId());
 	}
 }

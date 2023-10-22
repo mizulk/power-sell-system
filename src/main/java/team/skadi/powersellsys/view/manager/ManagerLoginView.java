@@ -1,5 +1,6 @@
 package team.skadi.powersellsys.view.manager;
 
+import lombok.extern.slf4j.Slf4j;
 import team.skadi.powersellsys.App;
 import team.skadi.powersellsys.components.VerificationTextField;
 import team.skadi.powersellsys.pojo.Manager;
@@ -15,6 +16,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import java.awt.GridBagConstraints;
 
+@Slf4j
 public class ManagerLoginView extends LoginView {
 
 	private VerificationTextField<JTextField> jobNumberField;
@@ -26,12 +28,12 @@ public class ManagerLoginView extends LoginView {
 
 	@Override
 	public void onShow() {
-		System.out.println("ManagerLoginView.onShow");
+		log.info("管理员登录页面被展示");
 	}
 
 	@Override
 	public void onHide() {
-		System.out.println("ManagerLoginView.onHide");
+		log.info("管理员登录页面被隐藏");
 	}
 
 	@Override

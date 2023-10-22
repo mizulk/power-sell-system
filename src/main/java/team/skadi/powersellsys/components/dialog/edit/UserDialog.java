@@ -52,6 +52,54 @@ public class UserDialog extends EditDialog<User> {
 		addField("地址(必填)：", addressField);
 	}
 
+	@Override
+	protected boolean isInputted() {
+		return nameField.getText().equals("")
+				&& passwordField.getPassword().length == 0
+				&& telField.getText().equals("")
+				&& addressField.getText().equals("");
+	}
+
+	@Override
+	protected User createData() {
+
+		User user = new User();
+		user.setName(nameField.getText().trim());
+		user.setPassword(new String(passwordField.getPassword()));
+		user.setSex((byte) sexComboBox.getSelectedIndex());
+		if (ageSpinner.getValue() instanceof Integer n)// 更改了年龄后传入的是Integer，不能强转为Short
+			user.setAge(n.shortValue());
+		else
+			user.setAge((Short) ageSpinner.getValue());// 没有更改年龄传入的Short
+		user.setZipCode(zipCodeField.getText().equals("") ? null : zipCodeField.getText().trim());
+		user.setTel(telField.getText().equals("") ? null : telField.getText().trim());
+		user.setAddress(addressField.getText().equals("") ? null : addressField.getText().trim());
+		return user;
+	}
+
+	@Override
+	protected boolean isModify(User user) {
+		return data != null
+				&& user.getName().equals(data.getName())
+				&& user.getPassword().equals(data.getPassword())
+				&& user.getSex().equals(data.getSex())
+				&& user.getAge().equals(data.getAge())
+				&& user.getZipCode().equals(data.getZipCode())
+				&& user.getTel().equals(data.getTel())
+				&& user.getAddress().equals(data.getAddress());
+	}
+
+	@Override
+	protected void modifyData(User user) {
+		data.setName(user.getName());
+		data.setPassword(user.getPassword());
+		data.setSex(user.getSex());
+		data.setAge(user.getAge());
+		data.setZipCode(user.getZipCode());
+		data.setTel(user.getTel());
+		data.setAddress(user.getAddress());
+	}
+
 	public void setData(User data) {
 		super.setData(data);
 		nameField.setText(data.getName());
@@ -65,46 +113,18 @@ public class UserDialog extends EditDialog<User> {
 
 	@Override
 	protected boolean onConfirmButtonClick() {
-		if (nameField.getText().equals("")
-				&& passwordField.getPassword().length == 0
-				&& telField.getText().equals("")
-				&& addressField.getText().equals("")
-		) {
+		if (isInputted()) {
 			return error("请输入必填项");
 		} else {
 			// TODO：检验手机号，地址长度，密码长度
-			User user = new User();
-			user.setName(nameField.getText().trim());
-			user.setPassword(new String(passwordField.getPassword()));
-			user.setSex((byte) sexComboBox.getSelectedIndex());
-			if (ageSpinner.getValue() instanceof Integer n)// 更改了年龄后传入的是Integer，不能强转为Short
-				user.setAge(n.shortValue());
-			else
-				user.setAge((Short) ageSpinner.getValue());// 没有更改年龄传入的Short
-			user.setZipCode(zipCodeField.getText().equals("") ? null : zipCodeField.getText().trim());
-			user.setTel(telField.getText().equals("") ? null : telField.getText().trim());
-			user.setAddress(addressField.getText().equals("") ? null : addressField.getText().trim());
 
+			User user = createData();
 			UserService userService = ServiceUtil.getService(UserService.class);
 
-			if (data != null
-					&& user.getName().equals(data.getName())
-					&& user.getPassword().equals(data.getPassword())
-					&& user.getSex().equals(data.getSex())
-					&& user.getAge().equals(data.getAge())
-					&& user.getZipCode().equals(data.getZipCode())
-					&& user.getTel().equals(data.getTel())
-					&& user.getAddress().equals(data.getAddress())
-			) return error("信息未修改");
+			if (isModify(user)) return error("信息未修改");
 
 			if (Objects.nonNull(data)) {
-				data.setName(user.getName());
-				data.setPassword(user.getPassword());
-				data.setSex(user.getSex());
-				data.setAge(user.getAge());
-				data.setZipCode(user.getZipCode());
-				data.setTel(user.getTel());
-				data.setAddress(user.getAddress());
+				modifyData(user);
 				userService.updateUser(data);
 				return successAndExit("修改成功");
 			} else {

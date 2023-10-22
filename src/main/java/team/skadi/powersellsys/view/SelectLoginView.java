@@ -1,5 +1,6 @@
 package team.skadi.powersellsys.view;
 
+import lombok.extern.slf4j.Slf4j;
 import team.skadi.powersellsys.App;
 import team.skadi.powersellsys.Main;
 import team.skadi.powersellsys.components.ImageButton;
@@ -16,6 +17,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+@Slf4j
 public class SelectLoginView extends BasicView implements ActionListener {
 
 	private ImageButton manager;
@@ -111,12 +113,12 @@ public class SelectLoginView extends BasicView implements ActionListener {
 
 	@Override
 	public void onShow() {
-		System.out.println("SelectLoginView.onShow");
+		log.info("选择登录页面被展示");
 	}
 
 	@Override
 	public void onHide() {
-		System.out.println("SelectLoginView.onHide");
+		log.info("选择登录页面被隐藏");
 	}
 
 	@Override

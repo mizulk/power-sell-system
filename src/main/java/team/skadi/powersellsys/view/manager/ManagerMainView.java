@@ -1,5 +1,6 @@
 package team.skadi.powersellsys.view.manager;
 
+import lombok.extern.slf4j.Slf4j;
 import team.skadi.powersellsys.App;
 import team.skadi.powersellsys.components.ImageButton;
 import team.skadi.powersellsys.components.manager.ManageCommentPanel;
@@ -26,6 +27,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+@Slf4j
 public class ManagerMainView extends BasicView implements ActionListener, ChangeListener {
 
 	private JLabel jobNumberLabel;
@@ -85,6 +87,7 @@ public class ManagerMainView extends BasicView implements ActionListener, Change
 
 	@Override
 	public void onShow() {
+		log.info("管理员主页面被展示");
 		ManagerService managerService = ServiceUtil.getService(ManagerService.class);
 		Manager manager = managerService.queryManager(app.useStore().managerStore.jobNumber());
 		jobNumberLabel.setText("工号：" + manager.getJobNumber());
@@ -94,6 +97,7 @@ public class ManagerMainView extends BasicView implements ActionListener, Change
 
 	@Override
 	public void onHide() {
+		log.info("管理员主页面被隐藏");
 		app.useStore().managerStore = null;// 管理员登出，清空保存的记录
 		tabbedPane.setSelectedIndex(0);
 	}

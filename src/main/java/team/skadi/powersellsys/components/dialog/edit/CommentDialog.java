@@ -43,7 +43,7 @@ public class CommentDialog extends UserCommentDialog {
 		} else {
 			CommentService commentService = ServiceUtil.getService(CommentService.class);
 
-			Comment comment = createComment();
+			Comment comment = createData();
 
 			if (!ServiceUtil.getService(UserService.class).isUserExist(comment.getUserId())) {
 				return error("不存在id为" + comment.getUserId() + "的用户！");
@@ -66,8 +66,8 @@ public class CommentDialog extends UserCommentDialog {
 	}
 
 	@Override
-	protected Comment createComment() {
-		Comment comment = super.createComment();
+	protected Comment createData() {
+		Comment comment = super.createData();
 		comment.setUserId(Integer.valueOf(userIdField.getText()));
 		return comment;
 	}

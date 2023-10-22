@@ -1,5 +1,6 @@
 package team.skadi.powersellsys.view.user;
 
+import lombok.extern.slf4j.Slf4j;
 import team.skadi.powersellsys.App;
 import team.skadi.powersellsys.components.VerificationTextField;
 import team.skadi.powersellsys.pojo.User;
@@ -13,6 +14,7 @@ import team.skadi.powersellsys.view.LoginView;
 import javax.swing.*;
 import java.awt.GridBagConstraints;
 
+@Slf4j
 public class UserLoginView extends LoginView {
 
 	private VerificationTextField<JTextField> accountTextField;
@@ -24,12 +26,12 @@ public class UserLoginView extends LoginView {
 
 	@Override
 	public void onShow() {
-		System.out.println("UserLoginView.onShow");
+		log.info("用户登录页面被展示");
 	}
 
 	@Override
 	public void onHide() {
-		System.out.println("UserLoginView.onHide");
+		log.info("用户登录页面被隐藏");
 	}
 
 	@Override

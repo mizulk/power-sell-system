@@ -62,6 +62,56 @@ public class GoodsDialog extends EditDialog<Goods> {
 	}
 
 	@Override
+	protected boolean isInputted() {
+		return nameField.getText().equals("") && modelField.getText().equals("");
+	}
+
+	@Override
+	protected Goods createData() {
+		Goods goods = new Goods();
+		goods.setName(nameField.getText());
+		goods.setTypeId(((PowerType) Objects.requireNonNull(typeComboBox.getSelectedItem())).getId());
+		goods.setModel(modelField.getText());
+		goods.setCapacity((Integer) capacitySpinner.getValue());
+		goods.setStock((Integer) stockSpinner.getValue());
+		if (priceSpinner.getValue() instanceof Float f)
+			goods.setPrice(f);
+		else
+			goods.setPrice(((Double) priceSpinner.getValue()).floatValue());
+		if (discountSpinner.getValue() instanceof Byte b)
+			goods.setDiscount(b);
+		else
+			goods.setDiscount(((Integer) discountSpinner.getValue()).byteValue());
+		goods.setDescribe(describeField.getText().equals("") ? null : describeField.getText());
+		return goods;
+	}
+
+	@Override
+	protected boolean isModify(Goods goods) {
+		return data != null
+				&& goods.getName().equals(data.getName())
+				&& goods.getTypeId().equals(data.getTypeId())
+				&& goods.getModel().equals(data.getModel())
+				&& goods.getCapacity().equals(data.getCapacity())
+				&& goods.getStock().equals(data.getStock())
+				&& goods.getPrice().equals(data.getPrice())
+				&& goods.getDiscount().equals(data.getDiscount())
+				&& goods.getDescribe().equals(data.getDescribe());
+	}
+
+	@Override
+	protected void modifyData(Goods goods) {
+		data.setName(goods.getName());
+		data.setTypeId(goods.getTypeId());
+		data.setModel(goods.getModel());
+		data.setCapacity(goods.getCapacity());
+		data.setStock(goods.getStock());
+		data.setPrice(goods.getPrice());
+		data.setDiscount(goods.getDiscount());
+		data.setDescribe(goods.getDescribe());
+	}
+
+	@Override
 	public void setData(Goods data) {
 		super.setData(data);
 		nameField.setText(data.getName());
@@ -87,50 +137,21 @@ public class GoodsDialog extends EditDialog<Goods> {
 
 	@Override
 	protected boolean onConfirmButtonClick() {
-		if (nameField.getText().equals("") && modelField.getText().equals("")) {
+		if (isInputted()) {
 			return error("请输入必填项");
 		} else {
-			Goods goods = new Goods();
-			goods.setName(nameField.getText());
-			goods.setTypeId(((PowerType) Objects.requireNonNull(typeComboBox.getSelectedItem())).getId());
-			goods.setModel(modelField.getText());
-			goods.setCapacity((Integer) capacitySpinner.getValue());
-			goods.setStock((Integer) stockSpinner.getValue());
-			if (priceSpinner.getValue() instanceof Float f)
-				goods.setPrice(f);
-			else
-				goods.setPrice(((Double) priceSpinner.getValue()).floatValue());
-			if (discountSpinner.getValue() instanceof Byte b)
-				goods.setDiscount(b);
-			else
-				goods.setDiscount(((Integer) discountSpinner.getValue()).byteValue());
-			goods.setDescribe(describeField.getText().equals("") ? null : describeField.getText());
-
+			Goods goods = createData();
 			GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
 
-			if (data != null
-					&& goods.getName().equals(data.getName())
-					&& goods.getTypeId().equals(data.getTypeId())
-					&& goods.getModel().equals(data.getModel())
-					&& goods.getCapacity().equals(data.getCapacity())
-					&& goods.getStock().equals(data.getStock())
-					&& goods.getPrice().equals(data.getPrice())
-					&& goods.getDiscount().equals(data.getDiscount())
-					&& goods.getDescribe().equals(data.getDescribe())
+			if (isModify(goods)
 			) return error("信息未修改");
 
 			if (Objects.nonNull(data)) {
-				data.setName(goods.getName());
-				data.setTypeId(goods.getTypeId());
-				data.setModel(goods.getModel());
-				data.setCapacity(goods.getCapacity());
-				data.setStock(goods.getStock());
-				data.setPrice(goods.getPrice());
-				data.setDiscount(goods.getDiscount());
-				data.setDescribe(goods.getDescribe());
 				goodsService.updateGoods(data);
 				return successAndExit("修改成功");
-			} else data = goods;
+			} else {
+				data = goods;
+			}
 
 			goodsService.addNewGoods(goods);
 			return successAndExit("添加成功");

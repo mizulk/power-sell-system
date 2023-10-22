@@ -47,6 +47,14 @@ public abstract class EditDialog<T> extends BasicDialog {
 	 */
 	abstract protected void buildInputLayout();
 
+	abstract protected boolean isInputted();
+
+	abstract protected T createData();
+
+	abstract protected boolean isModify(T t);
+
+	abstract protected void modifyData(T t);
+
 	/**
 	 * 向对话框添加横向的字段名-编辑器字段
 	 * <p>

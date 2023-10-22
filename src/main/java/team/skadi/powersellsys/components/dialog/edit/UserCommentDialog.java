@@ -49,7 +49,7 @@ public class UserCommentDialog extends EditDialog<Comment> {
 			return error("请输入必填项");
 		} else {
 			CommentService commentService = ServiceUtil.getService(CommentService.class);
-			Comment comment = createComment();
+			Comment comment = createData();
 
 			if (isModify(comment)) return error("信息未修改");
 
@@ -62,7 +62,8 @@ public class UserCommentDialog extends EditDialog<Comment> {
 		}
 	}
 
-	protected Comment createComment() {
+	@Override
+	protected Comment createData() {
 		Comment comment = new Comment();
 		comment.setPowerId(Integer.valueOf(powerIdField.getText()));
 		comment.setContent(contentField.getText());
@@ -74,11 +75,13 @@ public class UserCommentDialog extends EditDialog<Comment> {
 		return comment;
 	}
 
+	@Override
 	protected boolean isInputted() {
 		return powerIdField.getText().equals("")
 				&& contentField.getText().equals("");
 	}
 
+	@Override
 	protected boolean isModify(Comment comment) {
 		return data != null
 				&& comment.getPowerId().equals(data.getPowerId())
@@ -86,6 +89,7 @@ public class UserCommentDialog extends EditDialog<Comment> {
 				&& comment.getStar().equals(data.getStar());
 	}
 
+	@Override
 	protected void modifyData(Comment comment) {
 		data.setPowerId(comment.getPowerId());
 		data.setContent(comment.getContent());

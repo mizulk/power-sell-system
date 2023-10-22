@@ -28,12 +28,12 @@ public class UserRegisterView extends RegisterView {
 
 	@Override
 	public void onShow() {
-
+		log.info("用户注册页面被展示");
 	}
 
 	@Override
 	public void onHide() {
-
+		log.info("用户注册页面被隐藏");
 	}
 
 	@Override

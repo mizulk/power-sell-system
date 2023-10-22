@@ -21,12 +21,34 @@ public class FavoriteDialog extends EditDialog<FavoritePower> {
 	}
 
 	@Override
+	protected boolean isInputted() {
+		return powerId.getValue().equals(0);
+	}
+
+	@Override
+	protected FavoritePower createData() {
+		return null;
+	}
+
+	@Override
+	protected boolean isModify(FavoritePower favoritePower) {
+		return false;
+	}
+
+	@Override
+	protected void modifyData(FavoritePower favoritePower) {
+
+	}
+
+	@Override
 	public void setData(FavoritePower powerId) {
 		super.setData(powerId);
 	}
 
 	@Override
 	protected boolean onConfirmButtonClick() {
+		if (isInputted()) return false;
+
 		FavoritePower favorite = new FavoritePower();
 		if (powerId.getValue() instanceof Integer p) {
 			favorite.setPowerId(p);

@@ -32,6 +32,28 @@ public class PowerTypeDialog extends EditDialog<PowerType> {
 	}
 
 	@Override
+	protected boolean isInputted() {
+		return typeField.getText().equals("");
+	}
+
+	@Override
+	protected PowerType createData() {
+		PowerType powerType = new PowerType();
+		powerType.setValue(typeField.getText());
+		return powerType;
+	}
+
+	@Override
+	protected boolean isModify(PowerType powerType) {
+		return data != null && powerType.getValue().equals(data.getValue());
+	}
+
+	@Override
+	protected void modifyData(PowerType powerType) {
+		data.setValue(powerType.getValue());
+	}
+
+	@Override
 	public void setData(PowerType data) {
 		super.setData(data);
 		typeField.setText(data.getValue());
@@ -39,20 +61,18 @@ public class PowerTypeDialog extends EditDialog<PowerType> {
 
 	@Override
 	protected boolean onConfirmButtonClick() {
-		if (typeField.getText().equals("")) {
+		if (isInputted()) {
 			return error("请输入电源种类名称");
 		} else {
 			PowerType powerType = new PowerType();
-			powerType.setValue(typeField.getText());
 
-			if (data != null && powerType.getValue().equals(data.getValue())) {
+			if (isModify(powerType)) {
 				return error("未修改任何信息");
 			}
 
 			GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
 
 			if (data != null) {
-				data.setValue(powerType.getValue());
 				goodsService.updatePowerType(data);
 				return successAndExit("修改成功");
 			} else {

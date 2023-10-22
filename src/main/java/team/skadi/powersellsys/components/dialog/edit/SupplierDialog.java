@@ -40,6 +40,45 @@ public class SupplierDialog extends EditDialog<Supplier> {
 	}
 
 	@Override
+	protected boolean isInputted() {
+		return nameField.getText().equals("")
+				&& passwordField.getPassword().length == 0
+				&& telField.getText().equals("")
+				&& addressField.getText().equals("")
+				&& zipCodeField.getText().equals("");
+	}
+
+	@Override
+	protected Supplier createData() {
+		Supplier supplier = new Supplier();
+		supplier.setName(nameField.getText().trim());
+		supplier.setPassword(String.valueOf(passwordField.getPassword()));
+		supplier.setTel(telField.getText().trim());
+		supplier.setAddress(addressField.getText().trim());
+		supplier.setZipCode(zipCodeField.getText().trim());
+		return supplier;
+	}
+
+	@Override
+	protected boolean isModify(Supplier supplier) {
+		return data != null
+				&& supplier.getName().equals(data.getName())
+				&& supplier.getPassword().equals(data.getPassword())
+				&& supplier.getTel().equals(data.getTel())
+				&& supplier.getAddress().equals(data.getAddress())
+				&& supplier.getZipCode().equals(data.getZipCode());
+	}
+
+	@Override
+	protected void modifyData(Supplier supplier) {
+		data.setName(supplier.getName());
+		data.setPassword(supplier.getPassword());
+		data.setTel(supplier.getTel());
+		data.setAddress(supplier.getAddress());
+		data.setZipCode(supplier.getZipCode());
+	}
+
+	@Override
 	public void setData(Supplier data) {
 		super.setData(data);
 		nameField.setText(data.getName());
@@ -51,36 +90,16 @@ public class SupplierDialog extends EditDialog<Supplier> {
 
 	@Override
 	protected boolean onConfirmButtonClick() {
-		if (nameField.getText().equals("")
-				&& passwordField.getPassword().length == 0
-				&& telField.getText().equals("")
-				&& addressField.getText().equals("")
-				&& zipCodeField.getText().equals("")
-		) {
+		if (isInputted()) {
 			return error("请输入必填项");
 		} else {
-			Supplier supplier = new Supplier();
-			supplier.setName(nameField.getText().trim());
-			supplier.setPassword(String.valueOf(passwordField.getPassword()));
-			supplier.setTel(telField.getText().trim());
-			supplier.setAddress(addressField.getText().trim());
-			supplier.setZipCode(zipCodeField.getText().trim());
+			Supplier supplier = createData();
 
 			SupplierService supplierService = ServiceUtil.getService(SupplierService.class);
-			if (data != null
-					&& supplier.getName().equals(data.getName())
-					&& supplier.getPassword().equals(data.getPassword())
-					&& supplier.getTel().equals(data.getTel())
-					&& supplier.getAddress().equals(data.getAddress())
-					&& supplier.getZipCode().equals(data.getZipCode())
-			) return error("信息未修改");
+			if (isModify(supplier)) return error("信息未修改");
 
 			if (Objects.nonNull(data)) {
-				data.setName(supplier.getName());
-				data.setPassword(supplier.getPassword());
-				data.setTel(supplier.getTel());
-				data.setAddress(supplier.getAddress());
-				data.setZipCode(supplier.getZipCode());
+				modifyData(supplier);
 				supplierService.updateSupplier(data);
 				return successAndExit("修改成功");
 			}
