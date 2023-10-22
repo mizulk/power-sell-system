@@ -2,6 +2,8 @@ package team.skadi.powersellsys.components.dialog.edit;
 
 import team.skadi.powersellsys.pojo.Comment;
 import team.skadi.powersellsys.service.CommentService;
+import team.skadi.powersellsys.service.GoodsService;
+import team.skadi.powersellsys.service.UserService;
 import team.skadi.powersellsys.utils.ServiceUtil;
 
 import javax.swing.JFrame;
@@ -58,16 +60,25 @@ public class CommentDialog extends EditDialog<Comment> {
 		) {
 			return error("请输入必填项");
 		} else {
+			CommentService commentService = ServiceUtil.getService(CommentService.class);
+
 			Comment comment = new Comment();
 			comment.setUserId(Integer.valueOf(userIdField.getText()));
 			comment.setPowerId(Integer.valueOf(powerIdField.getText()));
 			comment.setContent(contentField.getText());
-			if (starSpinner.getValue() instanceof Byte b)
+			if (starSpinner.getValue() instanceof Byte b) {
 				comment.setStar(b);
-			else
+			} else {
 				comment.setStar(((Integer) starSpinner.getValue()).byteValue());
+			}
 
-			CommentService commentService = ServiceUtil.getService(CommentService.class);
+			if (!ServiceUtil.getService(UserService.class).isUserExist(comment.getUserId())) {
+				return error("不存在id为" + comment.getUserId() + "的用户！");
+			}
+
+			if (ServiceUtil.getService(GoodsService.class).isGoodsExist(comment.getPowerId())) {
+				return error("不存在id为" + comment.getPowerId() + "的电源商品");
+			}
 
 			if (data != null
 					&& comment.getUserId().equals(data.getUserId())

@@ -1,6 +1,5 @@
 package team.skadi.powersellsys.service;
 
-import team.skadi.powersellsys.pojo.Goods;
 import team.skadi.powersellsys.pojo.PageBean;
 import team.skadi.powersellsys.pojo.Supplier;
 
@@ -14,7 +13,7 @@ public interface SupplierService extends Service {
 
 	String register(Supplier supplier);
 
-	boolean getTelexists(String tel);
+	boolean getTelExists(String tel);
 
 	PageBean<Supplier> querySupplier(int page, int pageSize, Supplier supplier);
 
@@ -23,4 +22,6 @@ public interface SupplierService extends Service {
 	Supplier querySupplier(String account);
 
 	String getSupplierNameById(Integer id);
+
+	boolean isSupplierExist(Integer id);
 }

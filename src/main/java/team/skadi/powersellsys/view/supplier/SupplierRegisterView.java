@@ -116,13 +116,13 @@ public class SupplierRegisterView extends RegisterView {
             supplier.setTel(telTextField.getText());
             supplier.setAddress(addressTextField.getText());
             supplier.setZipCode(zipcodeTextField.getText());
-            if (supplierService.getTelexists(telTextField.getText())) {
-                String register = supplierService.register(supplier);
-                JOptionPane.showMessageDialog(app, "注册成功你的账号是：" + register);
-                app.useRouter().showView(ViewName.SUPPLIER_REGISTER_VIEW, ViewName.SUPPLIER_LOGIN_VIEW);
-            } else {
-                JOptionPane.showMessageDialog(app, "该电话号码已被注册，请更换");
-            }
+            if (supplierService.getTelExists(telTextField.getText())) {
+				String register = supplierService.register(supplier);
+				JOptionPane.showMessageDialog(app, "注册成功你的账号是：" + register);
+				app.useRouter().showView(ViewName.SUPPLIER_REGISTER_VIEW, ViewName.SUPPLIER_LOGIN_VIEW);
+			} else {
+				JOptionPane.showMessageDialog(app, "该电话号码已被注册，请更换");
+			}
         } else {
             JOptionPane.showMessageDialog(app, "请检查你的信息是否正确");
         }

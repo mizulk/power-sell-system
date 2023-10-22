@@ -36,4 +36,6 @@ public interface UserMapper {
 
 	@Update("UPDATE users SET login_time = NOW() WHERE account = #{account}")
 	void updateLoginTimeByUserId(@Param("account") String account);
+
+
 }

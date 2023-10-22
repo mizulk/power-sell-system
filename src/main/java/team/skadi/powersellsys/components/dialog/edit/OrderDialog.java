@@ -1,7 +1,9 @@
 package team.skadi.powersellsys.components.dialog.edit;
 
 import team.skadi.powersellsys.pojo.Order;
+import team.skadi.powersellsys.service.GoodsService;
 import team.skadi.powersellsys.service.OrderService;
+import team.skadi.powersellsys.service.UserService;
 import team.skadi.powersellsys.utils.ServiceUtil;
 
 import javax.swing.JFrame;
@@ -42,6 +44,7 @@ public class OrderDialog extends EditDialog<Order> implements ChangeListener {
 
 		amountField = new JTextField(TEXT_FIELD_COLUMNS);
 		amountField.setEditable(false);
+		amountField.setText("1");
 		addField("金额:", amountField);
 
 	}
@@ -71,6 +74,14 @@ public class OrderDialog extends EditDialog<Order> implements ChangeListener {
 			order.setAmount(Float.valueOf(amountField.getText()));
 
 			OrderService orderService = ServiceUtil.getService(OrderService.class);
+
+			if (!ServiceUtil.getService(UserService.class).isUserExist(order.getUserId())) {
+				return error("不存在id为" + order.getUserId() + "的用户！");
+			}
+
+			if (ServiceUtil.getService(GoodsService.class).isGoodsExist(order.getPowerId())) {
+				return error("不存在id为" + order.getPowerId() + "的电源商品");
+			}
 
 			if (data != null
 					&& order.getUserId().equals(data.getUserId())

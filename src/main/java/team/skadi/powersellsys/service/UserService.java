@@ -20,4 +20,6 @@ public interface UserService extends Service {
 	void updateUser(User user);
 
 	void updateLoginTime(String account);
+
+	boolean isUserExist(Integer id);
 }

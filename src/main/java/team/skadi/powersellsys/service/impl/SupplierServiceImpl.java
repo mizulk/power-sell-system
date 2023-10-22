@@ -57,7 +57,7 @@ public class SupplierServiceImpl implements SupplierService {
 	}
 
 	@Override
-	public boolean getTelexists(String tel) {
+	public boolean getTelExists(String tel) {
 		SqlSession sqlSession = SqlSessionUtil.getSqlSession();
 		SupplierMapper supplierMapper = sqlSession.getMapper(SupplierMapper.class);
 		Supplier telexists = supplierMapper.getTelexists(tel);
@@ -85,6 +85,11 @@ public class SupplierServiceImpl implements SupplierService {
 		sqlSession.commit();
 		sqlSession.close();
 		return name;
+	}
+
+	@Override
+	public boolean isSupplierExist(Integer id) {
+		return getSupplierNameById(id) != null;
 	}
 
 	@Override

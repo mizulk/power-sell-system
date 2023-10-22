@@ -4,9 +4,6 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
-import team.skadi.powersellsys.mapper.CommentMapper;
-import team.skadi.powersellsys.mapper.OrderMapper;
-import team.skadi.powersellsys.mapper.SupplyMapper;
 import team.skadi.powersellsys.mapper.UserMapper;
 import team.skadi.powersellsys.pojo.PageBean;
 import team.skadi.powersellsys.pojo.User;
@@ -137,6 +134,11 @@ public class UserServiceImpl implements UserService {
 		} finally {
 			sqlSession.close();
 		}
+	}
+
+	@Override
+	public boolean isUserExist(Integer id) {
+		return getUserNameById(id) != null;
 	}
 
 }

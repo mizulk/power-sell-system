@@ -1,6 +1,8 @@
 package team.skadi.powersellsys.components.dialog.edit;
 
 import team.skadi.powersellsys.pojo.Supply;
+import team.skadi.powersellsys.service.GoodsService;
+import team.skadi.powersellsys.service.SupplierService;
 import team.skadi.powersellsys.service.SupplyService;
 import team.skadi.powersellsys.utils.DateUtil;
 import team.skadi.powersellsys.utils.ServiceUtil;
@@ -62,6 +64,14 @@ public class SupplyDialog extends EditDialog<Supply> {
 			supply.setSupplyTime(supplyTimeField.getText().equals("") ? null : DateUtil.parse(supplyTimeField.getText()));
 
 			SupplyService supplyService = ServiceUtil.getService(SupplyService.class);
+
+			if (ServiceUtil.getService(GoodsService.class).isGoodsExist(supply.getPowerId())) {
+				return error("不存在id为" + supply.getPowerId() + "的电源商品");
+			}
+
+			if (!ServiceUtil.getService(SupplierService.class).isSupplierExist(supply.getPowerId())) {
+				return error("不存在id为" + supply.getPowerId() + "的供应商");
+			}
 
 			if (data != null
 					&& supply.getSupplierId().equals(data.getSupplierId())

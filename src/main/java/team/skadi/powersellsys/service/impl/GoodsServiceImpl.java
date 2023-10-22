@@ -156,4 +156,9 @@ public class GoodsServiceImpl implements GoodsService {
 		}
 	}
 
+	@Override
+	public boolean isGoodsExist(Integer id) {
+		return getGoodsNameById(id) == null;
+	}
+
 }
