@@ -1,12 +1,8 @@
 package team.skadi.powersellsys.model.supplier;
 
 import team.skadi.powersellsys.model.DataTableModel;
-import team.skadi.powersellsys.pojo.Goods;
 import team.skadi.powersellsys.pojo.Judge;
 import team.skadi.powersellsys.utils.DateUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class JudgeTableModel extends DataTableModel<Judge> {
 

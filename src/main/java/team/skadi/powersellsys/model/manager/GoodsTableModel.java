@@ -26,13 +26,8 @@ public class GoodsTableModel extends DataTableModel<Goods> {
 			case 1 -> goods.getModel();
 			case 2 -> StringUtil.INTEGER_FORMAT.format(goods.getCapacity());
 			case 3 -> goods.getStock();
-			case 4 -> goods.getDiscount() != 0 ?
-					String.format("%s (%s)",
-							StringUtil.FLOAT_FORMAT.format(goods.getPrice() * (1 - goods.getDiscount() * 0.01)),
-							StringUtil.INTEGER_FORMAT.format(goods.getPrice()))
-					:
-					StringUtil.FLOAT_FORMAT.format(goods.getPrice());
-			case 5 -> goods.getDiscount() == 0 ? "无" : String.format("-%d%%off", goods.getDiscount());
+			case 4 -> StringUtil.formatDiscountPrice(goods.getPrice(), goods.getDiscount());
+			case 5 -> StringUtil.formatDiscount(goods.getDiscount());
 			case 6 -> goods.getStatus() == 1 ? "售卖中" : "已下架";
 			default -> null;
 		};

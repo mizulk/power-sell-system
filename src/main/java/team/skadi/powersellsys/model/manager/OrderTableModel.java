@@ -2,6 +2,7 @@ package team.skadi.powersellsys.model.manager;
 
 import team.skadi.powersellsys.model.DataTableModel;
 import team.skadi.powersellsys.pojo.Order;
+import team.skadi.powersellsys.utils.DateUtil;
 
 import java.util.ArrayList;
 
@@ -25,9 +26,9 @@ public class OrderTableModel extends DataTableModel<Order> {
 		return switch (columnIndex) {
 			case 0 -> order.getUserId();
 			case 1 -> order.getPowerId();
-			case 2 -> order.getAmount();
-			case 3 -> order.getSum();
-			case 4 -> order.getCreateTime();
+			case 2 -> order.getSum();
+			case 3 -> order.getAmount();
+			case 4 -> DateUtil.replaceT(order.getCreateTime());
 			default -> null;
 		};
 	}

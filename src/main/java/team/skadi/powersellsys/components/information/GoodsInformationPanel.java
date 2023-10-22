@@ -145,12 +145,7 @@ public class GoodsInformationPanel extends BasicComponent {
 		typeLabel.setText(goods.getType());
 		capacityLabel.setText(goods.getCapacity() + "mA•h");
 		stockLabel.setText(String.valueOf(goods.getStock()));
-		priceLabel.setText(goods.getDiscount() != 0 ?
-				String.format("%s (%s)",
-						StringUtil.FLOAT_FORMAT.format(goods.getPrice() * (1 - goods.getDiscount() * 0.01)),
-						StringUtil.INTEGER_FORMAT.format(goods.getPrice()))
-				:
-				StringUtil.FLOAT_FORMAT.format(goods.getPrice()));
+		priceLabel.setText(StringUtil.formatDiscountPrice(goods.getPrice(), goods.getDiscount()));
 		discountLabel.setText(goods.getDiscount() == 0 ? "无" : String.format("-%d%%off", goods.getDiscount()));
 		modelLabel.setText(goods.getModel());
 		sumLabel.setText(String.valueOf(goods.getSum()));

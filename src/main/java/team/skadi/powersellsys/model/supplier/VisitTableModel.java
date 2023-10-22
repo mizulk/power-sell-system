@@ -2,8 +2,6 @@ package team.skadi.powersellsys.model.supplier;
 
 import team.skadi.powersellsys.model.DataTableModel;
 import team.skadi.powersellsys.pojo.Goods;
-import java.util.ArrayList;
-import java.util.List;
 
 public class VisitTableModel extends DataTableModel<Goods> {
 

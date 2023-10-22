@@ -2,6 +2,7 @@ package team.skadi.powersellsys.model.manager;
 
 import team.skadi.powersellsys.model.DataTableModel;
 import team.skadi.powersellsys.pojo.Supply;
+import team.skadi.powersellsys.utils.DateUtil;
 
 import java.util.ArrayList;
 
@@ -30,8 +31,8 @@ public class SupplyTableModel extends DataTableModel<Supply> {
 			case 0 -> supply.getSupplierId();
 			case 1 -> supply.getPowerId();
 			case 2 -> supply.getSum();
-			case 3 -> supply.getCreateTime();
-			case 4 -> supply.getSupplyTime() == null ? "尚未供应" : supply.getSupplyTime();
+			case 3 -> DateUtil.replaceT(supply.getCreateTime());
+			case 4 -> supply.getSupplyTime() == null ? "尚未供应" : DateUtil.replaceT(supply.getSupplyTime());
 			default -> null;
 		};
 	}
