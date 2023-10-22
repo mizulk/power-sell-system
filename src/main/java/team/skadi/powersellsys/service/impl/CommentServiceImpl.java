@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 import team.skadi.powersellsys.mapper.CommentMapper;
 import team.skadi.powersellsys.pojo.Comment;
+import team.skadi.powersellsys.pojo.Judge;
 import team.skadi.powersellsys.pojo.PageBean;
 import team.skadi.powersellsys.service.CommentService;
 import team.skadi.powersellsys.utils.SqlSessionUtil;
@@ -77,5 +78,18 @@ public class CommentServiceImpl implements CommentService {
 			sqlSession.close();
 		}
 		return true;
+	}
+
+	@Override
+	public PageBean<Judge> queryJudge(int page, int pageSize, Judge judge) {
+		log.info("分页查询评论，page；{}，pageSize：{}，judge：{}", page, pageSize, judge);
+		SqlSession sqlSession = SqlSessionUtil.getSqlSession();
+		CommentMapper judgeMapper = sqlSession.getMapper(CommentMapper.class);
+		Page<Judge> p = PageHelper.startPage(page, pageSize).doSelectPage(() -> judgeMapper.pageJudge(judge == null ? new Judge() : judge));
+		PageBean<Judge> judgePageBean = new PageBean<>(p.getTotal(), p.getResult());
+		sqlSession.commit();
+		sqlSession.close();
+		p.close();
+		return judgePageBean;
 	}
 }

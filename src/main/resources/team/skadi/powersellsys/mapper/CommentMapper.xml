@@ -46,5 +46,25 @@
             </if>
         </where>
     </select>
+    <select id="pageJudge" resultType="team.skadi.powersellsys.pojo.Judge">
+        SELECT * FROM judge
+        <where>
+            <if test="powerName != null">
+                power_name LIKE CONCAT('%',#{powerName},'%')
+            </if>
+            <if test="userAccount != null">
+                AND user_account = #{userAccount}
+            </if>
+            <if test="star != null">
+                AND star = #{star}
+            </if>
+            <if test="content != null">
+                AND content = #{content}
+            </if>
+            <if test="createTime != null">
+                AND create_time = #{createTime}
+            </if>
+        </where>
+    </select>
 
 </mapper>

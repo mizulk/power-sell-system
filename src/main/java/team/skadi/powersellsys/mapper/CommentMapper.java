@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Update;
 import team.skadi.powersellsys.pojo.Comment;
+import team.skadi.powersellsys.pojo.Judge;
 
 import java.util.List;
 
@@ -19,4 +20,6 @@ public interface CommentMapper {
 
 	@Delete("DELETE FROM comments WHERE id = #{id}")
 	void deleteComment(Comment comment);
+
+	List<Judge> pageJudge(Judge judge);
 }

@@ -1,6 +1,7 @@
 package team.skadi.powersellsys.service;
 
 import team.skadi.powersellsys.pojo.Comment;
+import team.skadi.powersellsys.pojo.Judge;
 import team.skadi.powersellsys.pojo.PageBean;
 
 public interface CommentService extends Service {
@@ -12,4 +13,6 @@ public interface CommentService extends Service {
 	void addNewComment(Comment comment);
 
 	boolean delComment(Comment comment);
+
+	PageBean<Judge> queryJudge(int page,int pageSize,Judge judge);
 }
