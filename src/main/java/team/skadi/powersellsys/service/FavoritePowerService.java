@@ -13,5 +13,7 @@ public interface FavoritePowerService extends Service{
 
 	void updateFavorite(FavoritePower favoritePower);
 
+	boolean delFavorite(Integer favoritePower);
+
 	void addNewFavorite(FavoritePower favoritePower);
 }

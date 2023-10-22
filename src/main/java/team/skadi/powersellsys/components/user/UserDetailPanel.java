@@ -7,8 +7,11 @@ import team.skadi.powersellsys.components.PaginationPanel;
 import team.skadi.powersellsys.components.SearchPanel;
 import team.skadi.powersellsys.components.dialog.edit.FavoriteDialog;
 import team.skadi.powersellsys.model.user.DetailTableModel;
+import team.skadi.powersellsys.pojo.FavoritePower;
 import team.skadi.powersellsys.pojo.Goods;
 import team.skadi.powersellsys.pojo.PageBean;
+import team.skadi.powersellsys.pojo.PowerType;
+import team.skadi.powersellsys.service.FavoritePowerService;
 import team.skadi.powersellsys.service.GoodsService;
 import team.skadi.powersellsys.utils.ServiceUtil;
 
@@ -19,7 +22,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class UserDetailPanel extends BasicComponent
-		implements PaginationPanel.OnClickListener, SearchPanel.OnClickListener, DataPanel, ListSelectionListener{
+		implements PaginationPanel.OnClickListener, SearchPanel.OnClickListener, DataPanel, ListSelectionListener {
 
 	private Goods goods;
 	private DetailTableModel detailTableModel;
@@ -102,14 +105,24 @@ public class UserDetailPanel extends BasicComponent
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
-		if (source == favoriteBtn){
+		if (source == favoriteBtn) {
 			addFavorite();
 		}
 	}
 
 	public void addFavorite() {
-		FavoriteDialog favoriteDialog = new FavoriteDialog(app);
-		favoriteDialog.getData();
+		if (detailTable.getSelectedRow() == -1) {
+			FavoriteDialog favoriteDialog = new FavoriteDialog(app);
+			favoriteDialog.getOption();
+		} else {
+			Goods row = detailTableModel.getRow(detailTable.getSelectedRow());
+			FavoritePower favoritePower = new FavoritePower();
+			favoritePower.setUserId(app.useStore().userStore.id());
+			favoritePower.setPowerId(row.getId());
+			FavoritePowerService service = ServiceUtil.getService(FavoritePowerService.class);
+			service.addNewFavorite(favoritePower);
+			JOptionPane.showMessageDialog(app, String.format("添加电源%s到收藏夹成功", row.getName()));
+		}
 	}
 
 	@Override

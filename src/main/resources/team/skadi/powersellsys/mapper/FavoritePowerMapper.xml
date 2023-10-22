@@ -10,7 +10,7 @@
            <if test="powerId != null">
                powerId = #{powerId}
            </if>
-       </set>>
+       </set>
        WHERE id = #{id}
    </update>
 
@@ -21,7 +21,7 @@
                 user_id = #{userId}
             </if>
             <if test="powerId != null">
-                AND id = #{powerId}
+                AND power_id = #{powerId}
             </if>
             <if test="name != null">
                 AND `name` = #{name}
@@ -43,6 +43,9 @@
             </if>
             <if test="value != null">
                 AND `value` = #{value}
+            </if>
+            <if test="id != null">
+                AND id = #{id}
             </if>
         </where>
     </select>

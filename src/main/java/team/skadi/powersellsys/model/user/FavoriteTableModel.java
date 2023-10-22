@@ -2,6 +2,8 @@ package team.skadi.powersellsys.model.user;
 
 import team.skadi.powersellsys.model.DataTableModel;
 import team.skadi.powersellsys.pojo.FavoritePower;
+import team.skadi.powersellsys.service.FavoritePowerService;
+import team.skadi.powersellsys.utils.ServiceUtil;
 
 import java.util.ArrayList;
 
@@ -35,5 +37,13 @@ public class FavoriteTableModel extends DataTableModel<FavoritePower> {
 			case 6 -> favorite.getDescribe();
 			default -> null;
 		};
+	}
+
+	@Override
+	public boolean delRow(int rowIndex) {
+		FavoritePowerService favoritePowerService = ServiceUtil.getService(FavoritePowerService.class);
+		boolean b = favoritePowerService.delFavorite(getRow(rowIndex).getId());
+		super.delRow(rowIndex);
+		return b;
 	}
 }

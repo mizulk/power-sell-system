@@ -55,6 +55,23 @@ public class FavoritePowerServiceImpl implements FavoritePowerService {
 	}
 
 	@Override
+	public boolean delFavorite(Integer powerId) {
+		SqlSession sqlSession = SqlSessionUtil.getSqlSession();
+		try {
+			FavoritePowerMapper favoritePowerMapper = sqlSession.getMapper(FavoritePowerMapper.class);
+			favoritePowerMapper.delFavoriteByPowerId(powerId);
+			sqlSession.commit();
+		} catch (Exception e) {
+			log.error("删除收藏时出错，数据库回滚。",e);
+			sqlSession.rollback();
+			return false;
+		} finally {
+			sqlSession.close();
+		}
+		return true;
+	}
+
+	@Override
 	public void addNewFavorite(FavoritePower favoritePower) {
 		SqlSession sqlSession = SqlSessionUtil.getSqlSession();
 		try {

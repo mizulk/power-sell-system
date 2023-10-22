@@ -9,7 +9,7 @@ import java.util.List;
 
 public class DetailTableModel extends DataTableModel<Goods> {
 
-	private final String[] columnName = new String[]{"名称", "型号", "容量", "单价", "折扣"};
+	private final String[] columnName = new String[]{"名称", "电源id", "型号", "容量", "单价", "折扣"};
 
 	public DetailTableModel() {
 		data = new ArrayList<>();
@@ -30,10 +30,11 @@ public class DetailTableModel extends DataTableModel<Goods> {
 		Goods detail = data.get(rowIndex);
 		return switch (columnIndex){
 			case 0 -> detail.getName();
-			case 1 -> detail.getModel();
-			case 2 -> detail.getCapacity();
-			case 3 -> detail.getPrice();
-			case 4 -> detail.getDiscount();
+			case 1 -> detail.getId();
+			case 2 -> detail.getModel();
+			case 3 -> detail.getCapacity();
+			case 4 -> detail.getPrice();
+			case 5 -> detail.getDiscount();
 			default -> null;
 		};
 	}
