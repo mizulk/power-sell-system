@@ -21,30 +21,43 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- Table structure for comments
 -- ----------------------------
 DROP TABLE IF EXISTS `comments`;
-CREATE TABLE `comments`  (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `user_id` int NOT NULL COMMENT '用户id',
-  `power_id` int NOT NULL COMMENT '电源id',
-  `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '评论内容',
-  `star` tinyint NOT NULL DEFAULT 1 COMMENT '好评星级',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '评论时间',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+CREATE TABLE `comments`
+(
+    `id`          int                                                           NOT NULL AUTO_INCREMENT COMMENT '主键',
+    `user_id`     int                                                           NOT NULL COMMENT '用户id',
+    `power_id`    int                                                           NOT NULL COMMENT '电源id',
+    `content`     varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '评论内容',
+    `star`        tinyint                                                       NOT NULL DEFAULT 1 COMMENT '好评星级',
+    `create_time` datetime(0)                                                   NULL     DEFAULT NULL COMMENT '评论时间',
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 6
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci
+  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of comments
 -- ----------------------------
-INSERT INTO `comments` VALUES (1, 1, 5, '1233', 5, '2023-10-21 21:08:31');
+INSERT INTO `comments`
+VALUES (2, 1, 1, '不错的电源', 5, '2023-10-22 04:30:30');
+INSERT INTO `comments`
+VALUES (3, 1, 2, 'wow', 5, '2023-10-22 04:31:22');
+INSERT INTO `comments`
+VALUES (4, 1, 3, 'good', 5, '2023-10-22 04:33:23');
+INSERT INTO `comments`
+VALUES (5, 1, 1, 'nice', 2, '2023-10-22 17:01:58');
 
 -- ----------------------------
 -- Table structure for favorites
 -- ----------------------------
 DROP TABLE IF EXISTS `favorites`;
-CREATE TABLE `favorites`  (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `user_id` int NOT NULL,
-  `power_id` int NOT NULL,
-  `create_time` datetime(0) NOT NULL,
+CREATE TABLE `favorites`
+(
+    `id`          int         NOT NULL AUTO_INCREMENT COMMENT '主键',
+    `user_id`     int         NOT NULL,
+    `power_id`    int         NOT NULL,
+    `create_time` datetime(0) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
@@ -98,78 +111,119 @@ CREATE TABLE `needs`  (
 -- Table structure for orders
 -- ----------------------------
 DROP TABLE IF EXISTS `orders`;
-CREATE TABLE `orders`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `user_id` int NOT NULL COMMENT '用户id',
-  `power_id` int NOT NULL COMMENT '电源id',
-  `sum` int UNSIGNED NOT NULL COMMENT '订购数量',
-  `amount` decimal(10, 2) UNSIGNED NOT NULL COMMENT '订购金额',
-  `create_time` datetime(0) NOT NULL COMMENT '订购日期',
-  `count` int NULL DEFAULT NULL COMMENT '当天订购人数',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+CREATE TABLE `orders`
+(
+    `id`          int                     NOT NULL AUTO_INCREMENT,
+    `user_id`     int                     NOT NULL COMMENT '用户id',
+    `power_id`    int                     NOT NULL COMMENT '电源id',
+    `sum`         int UNSIGNED            NOT NULL COMMENT '订购数量',
+    `amount`      decimal(10, 2) UNSIGNED NOT NULL COMMENT '订购金额',
+    `create_time` datetime(0)             NOT NULL COMMENT '订购日期',
+    `count`       int                     NULL DEFAULT NULL COMMENT '当天订购人数',
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 2
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci
+  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of orders
 -- ----------------------------
+INSERT INTO `orders`
+VALUES (1, 1, 1, 12, 12.00, '2023-10-22 16:14:08', NULL);
 
 -- ----------------------------
 -- Table structure for power_types
 -- ----------------------------
 DROP TABLE IF EXISTS `power_types`;
-CREATE TABLE `power_types`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '类型',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+CREATE TABLE `power_types`
+(
+    `id`    int                                                           NOT NULL AUTO_INCREMENT,
+    `value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '类型',
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 3
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci
+  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of power_types
 -- ----------------------------
-INSERT INTO `power_types` VALUES (1, '移动端');
+INSERT INTO `power_types`
+VALUES (1, '移动端');
+INSERT INTO `power_types`
+VALUES (2, '桌面端');
 
 -- ----------------------------
 -- Table structure for powers
 -- ----------------------------
 DROP TABLE IF EXISTS `powers`;
-CREATE TABLE `powers`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '电源名称',
-  `type` int NULL DEFAULT NULL COMMENT '电源类型',
-  `model` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '电源型号',
-  `capacity` int NULL DEFAULT NULL COMMENT '电源容量',
-  `stock` int NULL DEFAULT NULL COMMENT '库存',
-  `price` decimal(10, 2) NULL DEFAULT NULL COMMENT '单价',
-  `discount` tinyint NULL DEFAULT 0 COMMENT '折扣',
-  `status` int NULL DEFAULT NULL COMMENT '状态',
-  `create_time` datetime(0) NOT NULL COMMENT '创建时间',
-  `update_time` datetime(0) NOT NULL COMMENT '修改日期',
-  `describe` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '描述',
-  `sum` int NULL DEFAULT NULL COMMENT '访问数量',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+CREATE TABLE `powers`
+(
+    `id`          int                                                           NOT NULL AUTO_INCREMENT,
+    `name`        varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NULL DEFAULT NULL COMMENT '电源名称',
+    `type`        int                                                           NULL DEFAULT NULL COMMENT '电源类型',
+    `model`       varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NULL DEFAULT NULL COMMENT '电源型号',
+    `capacity`    int                                                           NULL DEFAULT NULL COMMENT '电源容量',
+    `stock`       int                                                           NULL DEFAULT NULL COMMENT '库存',
+    `price`       decimal(10, 2)                                                NULL DEFAULT NULL COMMENT '单价',
+    `discount`    tinyint                                                       NULL DEFAULT 0 COMMENT '折扣',
+    `status`      int                                                           NULL DEFAULT NULL COMMENT '状态',
+    `create_time` datetime(0)                                                   NOT NULL COMMENT '创建时间',
+    `update_time` datetime(0)                                                   NOT NULL COMMENT '修改日期',
+    `describe`    varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '描述',
+    `sum`         int                                                           NULL DEFAULT NULL COMMENT '访问数量',
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 12
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci
+  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of powers
 -- ----------------------------
-INSERT INTO `powers` VALUES (1, '野兽电源', 1, 'senbasuki', 40000, 10, 114.50, 14, 1, '2023-10-21 02:52:45', '2023-10-21 02:52:48', '野兽电源，更持久，更耐用', 514);
-INSERT INTO `powers` VALUES (2, '金轮电源', 1, 'v520', 4000, 10, 50.00, 0, 1, '2023-10-21 17:25:19', '2023-10-21 17:25:19', '金轮电源，值得信赖，所有芜湖人都在用', 0);
-INSERT INTO `powers` VALUES (3, '野兽电源v2', 1, 'senbasukiv2', 1000, 50, 5.00, 0, 1, '2023-10-21 17:32:17', '2023-10-21 17:32:17', '野兽电源全新升级，更小巧', 0);
-INSERT INTO `powers` VALUES (4, '金轮电源v2', 1, 'wuhu', 10000, 7, 105.00, 15, 1, '2023-10-21 17:36:19', '2023-10-21 17:36:19', '更大容量，更持久', 0);
-INSERT INTO `powers` VALUES (5, '乔桑电源', 1, 'A10', 15000, 50, 100.00, 10, 1, '2023-10-21 17:39:37', '2023-10-21 17:39:37', '超大容量', 0);
-INSERT INTO `powers` VALUES (6, '乔桑电源', 1, 'A113', 100000, 1, 1000.00, 0, 1, '2023-10-21 17:40:53', '2023-10-21 17:40:53', '巨大', 0);
-INSERT INTO `powers` VALUES (7, 'ipower', 1, 'A114', 100, 1000, 10.00, 0, 1, '2023-10-21 17:45:01', '2023-10-21 17:45:01', 'cnmios', 0);
-INSERT INTO `powers` VALUES (8, 'ipower', 1, 'A514', 2100, 5, 500.00, 10, 1, '2023-10-21 19:26:35', '2023-10-21 19:26:35', 'ipower new good.', 0);
+INSERT INTO `powers`
+VALUES (1, '野兽电源', 1, 'senbasuki', 40000, 10, 114.50, 14, 1, '2023-10-21 02:52:45', '2023-10-21 02:52:48',
+        '野兽电源，更持久，更耐用', 514);
+INSERT INTO `powers`
+VALUES (2, '金轮电源', 1, 'v520', 4000, 10, 50.00, 0, 1, '2023-10-21 17:25:19', '2023-10-21 17:25:19', '金轮电源，值得信赖，所有芜湖人都在用',
+        0);
+INSERT INTO `powers`
+VALUES (3, '野兽电源v2', 1, 'senbasukiv2', 1000, 50, 5.00, 0, 1, '2023-10-21 17:32:17', '2023-10-21 17:32:17',
+        '野兽电源全新升级，更小巧', 0);
+INSERT INTO `powers`
+VALUES (4, '金轮电源v2', 1, 'wuhu', 10000, 7, 105.00, 15, 1, '2023-10-21 17:36:19', '2023-10-21 17:36:19', '更大容量，更持久', 0);
+INSERT INTO `powers`
+VALUES (5, '乔桑电源', 1, 'A10', 15000, 50, 100.00, 10, 1, '2023-10-21 17:39:37', '2023-10-21 17:39:37', '超大容量', 0);
+INSERT INTO `powers`
+VALUES (6, '乔桑电源', 1, 'A113', 100000, 1, 1000.00, 90, 1, '2023-10-21 17:40:53', '2023-10-21 17:40:53', '巨大', 0);
+INSERT INTO `powers`
+VALUES (7, 'ipower', 1, 'A114', 100, 1000, 10.00, 0, 1, '2023-10-21 17:45:01', '2023-10-21 17:45:01', 'cnmios', 0);
+INSERT INTO `powers`
+VALUES (8, 'ipower', 1, 'A514', 2100, 5, 500.00, 10, 1, '2023-10-21 19:26:35', '2023-10-21 19:26:35',
+        'ipower new good.', 0);
+INSERT INTO `powers`
+VALUES (9, '乔桑电源', 2, 'B1', 5000, 5000, 500.00, 0, 1, '2023-10-22 17:41:06', '2023-10-22 17:41:06', '乔桑电源最新作品，面向桌面端',
+        0);
+INSERT INTO `powers`
+VALUES (10, '乔桑电源', 2, 'B2', 10000, 100, 900.00, 0, 1, '2023-10-22 17:42:11', '2023-10-22 17:42:11', '乔桑电源，更大，更好', 0);
+INSERT INTO `powers`
+VALUES (11, '金轮电源', 2, 'wuhu-B1', 100000, 5, 1500.00, 0, 1, '2023-10-22 17:43:27', '2023-10-22 17:43:27',
+        '停电怎么办，用金轮电源！', 0);
 
 -- ----------------------------
 -- Table structure for suppliers
 -- ----------------------------
 DROP TABLE IF EXISTS `suppliers`;
-CREATE TABLE `suppliers`  (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '唯一id',
-  `account` char(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '账号',
-  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '供应商姓名',
-  `password` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '供应商密码',
+CREATE TABLE `suppliers`
+(
+    `id`       int                                                          NOT NULL AUTO_INCREMENT COMMENT '唯一id',
+    `account`  char(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci     NULL DEFAULT NULL COMMENT '账号',
+    `name`     varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '供应商姓名',
+    `password` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '供应商密码',
   `tel` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '电话',
   `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '地址',
   `zip_code` char(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '邮编',

@@ -8,6 +8,7 @@ import team.skadi.powersellsys.service.GoodsService;
 import team.skadi.powersellsys.service.UserService;
 import team.skadi.powersellsys.utils.DateUtil;
 import team.skadi.powersellsys.utils.ServiceUtil;
+import team.skadi.powersellsys.utils.StringUtil;
 
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
@@ -91,8 +92,8 @@ public class OrderInformationPane extends BasicComponent {
 		String powerName = ServiceUtil.getService(GoodsService.class).getGoodsNameById(order.getPowerId());
 		userNameLabel.setText(userName);
 		powerNameLabel.setText(powerName);
-		sumLabel.setText(String.valueOf(order.getSum()));
-		amountLabel.setText(String.valueOf(order.getAmount()));
+		sumLabel.setText(StringUtil.INTEGER_FORMAT.format(order.getSum()));
+		amountLabel.setText(StringUtil.FLOAT_FORMAT.format(order.getAmount()));
 		createTimeLabel.setText(DateUtil.replaceT(order.getCreateTime()));
 	}
 

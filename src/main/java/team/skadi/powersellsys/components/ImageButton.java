@@ -96,8 +96,7 @@ public class ImageButton extends JButton {
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				if (isEnabled())
-					setContentAreaFilled(false);
+				setContentAreaFilled(false);
 			}
 		});
 	}

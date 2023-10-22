@@ -6,6 +6,7 @@ import team.skadi.powersellsys.components.ImageButton;
 import team.skadi.powersellsys.components.ImageLabel;
 import team.skadi.powersellsys.pojo.User;
 import team.skadi.powersellsys.utils.DateUtil;
+import team.skadi.powersellsys.utils.StringUtil;
 
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
@@ -153,7 +154,7 @@ public class UserInformationPanel extends BasicComponent {
 		zipCodeLabel.setText(user.getZipCode() == null ? "未填写" : user.getZipCode());
 		telLabel.setText(user.getTel());
 		accountLabel.setText(user.getAccount());
-		balanceLabel.setText(String.valueOf(user.getBalance()));
+		balanceLabel.setText(StringUtil.FLOAT_FORMAT.format(user.getBalance()));
 		addressLabel.setText(user.getAddress());
 		passwordLabel.setText("******");
 		createTimeLabel.setText(DateUtil.replaceT(user.getCreateTime()));

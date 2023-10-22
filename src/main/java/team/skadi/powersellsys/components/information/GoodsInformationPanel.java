@@ -5,6 +5,7 @@ import team.skadi.powersellsys.components.BasicComponent;
 import team.skadi.powersellsys.components.ImageLabel;
 import team.skadi.powersellsys.pojo.Goods;
 import team.skadi.powersellsys.utils.DateUtil;
+import team.skadi.powersellsys.utils.StringUtil;
 
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
@@ -144,8 +145,13 @@ public class GoodsInformationPanel extends BasicComponent {
 		typeLabel.setText(goods.getType());
 		capacityLabel.setText(goods.getCapacity() + "mA•h");
 		stockLabel.setText(String.valueOf(goods.getStock()));
-		priceLabel.setText(String.valueOf(goods.getPrice()));
-		discountLabel.setText(goods.getDiscount() == 0 ? "无" : String.format("-%%%doff", goods.getDiscount()));
+		priceLabel.setText(goods.getDiscount() != 0 ?
+				String.format("%s (%s)",
+						StringUtil.FLOAT_FORMAT.format(goods.getPrice() * (1 - goods.getDiscount() * 0.01)),
+						StringUtil.INTEGER_FORMAT.format(goods.getPrice()))
+				:
+				StringUtil.FLOAT_FORMAT.format(goods.getPrice()));
+		discountLabel.setText(goods.getDiscount() == 0 ? "无" : String.format("-%d%%off", goods.getDiscount()));
 		modelLabel.setText(goods.getModel());
 		sumLabel.setText(String.valueOf(goods.getSum()));
 		createTimeLabel.setText(DateUtil.replaceT(goods.getCreateTime()));
