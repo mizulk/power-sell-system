@@ -1,6 +1,7 @@
 package team.skadi.powersellsys.components;
 
 import team.skadi.powersellsys.App;
+import team.skadi.powersellsys.components.dialog.BasicDialog;
 import team.skadi.powersellsys.view.BasicView;
 
 import javax.swing.JPanel;
@@ -11,8 +12,13 @@ public abstract class BasicComponent extends JPanel implements ActionListener {
 	protected App app;
 
 	public BasicComponent(App app) {
+		this(app, true);
+	}
+
+	public BasicComponent(App app, boolean autoInit) {
 		this.app = app;
-		init();
+		if (autoInit)
+			init();
 	}
 
 	protected void init() {

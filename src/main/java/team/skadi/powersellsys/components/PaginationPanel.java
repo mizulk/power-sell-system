@@ -14,10 +14,7 @@ import java.awt.event.ActionEvent;
 /**
  * 分页面板，必须注册{@link OnClickListener}来使用
  * <p>
- * 使用方法1:使用{@link #addOnclickListener(OnClickListener)}
- * </p>
- * <p>
- * 使用方法2：在继承{@link javax.swing.table.AbstractTableModel}的类中实现
+ * 使用方法：使用{@link #addOnclickListener(OnClickListener)}
  * </p>
  */
 public class PaginationPanel extends BasicComponent {
@@ -35,52 +32,107 @@ public class PaginationPanel extends BasicComponent {
 	private long total;
 	private int pageLength;
 	private SpinnerNumberModel spinnerNumberModel;
+	private final String[] layout;
+	private JButton exportBtn;
 
+	/**
+	 * @param app        从属于那个app
+	 * @param exportable 是否能导出数据
+	 * @deprecated replaced by {@code new PaginationPanel(App,String)}.
+	 */
+	@Deprecated(since = "1", forRemoval = true)
 	public PaginationPanel(App app, boolean exportable) {
-		super(app);
+		this(app, "total,sizes,first,prev,pager,next,jumper");
 		if (exportable) {
-			JButton exportBtn = new JButton("导出");
+			exportBtn = new JButton("导出");
 			add(exportBtn);
 		}
+	}
+
+	/**
+	 * 以默认布局(total,sizes,first,prev,pager,next,jumper)创建分页面板
+	 *
+	 * @param app 从属于那个app
+	 */
+	public PaginationPanel(App app) {
+		this(app, "total,sizes,first,prev,pager,next,jumper");
+	}
+
+	/**
+	 * 依照给定的布局创建一个分页面板
+	 *
+	 * @param app    从属于那个app
+	 * @param layout 组件布局，子组件名用逗号分隔。提供的组件有 total,sizes,first,prev,pager,next,jumper,export
+	 */
+	public PaginationPanel(App app, String layout) {
+		super(app, false);
+		String[] layout1;
+		layout1 = layout.split(",\\s|,");
+		if (layout1.length == 0) {
+			layout1 = new String[]{"total", "sizes", "first", "prev", "pager", "next", "jumper"};
+		}
+		this.layout = layout1;
+		init();
 	}
 
 	@Override
 	protected void buildLayout() {
 		setLayout(new GridLayout(1, 6, 8, 0));
 
-		totalLabel = new JLabel(/*"共 1024"*/);
-		add(totalLabel);
+		for (String str : layout) {
+			switch (str) {
+				case "total" -> {
+					totalLabel = new JLabel(/*"共 1024"*/);
+					add(totalLabel);
+				}
+				case "sizes" -> {
+					pageSizeComboBox = new JComboBox<>(new String[]{"10/页", "15/页", "20/页"});
+					add(pageSizeComboBox);
+				}
+				case "first" -> {
+					firstBtn = new JButton("首页");
+					add(firstBtn);
+				}
+				case "prev" -> {
+					previousBtn = new JButton("<");
+					add(previousBtn);
+				}
+				case "pager" -> {
+					pageLabel = new JLabel("", JLabel.CENTER);
+					add(pageLabel);
+				}
+				case "next" -> {
+					nextBtn = new JButton(">");
+					add(nextBtn);
+				}
+				case "jumper" -> {
+					spinnerNumberModel = new SpinnerNumberModel(1, 1, 10, 1);
+					JSpinner pageSpinner = new JSpinner(spinnerNumberModel);
+					add(pageSpinner);
 
-		pageSizeComboBox = new JComboBox<>(new String[]{"10/页", "15/页", "20/页"});
-		add(pageSizeComboBox);
-
-		firstBtn = new JButton("首页");
-		add(firstBtn);
-
-		previousBtn = new JButton("<");
-		add(previousBtn);
-
-		pageLabel = new JLabel("", JLabel.CENTER);
-		add(pageLabel);
-
-		nextBtn = new JButton(">");
-		add(nextBtn);
-
-		spinnerNumberModel = new SpinnerNumberModel(1, 1, 10, 1);
-		JSpinner pageSpinner = new JSpinner(spinnerNumberModel);
-		add(pageSpinner);
-
-		jumpBtn = new JButton("跳转");
-		add(jumpBtn);
+					jumpBtn = new JButton("跳转");
+					add(jumpBtn);
+				}
+				case "export" -> {// unfinished
+					exportBtn = new JButton("导出");
+					add(exportBtn);
+				}
+			}
+		}
 	}
 
 	@Override
 	protected void addListener() {
-		pageSizeComboBox.addActionListener(this);
-		firstBtn.addActionListener(this);
-		previousBtn.addActionListener(this);
-		nextBtn.addActionListener(this);
-		jumpBtn.addActionListener(this);
+		for (String str : layout) {
+			switch (str) {
+				case "sizes" -> pageSizeComboBox.addActionListener(this);
+				case "first" -> firstBtn.addActionListener(this);
+				case "prev" -> previousBtn.addActionListener(this);
+				case "pager" -> nextBtn.addActionListener(this);
+				case "next" -> jumpBtn.addActionListener(this);
+				case "export" -> exportBtn.addActionListener(this);// unfinished
+			}
+		}
 	}
 
 
@@ -93,10 +145,7 @@ public class PaginationPanel extends BasicComponent {
 		if (l == null) return;
 		Object source = e.getSource();
 		if (source == pageSizeComboBox) {
-			pageSize = (pageSizeComboBox.getSelectedIndex() + 2) * 5;
-			pageSizeChange();
-			updateLabel();
-			l.pageSizeChange(pageSize);
+			pageChange();
 		} else if (source == firstBtn) {
 			firstPage();
 		} else if (source == previousBtn) {
@@ -104,13 +153,24 @@ public class PaginationPanel extends BasicComponent {
 		} else if (source == nextBtn) {
 			nextPage();
 		} else if (source == jumpBtn) {
-			int i = spinnerNumberModel.getNumber().intValue();
-			if (curPage != i) {
-				curPage = i;
-				updateLabel();
-				l.jumpTo(curPage, pageSize);
-			}
+			jumpTo();
 		}
+	}
+
+	private void jumpTo() {
+		int i = spinnerNumberModel.getNumber().intValue();
+		if (curPage != i) {
+			curPage = i;
+			updateLabel();
+			l.jumpTo(curPage, pageSize);
+		}
+	}
+
+	private void pageChange() {
+		pageSize = (pageSizeComboBox.getSelectedIndex() + 2) * 5;
+		initPageSize();
+		updateLabel();
+		l.pageSizeChange(pageSize);
 	}
 
 	private void nextPage() {
@@ -141,7 +201,7 @@ public class PaginationPanel extends BasicComponent {
 		pageLabel.setText(curPage + "/" + pageLength);
 	}
 
-	private void pageSizeChange() {
+	private void initPageSize() {
 		pageLength = (int) Math.ceil(total / (double) pageSize);
 		spinnerNumberModel.setMaximum(pageLength);
 		spinnerNumberModel.setValue(1);
@@ -150,7 +210,7 @@ public class PaginationPanel extends BasicComponent {
 
 	public void setPageBean(PageBean<?> pageBean) {
 		total = pageBean.getTotal();
-		pageSizeChange();
+		initPageSize();
 		totalLabel.setText("共 " + total);
 		updateLabel();
 	}
@@ -196,7 +256,9 @@ public class PaginationPanel extends BasicComponent {
 		 *
 		 * @param pageSize 每页含有记录数
 		 */
-		void firstPage(int pageSize);
+		default void firstPage(int pageSize) {
+
+		}
 
 		/**
 		 * 当下一页被按下时
@@ -220,14 +282,18 @@ public class PaginationPanel extends BasicComponent {
 		 * @param page     需要跳转到的页面
 		 * @param pageSize 每页含有记录数
 		 */
-		void jumpTo(int page, int pageSize);
+		default void jumpTo(int page, int pageSize) {
+
+		}
 
 		/**
 		 * 当每页记录数改变时调用
 		 *
 		 * @param pageSize 新的记录数
 		 */
-		void pageSizeChange(int pageSize);
+		default void pageSizeChange(int pageSize) {
+
+		}
 
 	}
 }
