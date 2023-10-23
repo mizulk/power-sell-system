@@ -1,5 +1,8 @@
 package team.skadi.powersellsys.components.dialog.edit;
 
+import team.skadi.powersellsys.App;
+import team.skadi.powersellsys.components.dialog.select.SelectField;
+import team.skadi.powersellsys.components.dialog.select.SelectPowerDialog;
 import team.skadi.powersellsys.pojo.Order;
 import team.skadi.powersellsys.service.OrderService;
 import team.skadi.powersellsys.utils.ServiceUtil;
@@ -13,10 +16,10 @@ import javax.swing.event.ChangeListener;
 
 public class UserOrderDialog extends EditDialog<Order> implements ChangeListener {
 
-	protected JTextField powerIdField;
 	protected JSpinner sumSpinner;
 	protected JSpinner priceSpinner;
 	protected JTextField amountField;
+	private SelectField selectPowerIdField;
 
 	public UserOrderDialog(JFrame frame, String title, int mode) {
 		super(frame, title, mode);
@@ -24,8 +27,8 @@ public class UserOrderDialog extends EditDialog<Order> implements ChangeListener
 
 	@Override
 	protected void buildInputLayout() {
-		powerIdField = new JTextField(TEXT_FIELD_COLUMNS);
-		addField("电源id(必填)：", powerIdField);
+		selectPowerIdField = new SelectField((App) getParent(), TEXT_FIELD_COLUMNS, SelectPowerDialog.class);
+		addField("电源id(必填)：", selectPowerIdField);
 
 		sumSpinner = new JSpinner(new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1));
 		sumSpinner.addChangeListener(this);
@@ -43,14 +46,13 @@ public class UserOrderDialog extends EditDialog<Order> implements ChangeListener
 
 	@Override
 	protected boolean isInputted() {
-		return powerIdField.getText().equals("")
-				&& priceSpinner.getValue().equals(0);
+		return selectPowerIdField.isInputted();
 	}
 
 	@Override
 	protected Order createData() {
 		Order order = new Order();
-		order.setPowerId(Integer.valueOf(powerIdField.getText()));
+		order.setPowerId(Integer.valueOf(selectPowerIdField.getText()));
 		order.setSum((Integer) sumSpinner.getValue());
 		order.setAmount(Float.valueOf(amountField.getText()));
 		return order;
@@ -93,7 +95,7 @@ public class UserOrderDialog extends EditDialog<Order> implements ChangeListener
 	@Override
 	public void setData(Order data) {
 		super.setData(data);
-		powerIdField.setText(String.valueOf(data.getPowerId()));
+		selectPowerIdField.setText(String.valueOf(data.getPowerId()));
 		if (data.getSum() != null)
 			sumSpinner.setValue(data.getSum());
 		if (data.getAmount() != null) {

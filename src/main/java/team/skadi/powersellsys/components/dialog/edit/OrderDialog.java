@@ -1,5 +1,8 @@
 package team.skadi.powersellsys.components.dialog.edit;
 
+import team.skadi.powersellsys.App;
+import team.skadi.powersellsys.components.dialog.select.SelectField;
+import team.skadi.powersellsys.components.dialog.select.SelectUserDialog;
 import team.skadi.powersellsys.pojo.Order;
 import team.skadi.powersellsys.service.GoodsService;
 import team.skadi.powersellsys.service.OrderService;
@@ -7,12 +10,11 @@ import team.skadi.powersellsys.service.UserService;
 import team.skadi.powersellsys.utils.ServiceUtil;
 
 import javax.swing.JFrame;
-import javax.swing.JTextField;
 import java.util.Objects;
 
 public class OrderDialog extends UserOrderDialog {
 
-	private JTextField userIdField;
+	private SelectField selectUserIdField;
 
 	public OrderDialog(JFrame frame, int mode) {
 		super(frame, mode == ADD_MODE ? "添加订单" : "修改订单", mode);
@@ -20,21 +22,27 @@ public class OrderDialog extends UserOrderDialog {
 
 	@Override
 	protected void buildInputLayout() {
-		userIdField = new JTextField(TEXT_FIELD_COLUMNS);
-		addField("用户id(必填)：", userIdField);
+
+		selectUserIdField = new SelectField((App) getParent(), TEXT_FIELD_COLUMNS, SelectUserDialog.class);
+		addField("用户id(必填)：", selectUserIdField);
 
 		super.buildInputLayout();
 	}
 
 	@Override
+	protected void addListener() {
+		super.addListener();
+	}
+
+	@Override
 	protected boolean isInputted() {
-		return super.isInputted() && userIdField.getText().equals("");
+		return super.isInputted() && selectUserIdField.isInputted();
 	}
 
 	@Override
 	protected Order createData() {
 		Order order = super.createData();
-		order.setUserId(Integer.valueOf(userIdField.getText()));
+		order.setUserId(Integer.valueOf(selectUserIdField.getText()));
 		return order;
 	}
 
@@ -53,7 +61,7 @@ public class OrderDialog extends UserOrderDialog {
 	@Override
 	public void setData(Order data) {
 		super.setData(data);
-		userIdField.setText(String.valueOf(data.getUserId()));
+		selectUserIdField.setText(String.valueOf(data.getUserId()));
 	}
 
 	@Override

@@ -40,7 +40,7 @@ public class PaginationPanel extends BasicComponent {
 	 * @param exportable 是否能导出数据
 	 * @deprecated replaced by {@code new PaginationPanel(App,String)}.
 	 */
-	@Deprecated(since = "1", forRemoval = true)
+	@Deprecated(since = "26f6bdafcfcf9e62c97756a94ad45ad9313c19fa", forRemoval = true)
 	public PaginationPanel(App app, boolean exportable) {
 		this(app, "total,sizes,first,prev,pager,next,jumper");
 		if (exportable) {
@@ -128,8 +128,8 @@ public class PaginationPanel extends BasicComponent {
 				case "sizes" -> pageSizeComboBox.addActionListener(this);
 				case "first" -> firstBtn.addActionListener(this);
 				case "prev" -> previousBtn.addActionListener(this);
-				case "pager" -> nextBtn.addActionListener(this);
-				case "next" -> jumpBtn.addActionListener(this);
+				case "next" -> nextBtn.addActionListener(this);
+				case "jumper" -> jumpBtn.addActionListener(this);
 				case "export" -> exportBtn.addActionListener(this);// unfinished
 			}
 		}
@@ -198,21 +198,29 @@ public class PaginationPanel extends BasicComponent {
 	}
 
 	private void updateLabel() {
-		pageLabel.setText(curPage + "/" + pageLength);
+		if (pageLabel != null)
+			pageLabel.setText(curPage + "/" + pageLength);
 	}
 
 	private void initPageSize() {
 		pageLength = (int) Math.ceil(total / (double) pageSize);
-		spinnerNumberModel.setMaximum(pageLength);
-		spinnerNumberModel.setValue(1);
-		curPage = 1;
+		if (spinnerNumberModel != null) {
+			spinnerNumberModel.setMaximum(pageLength);
+			spinnerNumberModel.setValue(1);
+		}
 	}
 
 	public void setPageBean(PageBean<?> pageBean) {
 		total = pageBean.getTotal();
 		initPageSize();
-		totalLabel.setText("共 " + total);
+		if (totalLabel != null)
+			totalLabel.setText("共 " + total);
 		updateLabel();
+	}
+
+	public void incTotal() {
+		if (totalLabel != null)
+			totalLabel.setText("共 " + (++total));
 	}
 
 	/**

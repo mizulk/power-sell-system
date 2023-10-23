@@ -69,7 +69,7 @@ public class UserEvaluationPanel extends BasicComponent
 
 		gbc.gridwidth = 2;
 		gbc.gridy++;
-		paginationPanel = new PaginationPanel(app, false);
+		paginationPanel = new PaginationPanel(app);
 		paginationPanel.addOnclickListener(this);
 		southPanel.add(paginationPanel, gbc);
 		add(southPanel, BorderLayout.SOUTH);

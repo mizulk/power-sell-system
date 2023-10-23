@@ -87,7 +87,7 @@ public class UserDetailPanel extends BasicComponent
 
 		gbc.gridy++;
 		gbc.gridwidth = 3;
-		paginationPanel = new PaginationPanel(app, false);
+		paginationPanel = new PaginationPanel(app);
 		paginationPanel.addOnclickListener(this);
 		btnPanel.add(paginationPanel, gbc);
 		add(btnPanel, BorderLayout.SOUTH);

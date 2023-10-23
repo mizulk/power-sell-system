@@ -143,9 +143,11 @@ public class ManageGoodsPanel extends ManagePanel {
 
 	private void addGoods() {
 		GoodsDialog goodsDialog = new GoodsDialog(app, EditDialog.ADD_MODE);
-		if (goodsDialog.getOption() == BasicDialog.CONFIRM_OPTION && paginationPanel.isLastPage() && paginationPanel.getLeftRecord() < paginationPanel.getPageSize()) {
+		if (goodsDialog.getOption() == BasicDialog.CONFIRM_OPTION) return;
+		if (paginationPanel.isLastPage()
+				&& paginationPanel.getLeftRecord() < paginationPanel.getPageSize())
 			goodsTableModel.addRow(goodsDialog.getData());
-		}
+		paginationPanel.incTotal();
 	}
 
 	private void onShelf() {

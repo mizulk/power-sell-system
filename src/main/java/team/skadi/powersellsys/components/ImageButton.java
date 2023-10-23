@@ -72,6 +72,12 @@ public class ImageButton extends JButton {
 		setIcon(image);
 	}
 
+	@Override
+	public void setEnabled(boolean b) {
+		if (!b) setContentAreaFilled(false);
+		super.setEnabled(b);
+	}
+
 	/**
 	 * 设置图片缩放
 	 *
@@ -90,8 +96,7 @@ public class ImageButton extends JButton {
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				if (isEnabled())
-					setContentAreaFilled(true);
+				if (isEnabled()) setContentAreaFilled(true);
 			}
 
 			@Override

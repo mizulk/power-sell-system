@@ -6,7 +6,6 @@ import team.skadi.powersellsys.components.ImageButton;
 import team.skadi.powersellsys.components.PaginationPanel;
 import team.skadi.powersellsys.components.SearchPanel;
 import team.skadi.powersellsys.components.dialog.BasicDialog;
-import team.skadi.powersellsys.components.dialog.edit.OrderDialog;
 import team.skadi.powersellsys.components.dialog.edit.UserOrderDialog;
 import team.skadi.powersellsys.model.user.OrderTableModel;
 import team.skadi.powersellsys.pojo.Goods;
@@ -64,7 +63,7 @@ public class UserOrderPanel extends BasicComponent
 
 		gbc.gridy++;
 		gbc.gridwidth = 2;
-		paginationPanel = new PaginationPanel(app, false);
+		paginationPanel = new PaginationPanel(app);
 		paginationPanel.addOnclickListener(this);
 		btnPanel.add(paginationPanel, gbc);
 		add(btnPanel, BorderLayout.SOUTH);

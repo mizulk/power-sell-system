@@ -14,6 +14,7 @@ import team.skadi.powersellsys.utils.ServiceUtil;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -99,6 +100,7 @@ public class ManageOrderPanel extends ManagePanel {
 		PageBean<Order> orderPageBean = orderService.queryOrder(paginationPanel.getCurPage(), paginationPanel.getPageSize(), order);
 		paginationPanel.setPageBean(orderPageBean);
 		orderTableModel.updateData(orderPageBean.getData());
+		JOptionPane.showMessageDialog(app, "刷新成功！");
 	}
 
 	@Override
@@ -144,11 +146,11 @@ public class ManageOrderPanel extends ManagePanel {
 
 	private void addOrder() {
 		OrderDialog orderDialog = new OrderDialog(app, EditDialog.ADD_MODE);
-		if (orderDialog.getOption() == BasicDialog.CONFIRM_OPTION
-				&& paginationPanel.isLastPage()
-				&& paginationPanel.getLeftRecord() < paginationPanel.getPageSize()) {
+		if (orderDialog.getOption() == BasicDialog.CANCEL_OPTION) return;
+		if (paginationPanel.isLastPage()
+				&& paginationPanel.getLeftRecord() < paginationPanel.getPageSize())
 			orderTableModel.addRow(orderDialog.getData());
-		}
+		paginationPanel.incTotal();
 	}
 
 	@Override

@@ -1,5 +1,8 @@
 package team.skadi.powersellsys.components.dialog.edit;
 
+import team.skadi.powersellsys.App;
+import team.skadi.powersellsys.components.dialog.select.SelectField;
+import team.skadi.powersellsys.components.dialog.select.SelectPowerDialog;
 import team.skadi.powersellsys.pojo.Comment;
 import team.skadi.powersellsys.service.CommentService;
 import team.skadi.powersellsys.utils.ServiceUtil;
@@ -8,9 +11,9 @@ import javax.swing.*;
 
 public class UserCommentDialog extends EditDialog<Comment> {
 
-	protected JTextField powerIdField;
 	protected JTextField contentField;
 	protected JSpinner starSpinner;
+	private SelectField selectPowerId;
 
 	public UserCommentDialog(JFrame frame, int mode) {
 		super(frame, mode == ADD_MODE ? "添加评论" : "修改评论", mode);
@@ -19,8 +22,8 @@ public class UserCommentDialog extends EditDialog<Comment> {
 	@Override
 	protected void buildInputLayout() {
 
-		powerIdField = new JTextField(TEXT_FIELD_COLUMNS);
-		addField("电源id(必填)：", powerIdField);
+		selectPowerId = new SelectField((App) getParent(), TEXT_FIELD_COLUMNS, SelectPowerDialog.class);
+		addField("电源id(必填)：", selectPowerId);
 
 		contentField = new JTextField(TEXT_FIELD_COLUMNS);
 		addField("评论内容(必填)：", contentField);
@@ -32,14 +35,14 @@ public class UserCommentDialog extends EditDialog<Comment> {
 	@Override
 	public void setData(Comment data) {
 		super.setData(data);
-		powerIdField.setText(String.valueOf(data.getPowerId()));
+		selectPowerId.setText(String.valueOf(data.getPowerId()));
 		if (data.getContent() != null)
 			contentField.setText(data.getContent());
 		if (data.getStar() != null)
 			starSpinner.setValue(data.getStar());
 
 		if (mode == MODIFY_MODE) {
-			powerIdField.setEditable(false);
+			selectPowerId.setEditable(false);
 		}
 	}
 
@@ -65,7 +68,7 @@ public class UserCommentDialog extends EditDialog<Comment> {
 	@Override
 	protected Comment createData() {
 		Comment comment = new Comment();
-		comment.setPowerId(Integer.valueOf(powerIdField.getText()));
+		comment.setPowerId(Integer.valueOf(selectPowerId.getText()));
 		comment.setContent(contentField.getText());
 		if (starSpinner.getValue() instanceof Byte b) {
 			comment.setStar(b);
@@ -77,7 +80,7 @@ public class UserCommentDialog extends EditDialog<Comment> {
 
 	@Override
 	protected boolean isInputted() {
-		return powerIdField.getText().equals("")
+		return selectPowerId.isInputted()
 				&& contentField.getText().equals("");
 	}
 

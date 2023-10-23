@@ -134,12 +134,11 @@ public class ManageUserPanel extends ManagePanel {
 
 	private void addUser() {
 		UserDialog userDialog = new UserDialog(app, UserDialog.ADD_MODE);
-		if (userDialog.getOption() == BasicDialog.CONFIRM_OPTION
-				&& paginationPanel.isLastPage()
+		if (userDialog.getOption() == BasicDialog.CANCEL_OPTION) return;
+		if (paginationPanel.isLastPage()
 				&& paginationPanel.getLeftRecord() < paginationPanel.getPageSize()
-		) {// 当分页是最后一页，并且还能往里面塞记录时
-			userTableModel.addRow(userDialog.getData());
-		}
+		) userTableModel.addRow(userDialog.getData());// 当分页是最后一页，并且还能往里面塞记录时
+		paginationPanel.incTotal();
 	}
 
 	private void modifyUser() {
@@ -208,6 +207,7 @@ public class ManageUserPanel extends ManagePanel {
 		PageBean<User> userPageBean = ServiceUtil.getService(UserService.class).queryUser(1, paginationPanel.getPageSize(), null);
 		userTableModel.updateData(userPageBean.getData());
 	}
+
 	@Override
 	public void firstPage(int pageSize) {
 		UserService userService = ServiceUtil.getService(UserService.class);

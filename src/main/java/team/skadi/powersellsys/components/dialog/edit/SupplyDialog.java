@@ -1,5 +1,8 @@
 package team.skadi.powersellsys.components.dialog.edit;
 
+import team.skadi.powersellsys.App;
+import team.skadi.powersellsys.components.dialog.select.SelectField;
+import team.skadi.powersellsys.components.dialog.select.SelectSupplierDialog;
 import team.skadi.powersellsys.pojo.Supply;
 import team.skadi.powersellsys.service.GoodsService;
 import team.skadi.powersellsys.service.SupplierService;
@@ -7,12 +10,11 @@ import team.skadi.powersellsys.service.SupplyService;
 import team.skadi.powersellsys.utils.ServiceUtil;
 
 import javax.swing.JFrame;
-import javax.swing.JTextField;
 import java.util.Objects;
 
 public class SupplyDialog extends SupplierSupplyDialog {
 
-	private JTextField supplierIdField;
+	private SelectField selectSupplierField;
 
 	public SupplyDialog(JFrame frame, int mode) {
 		super(frame, mode);
@@ -20,8 +22,8 @@ public class SupplyDialog extends SupplierSupplyDialog {
 
 	@Override
 	protected void buildInputLayout() {
-		supplierIdField = new JTextField(TEXT_FIELD_COLUMNS);
-		addField("供应商id(必填)：", supplierIdField);
+		selectSupplierField = new SelectField((App) getParent(), TEXT_FIELD_COLUMNS, SelectSupplierDialog.class);
+		addField("供应商id(必填)：", selectSupplierField);
 
 		super.buildInputLayout();
 	}
@@ -29,7 +31,7 @@ public class SupplyDialog extends SupplierSupplyDialog {
 	@Override
 	public void setData(Supply data) {
 		super.setData(data);
-		supplierIdField.setText(String.valueOf(data.getSupplierId()));
+		selectSupplierField.setText(String.valueOf(data.getSupplierId()));
 
 	}
 
@@ -67,13 +69,13 @@ public class SupplyDialog extends SupplierSupplyDialog {
 
 	@Override
 	protected boolean isInputted() {
-		return super.isInputted() && supplierIdField.getText().equals("");
+		return super.isInputted() && selectSupplierField.isInputted();
 	}
 
 	@Override
 	protected Supply createData() {
 		Supply supply = super.createData();
-		supply.setSupplierId(Integer.valueOf(supplierIdField.getText()));
+		supply.setSupplierId(Integer.valueOf(selectSupplierField.getText()));
 		return supply;
 	}
 

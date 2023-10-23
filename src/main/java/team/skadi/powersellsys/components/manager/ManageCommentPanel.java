@@ -14,6 +14,7 @@ import team.skadi.powersellsys.utils.ServiceUtil;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -45,7 +46,7 @@ public class ManageCommentPanel extends ManagePanel {
 
 	@Override
 	protected JPanel getSearchPanel() {
-		SearchPanel searchPanel = new SearchPanel(app, new String[]{"用户id", "电源id", "内容", "星"});
+		SearchPanel searchPanel = new SearchPanel(app, new String[]{"用户id", "电源id", "内容", "评分"});
 		searchPanel.addOnClickListener(this);
 		return searchPanel;
 	}
@@ -102,7 +103,9 @@ public class ManageCommentPanel extends ManagePanel {
 	public void refreshData() {
 		CommentService commentService = ServiceUtil.getService(CommentService.class);
 		PageBean<Comment> commentPageBean = commentService.queryComment(paginationPanel.getCurPage(), paginationPanel.getPageSize(), comment);
+		paginationPanel.setPageBean(commentPageBean);
 		commentTableModel.updateData(commentPageBean.getData());
+		JOptionPane.showMessageDialog(app, "刷新成功！");
 	}
 
 	@Override
@@ -132,10 +135,11 @@ public class ManageCommentPanel extends ManagePanel {
 
 	private void addComment() {
 		CommentDialog commentDialog = new CommentDialog(app, EditDialog.ADD_MODE);
-		if (commentDialog.getOption() == BasicDialog.CONFIRM_OPTION
-				&& paginationPanel.isLastPage()
+		if (commentDialog.getOption() == BasicDialog.CANCEL_OPTION) return;
+		if (paginationPanel.isLastPage()
 				&& paginationPanel.getLeftRecord() < paginationPanel.getPageSize())
 			commentTableModel.addRow(commentDialog.getData());
+		paginationPanel.incTotal();
 	}
 
 	private void delComment() {

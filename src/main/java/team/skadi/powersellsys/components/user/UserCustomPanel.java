@@ -14,8 +14,6 @@ import team.skadi.powersellsys.service.OrderService;
 import team.skadi.powersellsys.utils.ServiceUtil;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
@@ -46,7 +44,7 @@ public class UserCustomPanel extends BasicComponent
 		customTable.getTableHeader().setReorderingAllowed(false);
 		add(new JScrollPane(customTable), BorderLayout.CENTER);
 
-		paginationPanel = new PaginationPanel(app, false);
+		paginationPanel = new PaginationPanel(app);
 		paginationPanel.addOnclickListener(this);
 		add(paginationPanel, BorderLayout.SOUTH);
 
@@ -120,8 +118,8 @@ public class UserCustomPanel extends BasicComponent
 	public SearchPanel.SearchResult onSearchButtonClick(int optionIndex, String content) {
 		order = new Order();
 		try {
-			switch (optionIndex) {
-				case 0 -> order.setPowerId(Integer.parseInt(content));
+			if (optionIndex == 0) {
+				order.setPowerId(Integer.parseInt(content));
 			}
 		} catch (NumberFormatException e) {
 			return SearchPanel.SearchResult.NAN;

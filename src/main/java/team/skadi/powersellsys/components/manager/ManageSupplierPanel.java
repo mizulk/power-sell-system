@@ -168,12 +168,11 @@ public class ManageSupplierPanel extends ManagePanel {
 
 	private void addSupplier() {
 		SupplierDialog supplierDialog = new SupplierDialog(app, EditDialog.ADD_MODE);
-		if (supplierDialog.getOption() == BasicDialog.CONFIRM_OPTION
-				&& paginationPanel.isLastPage()
-				&& paginationPanel.getLeftRecord() < paginationPanel.getPageSize()
-		) {
+		if (supplierDialog.getOption() == BasicDialog.CANCEL_OPTION) return;
+		if (paginationPanel.isLastPage()
+				&& paginationPanel.getLeftRecord() < paginationPanel.getPageSize())
 			supplierTableModel.addRow(supplierDialog.getData());
-		}
+		paginationPanel.incTotal();
 	}
 
 	@Override

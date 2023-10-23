@@ -81,8 +81,8 @@ public class ShowGoodsPanel extends SupplierPanel
 
         gbc.gridy++;
         gbc.gridwidth = 2;
-        paginationPanel = new PaginationPanel(app, false);
-        paginationPanel.addOnclickListener(this);
+		paginationPanel = new PaginationPanel(app);
+		paginationPanel.addOnclickListener(this);
         btnPanel.add(paginationPanel, gbc);
         add(btnPanel, BorderLayout.SOUTH);
 
@@ -95,12 +95,13 @@ public class ShowGoodsPanel extends SupplierPanel
     @Override
     protected void addListener() {
         btn1.addActionListener(e -> {
-            GoodsDialog goodsDialog = new GoodsDialog(app, EditDialog.ADD_MODE);
-            if (goodsDialog.getOption() == BasicDialog.CONFIRM_OPTION
-            && paginationPanel.isLastPage() && paginationPanel.getLeftRecord() < paginationPanel.getPageSize()){
-                goodsTableModel.addRow(goodsDialog.getData());
-            }
-        });
+			GoodsDialog goodsDialog = new GoodsDialog(app, EditDialog.ADD_MODE);
+			if (goodsDialog.getOption() == BasicDialog.CANCEL_OPTION) return;
+			if (paginationPanel.isLastPage() && paginationPanel.getLeftRecord() < paginationPanel.getPageSize()) {
+				goodsTableModel.addRow(goodsDialog.getData());
+			}
+			paginationPanel.incTotal();
+		});
         btn2.addActionListener(e -> {
 //            int option = new PutOffDialog(app, "下架商品").getOption();
             if (table.getSelectedRow() != -1) {

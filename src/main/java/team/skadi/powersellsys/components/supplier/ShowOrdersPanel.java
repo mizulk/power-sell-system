@@ -20,17 +20,17 @@ import java.awt.event.ActionEvent;
 import java.time.LocalDateTime;
 
 public class ShowOrdersPanel extends SupplierPanel
-        implements PaginationPanel.OnClickListener, SearchPanel.OnClickListener, ListSelectionListener {
+		implements PaginationPanel.OnClickListener, SearchPanel.OnClickListener, ListSelectionListener {
 
-    private JButton btn;
-    private SupplyTableModel supplyTableModel;
-    private JTable table;
-    private JButton btn2;
-    private Supply supply;
-    private PaginationPanel paginationPanel;
+	private JButton btn;
+	private SupplyTableModel supplyTableModel;
+	private JTable table;
+	private JButton btn2;
+	private Supply supply;
+	private PaginationPanel paginationPanel;
 
-    public ShowOrdersPanel(App app) {
-        super(app);
+	public ShowOrdersPanel(App app) {
+		super(app);
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class ShowOrdersPanel extends SupplierPanel
 
 		gbc.gridy++;
 		gbc.gridwidth = 2;
-		paginationPanel = new PaginationPanel(app, false);
+		paginationPanel = new PaginationPanel(app);
 		paginationPanel.addOnclickListener(this);
 		btnpanel.add(paginationPanel, gbc);
 		add(btnpanel, BorderLayout.SOUTH);
@@ -115,10 +115,12 @@ public class ShowOrdersPanel extends SupplierPanel
 		supply1.setSupplierId(app.useStore().supplierStore.id());
 		supply1.setSum(1);
 		supplierSupplyDialog.setData(supply1);
-		if (supplierSupplyDialog.getOption() == BasicDialog.CONFIRM_OPTION) {
-			JOptionPane.showMessageDialog(app, "添加成功");
+		if (supplierSupplyDialog.getOption() == BasicDialog.CANCEL_OPTION) return;
+		JOptionPane.showMessageDialog(app, "添加成功");
+		if (paginationPanel.isLastPage()
+				&& paginationPanel.getLeftRecord() < paginationPanel.getPageSize())
 			supplyTableModel.addRow(supplierSupplyDialog.getData());
-		}
+		paginationPanel.incTotal();
 	}
 
 	public SearchPanel.SearchResult onSearchButtonClick(int optionIndex, String content) {
@@ -140,48 +142,48 @@ public class ShowOrdersPanel extends SupplierPanel
 
 	@Override
 	public void onCloseButtonCLick() {
-        PageBean<Supply> supplyPageBean = ServiceUtil.getService(SupplyService.class).querySupply(1, paginationPanel.getPageSize(), null);
-        supplyTableModel.updateData(supplyPageBean.getData());
-    }
+		PageBean<Supply> supplyPageBean = ServiceUtil.getService(SupplyService.class).querySupply(1, paginationPanel.getPageSize(), null);
+		supplyTableModel.updateData(supplyPageBean.getData());
+	}
 
-    @Override
-    public void firstPage(int pageSize) {
-        SupplyService supplyService = ServiceUtil.getService(SupplyService.class);
-        PageBean<Supply> supplyPageBean = supplyService.querySupply(1, pageSize, supply);
-        supplyTableModel.updateData(supplyPageBean.getData());
-    }
+	@Override
+	public void firstPage(int pageSize) {
+		SupplyService supplyService = ServiceUtil.getService(SupplyService.class);
+		PageBean<Supply> supplyPageBean = supplyService.querySupply(1, pageSize, supply);
+		supplyTableModel.updateData(supplyPageBean.getData());
+	}
 
-    @Override
-    public void nextPage(int curPage, int pageSize) {
-        SupplyService supplyService = ServiceUtil.getService(SupplyService.class);
-        PageBean<Supply> supplyPageBean = supplyService.querySupply(curPage, pageSize, supply);
-        supplyTableModel.updateData(supplyPageBean.getData());
-    }
+	@Override
+	public void nextPage(int curPage, int pageSize) {
+		SupplyService supplyService = ServiceUtil.getService(SupplyService.class);
+		PageBean<Supply> supplyPageBean = supplyService.querySupply(curPage, pageSize, supply);
+		supplyTableModel.updateData(supplyPageBean.getData());
+	}
 
-    @Override
-    public void previousPage(int curPage, int pageSize) {
-        SupplyService supplyService = ServiceUtil.getService(SupplyService.class);
-        PageBean<Supply> supplyPageBean = supplyService.querySupply(curPage, pageSize, supply);
-        supplyTableModel.updateData(supplyPageBean.getData());
-    }
+	@Override
+	public void previousPage(int curPage, int pageSize) {
+		SupplyService supplyService = ServiceUtil.getService(SupplyService.class);
+		PageBean<Supply> supplyPageBean = supplyService.querySupply(curPage, pageSize, supply);
+		supplyTableModel.updateData(supplyPageBean.getData());
+	}
 
-    @Override
-    public void jumpTo(int page, int pageSize) {
-        SupplyService supplyService = ServiceUtil.getService(SupplyService.class);
-        PageBean<Supply> supplyPageBean = supplyService.querySupply(page, pageSize, supply);
-        supplyTableModel.updateData(supplyPageBean.getData());
-    }
+	@Override
+	public void jumpTo(int page, int pageSize) {
+		SupplyService supplyService = ServiceUtil.getService(SupplyService.class);
+		PageBean<Supply> supplyPageBean = supplyService.querySupply(page, pageSize, supply);
+		supplyTableModel.updateData(supplyPageBean.getData());
+	}
 
-    @Override
-    public void pageSizeChange(int pageSize) {
-        SupplyService supplyService = ServiceUtil.getService(SupplyService.class);
-        PageBean<Supply> supplyPageBean = supplyService.querySupply(1, pageSize, supply);
-        supplyTableModel.updateData(supplyPageBean.getData());
-    }
+	@Override
+	public void pageSizeChange(int pageSize) {
+		SupplyService supplyService = ServiceUtil.getService(SupplyService.class);
+		PageBean<Supply> supplyPageBean = supplyService.querySupply(1, pageSize, supply);
+		supplyTableModel.updateData(supplyPageBean.getData());
+	}
 
-    @Override
-    public void valueChanged(ListSelectionEvent e) {
-        boolean b = table.getSelectedRow() != -1;
-        btn2.setEnabled(b);
-    }
+	@Override
+	public void valueChanged(ListSelectionEvent e) {
+		boolean b = table.getSelectedRow() != -1;
+		btn2.setEnabled(b);
+	}
 }

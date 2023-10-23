@@ -55,7 +55,7 @@ public abstract class ManagePanel extends BasicComponent
 	}
 
 	protected JPanel getPaginationPanel() {
-		paginationPanel = new PaginationPanel(app, false);
+		paginationPanel = new PaginationPanel(app);
 		paginationPanel.addOnclickListener(this);
 		return paginationPanel;
 	}

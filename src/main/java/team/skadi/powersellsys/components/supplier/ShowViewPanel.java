@@ -1,7 +1,6 @@
 package team.skadi.powersellsys.components.supplier;
 
 import team.skadi.powersellsys.App;
-import team.skadi.powersellsys.components.BasicComponent;
 import team.skadi.powersellsys.components.PaginationPanel;
 import team.skadi.powersellsys.components.SearchPanel;
 import team.skadi.powersellsys.model.supplier.VisitTableModel;
@@ -10,10 +9,12 @@ import team.skadi.powersellsys.pojo.PageBean;
 import team.skadi.powersellsys.service.GoodsService;
 import team.skadi.powersellsys.utils.ServiceUtil;
 
-import javax.swing.*;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import java.awt.*;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 
 public class ShowViewPanel extends SupplierPanel
@@ -39,8 +40,8 @@ public class ShowViewPanel extends SupplierPanel
         table.getSelectionModel().addListSelectionListener(this);
         add(new JScrollPane(table),BorderLayout.CENTER);
 
-        paginationPanel = new PaginationPanel(app,false);
-        paginationPanel.addOnclickListener(this);
+        paginationPanel = new PaginationPanel(app);
+		paginationPanel.addOnclickListener(this);
         add(paginationPanel,BorderLayout.SOUTH);
 
         SearchPanel searchPanel = new SearchPanel(app,new String[]{"商品名称"});
@@ -80,20 +81,19 @@ public class ShowViewPanel extends SupplierPanel
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Object source = e.getSource();
-        
+
     }
 
     public SearchPanel.SearchResult onSearchButtonClick(int optionIndex, String content) {
-        goods = new Goods();// 每次搜索清空内容（待定）
-        switch (optionIndex) {
-            
-        }
-        PageBean<Goods> goodss = ServiceUtil.getService(GoodsService.class).queryGoods(1, paginationPanel.getPageSize(), goods);
-        visitTableModel.updateData(goodss.getData());
-        paginationPanel.setPageBean(goodss); // 更新分页面板
-        return goodss.getTotal() == 0 ? SearchPanel.SearchResult.NO_RESULT : SearchPanel.SearchResult.HAVE_RESULT;
-    }
+		goods = new Goods();// 每次搜索清空内容（待定）
+		if (optionIndex == 0) {
+			goods.setName(content);
+		}
+		PageBean<Goods> goodss = ServiceUtil.getService(GoodsService.class).queryGoods(1, paginationPanel.getPageSize(), goods);
+		visitTableModel.updateData(goodss.getData());
+		paginationPanel.setPageBean(goodss); // 更新分页面板
+		return goodss.getTotal() == 0 ? SearchPanel.SearchResult.NO_RESULT : SearchPanel.SearchResult.HAVE_RESULT;
+	}
 
     @Override
     public void onCloseButtonCLick() {
@@ -138,7 +138,6 @@ public class ShowViewPanel extends SupplierPanel
 
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
-		boolean b = table.getSelectedRow() != -1;
 
 	}
 

@@ -50,8 +50,8 @@ public class ShowDescribePanel extends SupplierPanel implements PaginationPanel.
         table.setRowHeight(30);
         add(new JScrollPane(table),BorderLayout.CENTER);
 
-        paginationPanel = new PaginationPanel(app,false);
-        paginationPanel.addOnclickListener(this);
+        paginationPanel = new PaginationPanel(app);
+		paginationPanel.addOnclickListener(this);
         add(paginationPanel,BorderLayout.SOUTH);
 
         SearchPanel searchPanel = new SearchPanel(app,new String[]{"电源名称","用户账号","评分","评论内容","评论时间"});

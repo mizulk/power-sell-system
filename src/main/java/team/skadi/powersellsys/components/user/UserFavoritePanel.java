@@ -60,7 +60,7 @@ public class UserFavoritePanel extends BasicComponent
 
 		gbc.gridy++;
 		gbc.gridwidth = 2;
-		paginationPanel = new PaginationPanel(app, false);
+		paginationPanel = new PaginationPanel(app);
 		paginationPanel.addOnclickListener(this);
 		btnPanel.add(paginationPanel, gbc);
 		add(btnPanel, BorderLayout.SOUTH);

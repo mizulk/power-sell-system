@@ -13,7 +13,6 @@ import team.skadi.powersellsys.utils.ServiceUtil;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.time.LocalDateTime;
 
 public class ShowStatementPanel extends SupplierPanel implements PaginationPanel.OnClickListener, SearchPanel.OnClickListener {
 
@@ -55,8 +54,8 @@ public class ShowStatementPanel extends SupplierPanel implements PaginationPanel
         table.getTableHeader().setReorderingAllowed(false);
         add(new JScrollPane(table), BorderLayout.CENTER);
 
-        paginationPanel = new PaginationPanel(app, false);
-        paginationPanel.addOnclickListener(this);
+        paginationPanel = new PaginationPanel(app);
+		paginationPanel.addOnclickListener(this);
         add(paginationPanel, BorderLayout.SOUTH);
 
         SearchPanel searchPanel = new SearchPanel(app, new String[]{"电源id", "电源名称", "订购数量", "订购金额"});

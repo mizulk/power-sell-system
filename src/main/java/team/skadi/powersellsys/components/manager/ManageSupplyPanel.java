@@ -14,6 +14,7 @@ import team.skadi.powersellsys.utils.ServiceUtil;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -99,6 +100,7 @@ public class ManageSupplyPanel extends ManagePanel {
 		PageBean<Supply> supplyPageBean = supplyService.querySupply(paginationPanel.getCurPage(), paginationPanel.getPageSize(), supply);
 		paginationPanel.setPageBean(supplyPageBean);
 		supplyTableModel.updateData(supplyPageBean.getData());
+		JOptionPane.showMessageDialog(app, "刷新成功！");
 	}
 
 	@Override
@@ -144,10 +146,11 @@ public class ManageSupplyPanel extends ManagePanel {
 
 	private void addSupply() {
 		SupplyDialog supplyDialog = new SupplyDialog(app, EditDialog.ADD_MODE);
-		if (supplyDialog.getOption() == BasicDialog.CONFIRM_OPTION
-				&& paginationPanel.isLastPage()
+		if (supplyDialog.getOption() == BasicDialog.CANCEL_OPTION) return;
+		if (paginationPanel.isLastPage()
 				&& paginationPanel.getLeftRecord() < paginationPanel.getPageSize())
 			supplyTableModel.addRow(supply);
+		paginationPanel.incTotal();
 	}
 
 	@Override

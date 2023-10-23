@@ -55,8 +55,8 @@ public class ShowPricePanel extends SupplierPanel implements PaginationPanel.OnC
         table.setRowHeight(30);
         add(new JScrollPane(table), BorderLayout.CENTER);
 
-        paginationPanel = new PaginationPanel(app, false);
-        paginationPanel.addOnclickListener(this);
+        paginationPanel = new PaginationPanel(app);
+		paginationPanel.addOnclickListener(this);
         add(paginationPanel, BorderLayout.SOUTH);
 
         SearchPanel searchPanel = new SearchPanel(app, new String[]{"商品名称", "商品价格"});

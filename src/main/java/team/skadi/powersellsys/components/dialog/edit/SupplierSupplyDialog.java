@@ -1,5 +1,8 @@
 package team.skadi.powersellsys.components.dialog.edit;
 
+import team.skadi.powersellsys.App;
+import team.skadi.powersellsys.components.dialog.select.SelectField;
+import team.skadi.powersellsys.components.dialog.select.SelectPowerDialog;
 import team.skadi.powersellsys.pojo.Supply;
 import team.skadi.powersellsys.service.GoodsService;
 import team.skadi.powersellsys.service.SupplyService;
@@ -11,7 +14,6 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import java.awt.BorderLayout;
 import java.text.SimpleDateFormat;
@@ -19,10 +21,10 @@ import java.time.LocalDateTime;
 
 public class SupplierSupplyDialog extends EditDialog<Supply> {
 
-	protected JTextField powerIdField;
 	protected JSpinner sumSpinner;
 	protected JFormattedTextField supplyTimeField;
 	private JButton nowBtn;
+	private SelectField selectPowerIdField;
 
 	public SupplierSupplyDialog(JFrame frame, int mode) {
 		super(frame, mode == ADD_MODE ? "添加供应订单" : "修正订单", mode);
@@ -30,8 +32,8 @@ public class SupplierSupplyDialog extends EditDialog<Supply> {
 
 	@Override
 	protected void buildInputLayout() {
-		powerIdField = new JTextField(TEXT_FIELD_COLUMNS);
-		addField("电源id(必填)：", powerIdField);
+		selectPowerIdField = new SelectField((App) getParent(), TEXT_FIELD_COLUMNS, SelectPowerDialog.class);
+		addField("电源id(必填)：", selectPowerIdField);
 
 		sumSpinner = new JSpinner(new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1));
 		addField("供应数量：", sumSpinner);
@@ -78,7 +80,7 @@ public class SupplierSupplyDialog extends EditDialog<Supply> {
 	public void setData(Supply data) {
 		super.setData(data);
 		if (data.getPowerId() != null)
-			powerIdField.setText(String.valueOf(data.getPowerId()));
+			selectPowerIdField.setText(String.valueOf(data.getPowerId()));
 		if (data.getSum() != null)
 			sumSpinner.setValue(data.getSum());
 		if (data.getSupplyTime() != null)
@@ -87,13 +89,13 @@ public class SupplierSupplyDialog extends EditDialog<Supply> {
 
 	@Override
 	protected boolean isInputted() {
-		return powerIdField.getText().equals("");
+		return selectPowerIdField.isInputted();
 	}
 
 	@Override
 	protected Supply createData() {
 		Supply supply = new Supply();
-		supply.setPowerId(Integer.valueOf(powerIdField.getText()));
+		supply.setPowerId(Integer.valueOf(selectPowerIdField.getText()));
 		supply.setSum((Integer) sumSpinner.getValue());
 		supply.setSupplyTime(supplyTimeField.getText().equals("") ? null :
 				DateUtil.parse(supplyTimeField.getText()));
