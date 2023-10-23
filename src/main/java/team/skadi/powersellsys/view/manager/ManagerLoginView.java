@@ -81,7 +81,7 @@ public class ManagerLoginView extends LoginView {
 			if (manager != null) {
 				// 需要更改jobNumber的值必须重新new一个
 				app.useStore().managerStore = new ManagerStore(manager.getJobNumber());// 直接创建
-				JOptionPane.showMessageDialog(app, "登录成功，欢迎使用你," + manager.getName());
+				JOptionPane.showMessageDialog(app, "登录成功，欢迎使用," + manager.getName());
 				app.useRouter().showView(ViewName.MANAGER_LOGIN_VIEW, ViewName.MANAGER_MAIN_VIEW);
 				// 重重密码框
 				passwordField.reset();

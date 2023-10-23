@@ -20,6 +20,7 @@ public class SupplierRegisterView extends RegisterView {
 	private VerificationTextField<JTextField> telTextField;
 	private VerificationTextField<JTextField> addressTextField;
 	private VerificationTextField<JTextField> zipcodeTextField;
+	private VerificationTextField<JTextField> passwordField2;
 
 
 	public SupplierRegisterView(App app) {
@@ -39,12 +40,13 @@ public class SupplierRegisterView extends RegisterView {
 		telTextField.reset();
 		addressTextField.reset();
 		zipcodeTextField.reset();
+		passwordField2.reset();
 	}
 
 	@Override
 	protected void buildTextField(JPanel centerPanel, GridBagConstraints gbc) {
 		gbc.gridy++; // 表示为下一行，每行应该有两个元素
-		nameTextField = new VerificationTextField<>("姓名：", new JTextField(20));
+		nameTextField = new VerificationTextField<>("姓名 ：", new JTextField(20));
 		centerPanel.add(nameTextField, gbc);// 第二个元素是输入框
 		nameTextField.setVerification(context -> {
 			if (context.equals("")) {
@@ -57,7 +59,7 @@ public class SupplierRegisterView extends RegisterView {
 		});
 
 		gbc.gridy++;
-		passwordField = new VerificationTextField<>("密码：", new JPasswordField(20));
+		passwordField = new VerificationTextField<>("密码1：", new JPasswordField(20));
 		centerPanel.add(passwordField, gbc);
 		passwordField.setVerification(context -> {
 			if (context.equals("")) {
@@ -70,7 +72,22 @@ public class SupplierRegisterView extends RegisterView {
 		});
 
 		gbc.gridy++;
-		telTextField = new VerificationTextField<>("电话：", new JTextField(20));
+		passwordField2 = new VerificationTextField<>("密码2：", new JPasswordField(20));
+		centerPanel.add(passwordField2, gbc);
+		passwordField2.setVerification(context -> {
+			if (context.equals("")) {
+				return "密码不能为空";
+			} else if (context.length() < 6) {
+				return "密码长度至少为6位";
+			} else if (!passwordField.getText().equals(context)) {
+				return "两次输入的密码不相等";
+			} else {
+				return "";
+			}
+		});
+
+		gbc.gridy++;
+		telTextField = new VerificationTextField<>("电话 ：", new JTextField(20));
 		centerPanel.add(telTextField, gbc);
 		telTextField.setVerification(context -> {
 			if (context.equals("")) {
@@ -83,7 +100,7 @@ public class SupplierRegisterView extends RegisterView {
 		});
 
 		gbc.gridy++;
-		addressTextField = new VerificationTextField<>("地址：", new JTextField(20));
+		addressTextField = new VerificationTextField<>("地址 ：", new JTextField(20));
 		centerPanel.add(addressTextField, gbc);
 		addressTextField.setVerification(context -> {
 			if (context.equals("")) {
@@ -96,7 +113,7 @@ public class SupplierRegisterView extends RegisterView {
 		});
 
 		gbc.gridy++;
-		zipcodeTextField = new VerificationTextField<>("邮编：", new JTextField(20));
+		zipcodeTextField = new VerificationTextField<>("邮编 ：", new JTextField(20));
 		centerPanel.add(zipcodeTextField, gbc);
 		zipcodeTextField.setVerification(context -> {
 			if (context.equals("")) {

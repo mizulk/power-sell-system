@@ -42,7 +42,7 @@ public class SelectLoginView extends BasicView implements ActionListener {
 	private JPanel getSouthPanel() {
 		JPanel southPanel = new JPanel();
 		southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.X_AXIS));
-		JLabel label = new JLabel("2023.09.18-2023");
+		JLabel label = new JLabel("2023.09.18 - 2023.10.23");
 		southPanel.add(label);
 
 		southPanel.add(Box.createHorizontalGlue());

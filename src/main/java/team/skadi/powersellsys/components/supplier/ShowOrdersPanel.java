@@ -35,8 +35,11 @@ public class ShowOrdersPanel extends SupplierPanel
 
 	@Override
 	public void initData() {
+		if (!supplyTableModel.hasData()) {
+			supply.setSupplierId(app.useStore().supplierStore.id());
+		}
 		SupplyService service = ServiceUtil.getService(SupplyService.class);
-		PageBean<Supply> supplyPageBean = service.querySupply(1, paginationPanel.getPageSize(), null);
+		PageBean<Supply> supplyPageBean = service.querySupply(1, paginationPanel.getPageSize(), supply);
 		paginationPanel.setPageBean(supplyPageBean);
 		supplyTableModel.updateData(supplyPageBean.getData());
 	}
@@ -44,7 +47,7 @@ public class ShowOrdersPanel extends SupplierPanel
 	@Override
 	public void refreshData() {
 		SupplyService service = ServiceUtil.getService(SupplyService.class);
-		PageBean<Supply> supplyPageBean = service.querySupply(1, paginationPanel.getPageSize(), null);
+		PageBean<Supply> supplyPageBean = service.querySupply(1, paginationPanel.getPageSize(), supply);
 		paginationPanel.setPageBean(supplyPageBean);
 		supplyTableModel.updateData(supplyPageBean.getData());
 	}
@@ -125,6 +128,7 @@ public class ShowOrdersPanel extends SupplierPanel
 
 	public SearchPanel.SearchResult onSearchButtonClick(int optionIndex, String content) {
 		supply = new Supply();
+		supply.setSupplierId(app.useStore().supplierStore.id());
 		try {
 			switch (optionIndex) {
 				case 0 -> supply.setPowerId(Integer.parseInt(content));
@@ -142,7 +146,7 @@ public class ShowOrdersPanel extends SupplierPanel
 
 	@Override
 	public void onCloseButtonCLick() {
-		PageBean<Supply> supplyPageBean = ServiceUtil.getService(SupplyService.class).querySupply(1, paginationPanel.getPageSize(), null);
+		PageBean<Supply> supplyPageBean = ServiceUtil.getService(SupplyService.class).querySupply(1, paginationPanel.getPageSize(), supply);
 		supplyTableModel.updateData(supplyPageBean.getData());
 	}
 

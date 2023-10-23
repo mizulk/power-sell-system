@@ -104,8 +104,10 @@ public class UserDialog extends EditDialog<User> {
 		super.setData(data);
 		nameField.setText(data.getName());
 		passwordField.setText(data.getPassword());
-		sexComboBox.setSelectedIndex(data.getSex());
-		ageSpinner.setValue(data.getAge());
+		if (data.getSex() != null)
+			sexComboBox.setSelectedIndex(data.getSex());
+		if (data.getAge() != null)
+			ageSpinner.setValue(data.getAge());
 		zipCodeField.setText(data.getZipCode());
 		telField.setText(data.getTel());
 		addressField.setText(data.getAddress());

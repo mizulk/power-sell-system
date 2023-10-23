@@ -149,8 +149,8 @@ public class UserInformationPanel extends BasicComponent {
 	public void showUser(User user) {
 		this.user = user;
 		nameLabel.setText(user.getName());
-		ageLabel.setText(String.valueOf(user.getAge()));
-		sexLabel.setText(user.getSex() == 0 ? "女" : "男");
+		ageLabel.setText(user.getAge() == null ? "未填写" : String.valueOf(user.getAge()));
+		sexLabel.setText(user.getSex() == null ? "未填写" : user.getSex() == 0 ? "女" : "男");
 		zipCodeLabel.setText(user.getZipCode() == null ? "未填写" : user.getZipCode());
 		telLabel.setText(user.getTel());
 		accountLabel.setText(user.getAccount());

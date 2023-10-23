@@ -41,7 +41,7 @@ public abstract class RegisterView extends BasicView implements ActionListener {
 		// gbc.gridy++;
 		gbc.gridwidth = 1;
 		gbc.weightx = 0;
-		gbc.insets.set(24, 0, 0, 0);
+		gbc.insets.set(10, 0, 0, 0);
 		buildTextField(centerPanel, gbc);
 
 		gbc.gridy++;

@@ -25,8 +25,8 @@ public class UserTableModel extends DataTableModel<User> {
 		return switch (columnIndex) {
 			case 0 -> user.getAccount();
 			case 1 -> user.getName();
-			case 2 -> user.getSex() == 0 ? "女" : "男";
-			case 3 -> user.getAge();
+			case 2 -> user.getSex() != null ? user.getSex() == 0 ? "女" : "男" : "尚未填写";
+			case 3 -> user.getAge() != null ? user.getAge() : "尚未填写";
 			case 4 -> user.getTel();
 			default -> null;
 		};
