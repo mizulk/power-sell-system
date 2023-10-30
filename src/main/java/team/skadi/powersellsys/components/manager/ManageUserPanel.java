@@ -209,37 +209,9 @@ public class ManageUserPanel extends ManagePanel {
 	}
 
 	@Override
-	public void firstPage(int pageSize) {
-		UserService userService = ServiceUtil.getService(UserService.class);
-		PageBean<User> userPageBean = userService.queryUser(1, pageSize, user);
-		userTableModel.updateData(userPageBean.getData());
-	}
-
-	@Override
-	public void nextPage(int curPage, int pageSize) {
+	public void pageChange(int curPage, int pageSize) {
 		UserService userService = ServiceUtil.getService(UserService.class);
 		PageBean<User> userPageBean = userService.queryUser(curPage, pageSize, user);
-		userTableModel.updateData(userPageBean.getData());
-	}
-
-	@Override
-	public void previousPage(int curPage, int pageSize) {
-		UserService userService = ServiceUtil.getService(UserService.class);
-		PageBean<User> userPageBean = userService.queryUser(curPage, pageSize, user);
-		userTableModel.updateData(userPageBean.getData());
-	}
-
-	@Override
-	public void jumpTo(int page, int pageSize) {
-		UserService userService = ServiceUtil.getService(UserService.class);
-		PageBean<User> userPageBean = userService.queryUser(page, pageSize, user);
-		userTableModel.updateData(userPageBean.getData());
-	}
-
-	@Override
-	public void pageSizeChange(int pageSize) {
-		UserService userService = ServiceUtil.getService(UserService.class);
-		PageBean<User> userPageBean = userService.queryUser(1, pageSize, user);
 		userTableModel.updateData(userPageBean.getData());
 	}
 

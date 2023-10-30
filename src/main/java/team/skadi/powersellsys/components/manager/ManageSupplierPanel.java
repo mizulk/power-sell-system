@@ -184,38 +184,9 @@ public class ManageSupplierPanel extends ManagePanel {
 	}
 
 	@Override
-	public void firstPage(int pageSize) {
-		SupplierService supplierService = ServiceUtil.getService(SupplierService.class);
-		PageBean<Supplier> supplierPageBean = supplierService.querySupplier(1, pageSize, supplier);
-		supplierTableModel.updateData(supplierPageBean.getData());
-	}
-
-	@Override
-	public void nextPage(int curPage, int pageSize) {
+	public void pageChange(int curPage, int pageSize) {
 		SupplierService supplierService = ServiceUtil.getService(SupplierService.class);
 		PageBean<Supplier> supplierPageBean = supplierService.querySupplier(curPage, pageSize, supplier);
-		supplierTableModel.updateData(supplierPageBean.getData());
-	}
-
-	@Override
-	public void previousPage(int curPage, int pageSize) {
-		SupplierService supplierService = ServiceUtil.getService(SupplierService.class);
-		PageBean<Supplier> supplierPageBean = supplierService.querySupplier(curPage, pageSize, supplier);
-		supplierTableModel.updateData(supplierPageBean.getData());
-	}
-
-	@Override
-	public void jumpTo(int page, int pageSize) {
-		SupplierService supplierService = ServiceUtil.getService(SupplierService.class);
-		PageBean<Supplier> supplierPageBean = supplierService.querySupplier(page, pageSize, supplier);
-		supplierTableModel.updateData(supplierPageBean.getData());
-	}
-
-	@Override
-	public void pageSizeChange(int pageSize) {
-		SupplierService supplierService = ServiceUtil.getService(SupplierService.class);
-		PageBean<Supplier> supplierPageBean = supplierService.querySupplier(1, pageSize, supplier);
-		paginationPanel.setPageBean(supplierPageBean);
 		supplierTableModel.updateData(supplierPageBean.getData());
 	}
 

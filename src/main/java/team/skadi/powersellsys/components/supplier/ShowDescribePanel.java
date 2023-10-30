@@ -84,48 +84,21 @@ public class ShowDescribePanel extends SupplierPanel implements PaginationPanel.
         }
         PageBean<Judge> supplys = ServiceUtil.getService(CommentService.class).queryJudge(1, paginationPanel.getPageSize(), judge);
         judgeTableModel.updateData(supplys.getData());
-        paginationPanel.setPageBean(supplys); // 更新分页面板
-        return supplys.getTotal() == 0 ? SearchPanel.SearchResult.NO_RESULT : SearchPanel.SearchResult.HAVE_RESULT;
-    }
+		paginationPanel.setPageBean(supplys); // 更新分页面板
+		return supplys.getTotal() == 0 ? SearchPanel.SearchResult.NO_RESULT : SearchPanel.SearchResult.HAVE_RESULT;
+	}
 
-    @Override
-    public void onCloseButtonCLick() {
-        PageBean<Judge> supplyPageBean = ServiceUtil.getService(CommentService.class).queryJudge(1, paginationPanel.getPageSize(), null);
-        judgeTableModel.updateData(supplyPageBean.getData());
-    }
+	@Override
+	public void onCloseButtonCLick() {
+		PageBean<Judge> supplyPageBean = ServiceUtil.getService(CommentService.class).queryJudge(1, paginationPanel.getPageSize(), null);
+		judgeTableModel.updateData(supplyPageBean.getData());
+	}
 
-    @Override
-    public void firstPage(int pageSize) {
-        CommentService commentService = ServiceUtil.getService(CommentService.class);
-        PageBean<Judge> supplyPageBean = commentService.queryJudge(1, pageSize, judge);
-        judgeTableModel.updateData(supplyPageBean.getData());
-    }
+	@Override
+	public void pageChange(int curPage, int pageSize) {
+		CommentService commentService = ServiceUtil.getService(CommentService.class);
+		PageBean<Judge> supplyPageBean = commentService.queryJudge(curPage, pageSize, judge);
+		judgeTableModel.updateData(supplyPageBean.getData());
+	}
 
-    @Override
-    public void nextPage(int curPage, int pageSize) {
-        CommentService commentService = ServiceUtil.getService(CommentService.class);
-        PageBean<Judge> supplyPageBean = commentService.queryJudge(curPage, pageSize, judge);
-        judgeTableModel.updateData(supplyPageBean.getData());
-    }
-
-    @Override
-    public void previousPage(int curPage, int pageSize) {
-        CommentService commentService = ServiceUtil.getService(CommentService.class);
-        PageBean<Judge> supplyPageBean = commentService.queryJudge(curPage, pageSize, judge);
-        judgeTableModel.updateData(supplyPageBean.getData());
-    }
-
-    @Override
-    public void jumpTo(int page, int pageSize) {
-        CommentService commentService = ServiceUtil.getService(CommentService.class);
-        PageBean<Judge> supplyPageBean = commentService.queryJudge(page, pageSize, judge);
-        judgeTableModel.updateData(supplyPageBean.getData());
-    }
-
-    @Override
-    public void pageSizeChange(int pageSize) {
-        CommentService commentService = ServiceUtil.getService(CommentService.class);
-        PageBean<Judge> supplyPageBean = commentService.queryJudge(1, pageSize, judge);
-        judgeTableModel.updateData(supplyPageBean.getData());
-    }
 }

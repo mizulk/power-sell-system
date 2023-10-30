@@ -161,37 +161,9 @@ public class ManageOrderPanel extends ManagePanel {
 	}
 
 	@Override
-	public void firstPage(int pageSize) {
-		OrderService orderService = ServiceUtil.getService(OrderService.class);
-		PageBean<Order> orderPageBean = orderService.queryOrder(1, pageSize, order);
-		orderTableModel.updateData(orderPageBean.getData());
-	}
-
-	@Override
-	public void nextPage(int curPage, int pageSize) {
+	public void pageChange(int curPage, int pageSize) {
 		OrderService orderService = ServiceUtil.getService(OrderService.class);
 		PageBean<Order> orderPageBean = orderService.queryOrder(curPage, pageSize, order);
-		orderTableModel.updateData(orderPageBean.getData());
-	}
-
-	@Override
-	public void previousPage(int curPage, int pageSize) {
-		OrderService orderService = ServiceUtil.getService(OrderService.class);
-		PageBean<Order> orderPageBean = orderService.queryOrder(curPage, pageSize, order);
-		orderTableModel.updateData(orderPageBean.getData());
-	}
-
-	@Override
-	public void jumpTo(int page, int pageSize) {
-		OrderService orderService = ServiceUtil.getService(OrderService.class);
-		PageBean<Order> orderPageBean = orderService.queryOrder(page, pageSize, order);
-		orderTableModel.updateData(orderPageBean.getData());
-	}
-
-	@Override
-	public void pageSizeChange(int pageSize) {
-		OrderService orderService = ServiceUtil.getService(OrderService.class);
-		PageBean<Order> orderPageBean = orderService.queryOrder(1, pageSize, order);
 		orderTableModel.updateData(orderPageBean.getData());
 	}
 

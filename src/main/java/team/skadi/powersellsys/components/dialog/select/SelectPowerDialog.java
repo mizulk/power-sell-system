@@ -71,16 +71,10 @@ public class SelectPowerDialog extends SelectDialog<Goods> {
 	}
 
 	@Override
-	public void nextPage(int curPage, int pageSize) {
+	public void pageChange(int curPage, int pageSize) {
 		GoodsService service = ServiceUtil.getService(GoodsService.class);
 		PageBean<Goods> goodsPageBean = service.queryGoods(curPage, paginationPanel.getPageSize(), null);
 		dataTableModel.updateData(goodsPageBean.getData());
 	}
 
-	@Override
-	public void previousPage(int curPage, int pageSize) {
-		GoodsService service = ServiceUtil.getService(GoodsService.class);
-		PageBean<Goods> goodsPageBean = service.queryGoods(curPage, paginationPanel.getPageSize(), null);
-		dataTableModel.updateData(goodsPageBean.getData());
-	}
 }

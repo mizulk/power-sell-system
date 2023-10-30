@@ -63,60 +63,32 @@ public class ShowStatementPanel extends SupplierPanel implements PaginationPanel
         add(searchPanel, BorderLayout.NORTH);
     }
 
-    @Override
-    protected void addListener() {
+	@Override
+	protected void addListener() {
 
-    }
+	}
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
+	@Override
+	public void actionPerformed(ActionEvent e) {
 
-    }
+	}
 
-    @Override
-    public void firstPage(int pageSize) {
-        OrderService orderService = ServiceUtil.getService(OrderService.class);
-        PageBean<Statement> rank = orderService.queryStatement(1, pageSize, statement);
-        statementTableModel.updateData(rank.getData());
-    }
+	@Override
+	public void pageChange(int curPage, int pageSize) {
+		OrderService orderService = ServiceUtil.getService(OrderService.class);
+		PageBean<Statement> rank = orderService.queryStatement(curPage, pageSize, statement);
+		statementTableModel.updateData(rank.getData());
+	}
 
-    @Override
-    public void nextPage(int curPage, int pageSize) {
-        OrderService orderService = ServiceUtil.getService(OrderService.class);
-        PageBean<Statement> rank = orderService.queryStatement(curPage, pageSize, statement);
-        statementTableModel.updateData(rank.getData());
-    }
-
-    @Override
-    public void previousPage(int curPage, int pageSize) {
-        OrderService orderService = ServiceUtil.getService(OrderService.class);
-        PageBean<Statement> rank = orderService.queryStatement(curPage, pageSize, statement);
-        statementTableModel.updateData(rank.getData());
-    }
-
-    @Override
-    public void jumpTo(int page, int pageSize) {
-        OrderService orderService = ServiceUtil.getService(OrderService.class);
-        PageBean<Statement> rank = orderService.queryStatement(page, pageSize, statement);
-        statementTableModel.updateData(rank.getData());
-    }
-
-    @Override
-    public void pageSizeChange(int pageSize) {
-        OrderService orderService = ServiceUtil.getService(OrderService.class);
-        PageBean<Statement> rank = orderService.queryStatement(1, pageSize, statement);
-        statementTableModel.updateData(rank.getData());
-    }
-
-    @Override
-    public SearchPanel.SearchResult onSearchButtonClick(int optionIndex, String content) {
-        statement = new Statement();
-        try {
-            switch (optionIndex) {
-                case 0 -> statement.setPowerId(Integer.parseInt(content));
-                case 1 -> statement.setPowerName(content);
-                case 2 -> statement.setSum(Integer.parseInt(content));
-                case 3 -> statement.setTotalPrice(Float.parseFloat(content));
+	@Override
+	public SearchPanel.SearchResult onSearchButtonClick(int optionIndex, String content) {
+		statement = new Statement();
+		try {
+			switch (optionIndex) {
+				case 0 -> statement.setPowerId(Integer.parseInt(content));
+				case 1 -> statement.setPowerName(content);
+				case 2 -> statement.setSum(Integer.parseInt(content));
+				case 3 -> statement.setTotalPrice(Float.parseFloat(content));
             }
         } catch (NumberFormatException e) {
             return SearchPanel.SearchResult.NAN;

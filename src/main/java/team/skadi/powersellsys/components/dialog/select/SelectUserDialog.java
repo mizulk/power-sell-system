@@ -23,14 +23,7 @@ public class SelectUserDialog extends SelectDialog<User> {
 	}
 
 	@Override
-	public void nextPage(int curPage, int pageSize) {
-		UserService service = ServiceUtil.getService(UserService.class);
-		PageBean<User> userPageBean = service.queryUser(curPage, paginationPanel.getPageSize(), null);
-		dataTableModel.updateData(userPageBean.getData());
-	}
-
-	@Override
-	public void previousPage(int curPage, int pageSize) {
+	public void pageChange(int curPage, int pageSize) {
 		UserService service = ServiceUtil.getService(UserService.class);
 		PageBean<User> userPageBean = service.queryUser(curPage, paginationPanel.getPageSize(), null);
 		dataTableModel.updateData(userPageBean.getData());

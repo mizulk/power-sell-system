@@ -95,44 +95,16 @@ public class ShowViewPanel extends SupplierPanel
 		return goodss.getTotal() == 0 ? SearchPanel.SearchResult.NO_RESULT : SearchPanel.SearchResult.HAVE_RESULT;
 	}
 
-    @Override
-    public void onCloseButtonCLick() {
-        PageBean<Goods> goodsPageBean = ServiceUtil.getService(GoodsService.class).queryGoods(1, paginationPanel.getPageSize(), null);
-        visitTableModel.updateData(goodsPageBean.getData());
-    }
-
-    @Override
-    public void firstPage(int pageSize) {
-        GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
-        PageBean<Goods> goodsPageBean = goodsService.queryGoods(1, pageSize, goods);
-        visitTableModel.updateData(goodsPageBean.getData());
-    }
-
-    @Override
-    public void nextPage(int curPage, int pageSize) {
-        GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
-        PageBean<Goods> goodsPageBean = goodsService.queryGoods(curPage, pageSize, goods);
-        visitTableModel.updateData(goodsPageBean.getData());
-    }
-
-    @Override
-    public void previousPage(int curPage, int pageSize) {
-        GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
-        PageBean<Goods> goodsPageBean = goodsService.queryGoods(curPage, pageSize, goods);
+	@Override
+	public void onCloseButtonCLick() {
+		PageBean<Goods> goodsPageBean = ServiceUtil.getService(GoodsService.class).queryGoods(1, paginationPanel.getPageSize(), null);
 		visitTableModel.updateData(goodsPageBean.getData());
 	}
 
 	@Override
-	public void jumpTo(int page, int pageSize) {
+	public void pageChange(int curPage, int pageSize) {
 		GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
-		PageBean<Goods> goodsPageBean = goodsService.queryGoods(page, pageSize, goods);
-		visitTableModel.updateData(goodsPageBean.getData());
-	}
-
-	@Override
-	public void pageSizeChange(int pageSize) {
-		GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
-		PageBean<Goods> goodsPageBean = goodsService.queryGoods(1, pageSize, goods);
+		PageBean<Goods> goodsPageBean = goodsService.queryGoods(curPage, pageSize, goods);
 		visitTableModel.updateData(goodsPageBean.getData());
 	}
 

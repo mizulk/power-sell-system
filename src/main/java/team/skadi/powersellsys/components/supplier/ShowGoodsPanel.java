@@ -140,48 +140,20 @@ public class ShowGoodsPanel extends SupplierPanel
         PageBean<Goods> goodsPageBean = ServiceUtil.getService(GoodsService.class).queryGoods(1, paginationPanel.getPageSize(), goods);
         goodsTableModel.updateData(goodsPageBean.getData());
         paginationPanel.setPageBean(goodsPageBean);
-        return goodsPageBean.getTotal() == 0 ? SearchPanel.SearchResult.NO_RESULT : SearchPanel.SearchResult.HAVE_RESULT;
-    }
-
-    @Override
-    public void onCloseButtonCLick() {
-        PageBean<Goods> goodsPageBean = ServiceUtil.getService(GoodsService.class).queryGoods(1, paginationPanel.getPageSize(), null);
-        goodsTableModel.updateData(goodsPageBean.getData());
-        paginationPanel.setPageBean(goodsPageBean);
-    }
-
-    @Override
-    public void firstPage(int pageSize) {
-        GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
-        PageBean<Goods> goodsPageBean = goodsService.queryGoods(1, pageSize, goods);
-        goodsTableModel.updateData(goodsPageBean.getData());
-    }
-
-    @Override
-    public void nextPage(int curPage, int pageSize) {
-        GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
-        PageBean<Goods> goodsPageBean = goodsService.queryGoods(curPage, pageSize, goods);
-        goodsTableModel.updateData(goodsPageBean.getData());
-    }
-
-    @Override
-    public void previousPage(int curPage, int pageSize) {
-        GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
-        PageBean<Goods> goodsPageBean = goodsService.queryGoods(curPage, pageSize, goods);
-		goodsTableModel.updateData(goodsPageBean.getData());
+		return goodsPageBean.getTotal() == 0 ? SearchPanel.SearchResult.NO_RESULT : SearchPanel.SearchResult.HAVE_RESULT;
 	}
 
 	@Override
-	public void jumpTo(int page, int pageSize) {
-		GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
-		PageBean<Goods> goodsPageBean = goodsService.queryGoods(page, pageSize, goods);
+	public void onCloseButtonCLick() {
+		PageBean<Goods> goodsPageBean = ServiceUtil.getService(GoodsService.class).queryGoods(1, paginationPanel.getPageSize(), null);
 		goodsTableModel.updateData(goodsPageBean.getData());
+		paginationPanel.setPageBean(goodsPageBean);
 	}
 
 	@Override
-	public void pageSizeChange(int pageSize) {
+	public void pageChange(int curPage, int pageSize) {
 		GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
-		PageBean<Goods> goodsPageBean = goodsService.queryGoods(1, pageSize, goods);
+		PageBean<Goods> goodsPageBean = goodsService.queryGoods(curPage, pageSize, goods);
 		goodsTableModel.updateData(goodsPageBean.getData());
 	}
 

@@ -1,7 +1,6 @@
 package team.skadi.powersellsys.components.supplier;
 
 import team.skadi.powersellsys.App;
-import team.skadi.powersellsys.components.BasicComponent;
 import team.skadi.powersellsys.components.PaginationPanel;
 import team.skadi.powersellsys.components.SearchPanel;
 import team.skadi.powersellsys.model.supplier.PriceTableModel;
@@ -10,8 +9,9 @@ import team.skadi.powersellsys.pojo.PageBean;
 import team.skadi.powersellsys.service.GoodsService;
 import team.skadi.powersellsys.utils.ServiceUtil;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 
 public class ShowPricePanel extends SupplierPanel implements PaginationPanel.OnClickListener, SearchPanel.OnClickListener {
@@ -64,56 +64,35 @@ public class ShowPricePanel extends SupplierPanel implements PaginationPanel.OnC
         add(searchPanel, BorderLayout.NORTH);
     }
 
-    @Override
-    protected void addListener() {
+	@Override
+	protected void addListener() {
 
-    }
+	}
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
+	@Override
+	public void actionPerformed(ActionEvent e) {
 
-    }
+	}
 
-    @Override
-    public void firstPage(int pageSize) {
-        GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
-        PageBean<Goods> rank = goodsService.getRank(1, pageSize, goods);
-        priceTableModel.updateData(rank.getData());
-    }
+	@Override
+	public void pageChange(int curPage, int pageSize) {
+		GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
+		PageBean<Goods> rank = goodsService.getRank(curPage, pageSize, goods);
+		priceTableModel.updateData(rank.getData());
+	}
 
-    @Override
-    public void nextPage(int curPage, int pageSize) {
-        GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
-        PageBean<Goods> rank = goodsService.getRank(curPage, pageSize, goods);
-        priceTableModel.updateData(rank.getData());
-    }
+	@Override
+	public void firstPage(int pageSize) {
+		GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
+		PageBean<Goods> rank = goodsService.getRank(1, pageSize, goods);
+		priceTableModel.updateData(rank.getData());
+	}
 
-    @Override
-    public void previousPage(int curPage, int pageSize) {
-        GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
-        PageBean<Goods> rank = goodsService.getRank(curPage, pageSize, goods);
-        priceTableModel.updateData(rank.getData());
-    }
-
-    @Override
-    public void jumpTo(int page, int pageSize) {
-        GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
-        PageBean<Goods> rank = goodsService.getRank(page, pageSize, goods);
-        priceTableModel.updateData(rank.getData());
-    }
-
-    @Override
-    public void pageSizeChange(int pageSize) {
-        GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
-        PageBean<Goods> rank = goodsService.getRank(1, pageSize, goods);
-        priceTableModel.updateData(rank.getData());
-    }
-
-    @Override
-    public SearchPanel.SearchResult onSearchButtonClick(int optionIndex, String content) {
-        goods = new Goods();
-        try {
-            switch (optionIndex) {
+	@Override
+	public SearchPanel.SearchResult onSearchButtonClick(int optionIndex, String content) {
+		goods = new Goods();
+		try {
+			switch (optionIndex) {
                 case 0 -> goods.setName(content);
                 case 1 -> goods.setPrice(Float.parseFloat(content));
             }

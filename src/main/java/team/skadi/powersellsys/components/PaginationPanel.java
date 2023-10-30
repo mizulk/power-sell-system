@@ -145,7 +145,7 @@ public class PaginationPanel extends BasicComponent {
 		if (l == null) return;
 		Object source = e.getSource();
 		if (source == pageSizeComboBox) {
-			pageChange();
+			pageSizeChange();
 		} else if (source == firstBtn) {
 			firstPage();
 		} else if (source == previousBtn) {
@@ -155,6 +155,7 @@ public class PaginationPanel extends BasicComponent {
 		} else if (source == jumpBtn) {
 			jumpTo();
 		}
+		l.pageChange(curPage, pageSize);
 	}
 
 	private void jumpTo() {
@@ -166,7 +167,7 @@ public class PaginationPanel extends BasicComponent {
 		}
 	}
 
-	private void pageChange() {
+	private void pageSizeChange() {
 		pageSize = (pageSizeComboBox.getSelectedIndex() + 2) * 5;
 		initPageSize();
 		updateLabel();
@@ -259,6 +260,9 @@ public class PaginationPanel extends BasicComponent {
 
 	/** 分页面板点击事件，需要实现并使用{@link #addOnclickListener(OnClickListener)}注册监听才能正常使用 */
 	public interface OnClickListener {
+
+		void pageChange(int curPage, int pageSize);
+
 		/**
 		 * 当第一页被按下时
 		 *
@@ -274,7 +278,9 @@ public class PaginationPanel extends BasicComponent {
 		 * @param curPage  下一页的页码
 		 * @param pageSize 每页含有记录数
 		 */
-		void nextPage(int curPage, int pageSize);
+		default void nextPage(int curPage, int pageSize) {
+
+		}
 
 		/**
 		 * 当上一页被按下时
@@ -282,7 +288,9 @@ public class PaginationPanel extends BasicComponent {
 		 * @param curPage  上一页的页码
 		 * @param pageSize 每页含有记录数
 		 */
-		void previousPage(int curPage, int pageSize);
+		default void previousPage(int curPage, int pageSize) {
+
+		}
 
 		/**
 		 * 当跳转按钮被按下时

@@ -112,37 +112,9 @@ public class UserFavoritePanel extends BasicComponent
 	}
 
 	@Override
-	public void firstPage(int pageSize) {
-		FavoritePowerService favoriteService = ServiceUtil.getService(FavoritePowerService.class);
-		PageBean<FavoritePower> favoritePageBean = favoriteService.queryFavorite(1, pageSize, favoritePower);
-		favoriteTableModel.updateData(favoritePageBean.getData());
-	}
-
-	@Override
-	public void nextPage(int curPage, int pageSize) {
+	public void pageChange(int curPage, int pageSize) {
 		FavoritePowerService favoriteService = ServiceUtil.getService(FavoritePowerService.class);
 		PageBean<FavoritePower> favoritePageBean = favoriteService.queryFavorite(curPage, pageSize, favoritePower);
-		favoriteTableModel.updateData(favoritePageBean.getData());
-	}
-
-	@Override
-	public void previousPage(int curPage, int pageSize) {
-		FavoritePowerService favoriteService = ServiceUtil.getService(FavoritePowerService.class);
-		PageBean<FavoritePower> favoritePageBean = favoriteService.queryFavorite(curPage, pageSize, favoritePower);
-		favoriteTableModel.updateData(favoritePageBean.getData());
-	}
-
-	@Override
-	public void jumpTo(int page, int pageSize) {
-		FavoritePowerService favoriteService = ServiceUtil.getService(FavoritePowerService.class);
-		PageBean<FavoritePower> favoritePageBean = favoriteService.queryFavorite(page, pageSize, favoritePower);
-		favoriteTableModel.updateData(favoritePageBean.getData());
-	}
-
-	@Override
-	public void pageSizeChange(int pageSize) {
-		FavoritePowerService favoriteService = ServiceUtil.getService(FavoritePowerService.class);
-		PageBean<FavoritePower> favoritePageBean = favoriteService.queryFavorite(1, pageSize, favoritePower);
 		favoriteTableModel.updateData(favoritePageBean.getData());
 	}
 

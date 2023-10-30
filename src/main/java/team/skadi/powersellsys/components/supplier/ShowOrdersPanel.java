@@ -36,6 +36,7 @@ public class ShowOrdersPanel extends SupplierPanel
 	@Override
 	public void initData() {
 		if (!supplyTableModel.hasData()) {
+			supply = new Supply();
 			supply.setSupplierId(app.useStore().supplierStore.id());
 		}
 		SupplyService service = ServiceUtil.getService(SupplyService.class);
@@ -151,37 +152,9 @@ public class ShowOrdersPanel extends SupplierPanel
 	}
 
 	@Override
-	public void firstPage(int pageSize) {
-		SupplyService supplyService = ServiceUtil.getService(SupplyService.class);
-		PageBean<Supply> supplyPageBean = supplyService.querySupply(1, pageSize, supply);
-		supplyTableModel.updateData(supplyPageBean.getData());
-	}
-
-	@Override
-	public void nextPage(int curPage, int pageSize) {
+	public void pageChange(int curPage, int pageSize) {
 		SupplyService supplyService = ServiceUtil.getService(SupplyService.class);
 		PageBean<Supply> supplyPageBean = supplyService.querySupply(curPage, pageSize, supply);
-		supplyTableModel.updateData(supplyPageBean.getData());
-	}
-
-	@Override
-	public void previousPage(int curPage, int pageSize) {
-		SupplyService supplyService = ServiceUtil.getService(SupplyService.class);
-		PageBean<Supply> supplyPageBean = supplyService.querySupply(curPage, pageSize, supply);
-		supplyTableModel.updateData(supplyPageBean.getData());
-	}
-
-	@Override
-	public void jumpTo(int page, int pageSize) {
-		SupplyService supplyService = ServiceUtil.getService(SupplyService.class);
-		PageBean<Supply> supplyPageBean = supplyService.querySupply(page, pageSize, supply);
-		supplyTableModel.updateData(supplyPageBean.getData());
-	}
-
-	@Override
-	public void pageSizeChange(int pageSize) {
-		SupplyService supplyService = ServiceUtil.getService(SupplyService.class);
-		PageBean<Supply> supplyPageBean = supplyService.querySupply(1, pageSize, supply);
 		supplyTableModel.updateData(supplyPageBean.getData());
 	}
 

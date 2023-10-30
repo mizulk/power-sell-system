@@ -23,14 +23,7 @@ public class SelectSupplierDialog extends SelectDialog<Supplier> {
 	}
 
 	@Override
-	public void nextPage(int curPage, int pageSize) {
-		SupplierService service = ServiceUtil.getService(SupplierService.class);
-		PageBean<Supplier> supplierPageBean = service.querySupplier(curPage, paginationPanel.getPageSize(), null);
-		dataTableModel.updateData(supplierPageBean.getData());
-	}
-
-	@Override
-	public void previousPage(int curPage, int pageSize) {
+	public void pageChange(int curPage, int pageSize) {
 		SupplierService service = ServiceUtil.getService(SupplierService.class);
 		PageBean<Supplier> supplierPageBean = service.querySupplier(curPage, paginationPanel.getPageSize(), null);
 		dataTableModel.updateData(supplierPageBean.getData());

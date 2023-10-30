@@ -121,37 +121,9 @@ public class UserOrderPanel extends BasicComponent
 	}
 
 	@Override
-	public void firstPage(int pageSize) {
-		GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
-		PageBean<Goods> goodsPageBean = goodsService.queryGoods(1, pageSize, goods);
-		orderTableModel.updateData(goodsPageBean.getData());
-	}
-
-	@Override
-	public void nextPage(int curPage, int pageSize) {
+	public void pageChange(int curPage, int pageSize) {
 		GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
 		PageBean<Goods> goodsPageBean = goodsService.queryGoods(curPage, pageSize, goods);
-		orderTableModel.updateData(goodsPageBean.getData());
-	}
-
-	@Override
-	public void previousPage(int curPage, int pageSize) {
-		GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
-		PageBean<Goods> goodsPageBean = goodsService.queryGoods(curPage, pageSize, goods);
-		orderTableModel.updateData(goodsPageBean.getData());
-	}
-
-	@Override
-	public void jumpTo(int page, int pageSize) {
-		GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
-		PageBean<Goods> goodsPageBean = goodsService.queryGoods(page, pageSize, goods);
-		orderTableModel.updateData(goodsPageBean.getData());
-	}
-
-	@Override
-	public void pageSizeChange(int pageSize) {
-		GoodsService goodsService = ServiceUtil.getService(GoodsService.class);
-		PageBean<Goods> goodsPageBean = goodsService.queryGoods(1, pageSize, goods);
 		orderTableModel.updateData(goodsPageBean.getData());
 	}
 
