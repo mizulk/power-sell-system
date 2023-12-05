@@ -67,11 +67,21 @@ public class ImageButton extends JButton {
 		setVerticalTextPosition(vertical);
 	}
 
+	/**
+	 * 设置背景图片
+	 *
+	 * @param res 图片资源地址 "res/img.png"
+	 */
 	public void setImage(String res) {
 		image = new ImageIcon(Objects.requireNonNull(getClass().getResource(res)));
 		setIcon(image);
 	}
 
+	/**
+	 * 设置按钮是否失效
+	 *
+	 * @param b true to enable the button, otherwise false
+	 */
 	@Override
 	public void setEnabled(boolean b) {
 		if (!b) setContentAreaFilled(false);
@@ -93,6 +103,7 @@ public class ImageButton extends JButton {
 		setBackground(new Color(204, 227, 255));
 		setContentAreaFilled(false);
 		setFocusPainted(false);
+		// 实现鼠标移入改变背景的效果，相当于:hover
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {

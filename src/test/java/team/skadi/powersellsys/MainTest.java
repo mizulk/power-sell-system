@@ -22,7 +22,7 @@ public class MainTest {
 	public void testMapper() {
 		SqlSession sqlSession = SqlSessionUtil.getSqlSession();
 		SupplierMapper supplierMapper = sqlSession.getMapper(SupplierMapper.class);
-		List<Supplier> suppliers = supplierMapper.selectAll();
+		List<Supplier> suppliers = supplierMapper.page(new Supplier());
 		for (Supplier supplier : suppliers) {
 			log.debug("{}", supplier.toString());
 		}
@@ -30,25 +30,12 @@ public class MainTest {
 	}
 
 	@Test
-	public void testService() throws Exception {
+	public void testService() {
 //		String s = UserService.class.getPackageName() + ".impl.";
 //		String s1 = UserService.class.getSimpleName() + "Impl";
 //		Class<Service> aClass = (Class<Service>) Class.forName(s + s1);
 //		System.out.println(aClass.newInstance());
 		UserService userService = ServiceUtil.getService(UserService.class);
 		log.debug("{}", userService);
-	}
-
-	@Test
-	public void testDialog() {
-		BasicDialog basicDialog = new BasicDialog(null, "title") {
-			@Override
-			protected JComponent getCenterLayout() {
-				JPanel panel = new JPanel();
-				panel.add(new JLabel("ffdfdf"));
-				return panel;
-			}
-		};
-		System.out.println(basicDialog.getOption());
 	}
 }

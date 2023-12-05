@@ -15,6 +15,10 @@ public abstract class BasicComponent extends JPanel implements ActionListener {
 		this(app, true);
 	}
 
+	/**
+	 * @param app      所属app
+	 * @param autoInit 是否自动执行初始化代码
+	 */
 	public BasicComponent(App app, boolean autoInit) {
 		this.app = app;
 		if (autoInit)

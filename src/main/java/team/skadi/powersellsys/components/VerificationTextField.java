@@ -135,6 +135,9 @@ public class VerificationTextField<T extends JTextField> extends JPanel implemen
 		return textField.getText();
 	}
 
+	/**
+	 * 清空内容，label如果设置为""空串就会失去高度
+	 */
 	public void reset() {
 		errorLabel.setText(" ");
 		textField.setText("");

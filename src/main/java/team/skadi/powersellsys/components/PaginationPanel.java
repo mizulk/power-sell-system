@@ -261,6 +261,12 @@ public class PaginationPanel extends BasicComponent {
 	/** 分页面板点击事件，需要实现并使用{@link #addOnclickListener(OnClickListener)}注册监听才能正常使用 */
 	public interface OnClickListener {
 
+		/**
+		 * 当页面发生变化时调用
+		 *
+		 * @param curPage  当前页数
+		 * @param pageSize 每页包含记录数
+		 */
 		void pageChange(int curPage, int pageSize);
 
 		/**

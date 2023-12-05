@@ -36,6 +36,7 @@ import java.util.ArrayList;
  * </code></pre>
  * </p>
  */
+// TODO：分类变化输入框
 public class SearchPanel extends BasicComponent {
 
 	private JButton searchBtn;
