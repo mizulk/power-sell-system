@@ -2,10 +2,10 @@ package team.skadi.powersellsys.router;
 
 import team.skadi.powersellsys.view.BasicView;
 import team.skadi.powersellsys.view.HelpView;
+import team.skadi.powersellsys.view.SelectLoginView;
 import team.skadi.powersellsys.view.manager.ManagerLoginView;
 import team.skadi.powersellsys.view.manager.ManagerMainView;
 import team.skadi.powersellsys.view.supplier.SupplierLoginView;
-import team.skadi.powersellsys.view.SelectLoginView;
 import team.skadi.powersellsys.view.supplier.SupplierMainView;
 import team.skadi.powersellsys.view.supplier.SupplierRegisterView;
 import team.skadi.powersellsys.view.user.UserLoginView;

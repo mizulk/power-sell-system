@@ -10,6 +10,9 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.Objects;
 
 /**
  * 分页面板，必须注册{@link OnClickListener}来使用
@@ -18,6 +21,16 @@ import java.awt.event.ActionEvent;
  * </p>
  */
 public class PaginationPanel extends BasicComponent {
+
+	public static final Component[] DEFAULT_LAYOUT = {
+			Component.TOTAL,
+			Component.SIZES,
+			Component.FIRST,
+			Component.PREV,
+			Component.PAGER,
+			Component.NEXT,
+			Component.JUMPER
+	};
 
 	private JLabel totalLabel;
 	private JComboBox<String> pageSizeComboBox;
@@ -31,18 +44,63 @@ public class PaginationPanel extends BasicComponent {
 	private int pageSize = 10;
 	private long total;
 	private int pageLength;
+	private final LinkedHashSet<Component> layoutSet;
 	private SpinnerNumberModel spinnerNumberModel;
-	private final String[] layout;
 	private JButton exportBtn;
+
+	/**
+	 * 目前分页面板支持的组件有：
+	 * <ul>
+	 *     <li>total：总共页数</li>
+	 *     <li>sizes：切换每页显示记录数</li>
+	 *     <li>first：第一页按钮</li>
+	 *     <li>prev：上一页按钮</li>
+	 *     <li>pager：页数显示</li>
+	 *     <li>next：下一页按钮</li>
+	 *     <li>jumper：跳转按钮</li>
+	 *     <li>export：导出数据</li>
+	 * </ul>
+	 */
+	public enum Component {
+		TOTAL("total"),
+		SIZES("sizes"),
+		FIRST("first"),
+		PREV("prev"),
+		PAGER("pager"),
+		NEXT("next"),
+		JUMPER("jumper"),
+		EXPORT("export");
+		final String value;
+
+		Component(String value) {
+			this.value = value;
+		}
+
+		public static Component[] parse(String layout) {
+			String[] strings = layout.split(",\\s|,");
+			if (strings.length == 0) return null;
+
+			LinkedHashSet<Component> components = new LinkedHashSet<>();
+			for (String str : strings) {
+				for (Component comp : Component.values()) {
+					if (str.equals(comp.value)) {
+						components.add(comp);
+						break;
+					}
+				}
+			}
+			return components.toArray(new Component[]{});
+		}
+	}
 
 	/**
 	 * @param app        从属于那个app
 	 * @param exportable 是否能导出数据
-	 * @deprecated replaced by {@code new PaginationPanel(App,String)}.
+	 * @deprecated replaced by {@link PaginationPanel#PaginationPanel(App, String)} or {@link PaginationPanel#PaginationPanel(App, Component[])}.
 	 */
 	@Deprecated(since = "26f6bdafcfcf9e62c97756a94ad45ad9313c19fa", forRemoval = true)
 	public PaginationPanel(App app, boolean exportable) {
-		this(app, "total,sizes,first,prev,pager,next,jumper");
+		this(app, DEFAULT_LAYOUT);
 		if (exportable) {
 			exportBtn = new JButton("导出");
 			add(exportBtn);
@@ -55,57 +113,62 @@ public class PaginationPanel extends BasicComponent {
 	 * @param app 从属于那个app
 	 */
 	public PaginationPanel(App app) {
-		this(app, "total,sizes,first,prev,pager,next,jumper");
+		this(app, DEFAULT_LAYOUT);
 	}
 
 	/**
-	 * 依照给定的布局创建一个分页面板
+	 * 依照给定的布局创建一个分页面板，字符串模式
 	 *
-	 * @param app    从属于那个app
-	 * @param layout 组件布局，子组件名用逗号分隔。提供的组件有 total,sizes,first,prev,pager,next,jumper,export
+	 * @see PaginationPanel#PaginationPanel(App, Component[])
 	 */
 	public PaginationPanel(App app, String layout) {
+		this(app, Objects.requireNonNullElse(Component.parse(layout), DEFAULT_LAYOUT));
+	}
+
+	/**
+	 * 依照给定的布局创建一个分页面板，枚举模式
+	 *
+	 * @param app        从属于那个app
+	 * @param components 组件布局，子组件名用逗号分隔。提供的组件有: {@link Component}
+	 */
+	public PaginationPanel(App app, Component[] components) {
 		super(app, false);
-		String[] layout1;
-		layout1 = layout.split(",\\s|,");
-		if (layout1.length == 0) {
-			layout1 = new String[]{"total", "sizes", "first", "prev", "pager", "next", "jumper"};
-		}
-		this.layout = layout1;
+		layoutSet = new LinkedHashSet<>(Component.values().length);
+		Collections.addAll(layoutSet, components.length == 0 ? DEFAULT_LAYOUT : components);
 		init();
 	}
 
 	@Override
 	protected void buildLayout() {
-		setLayout(new GridLayout(1, 6, 8, 0));
+		setLayout(new GridLayout(1, layoutSet.size(), 8, 0));
 
-		for (String str : layout) {
-			switch (str) {
-				case "total" -> {
+		for (Component component : layoutSet) {
+			switch (component) {
+				case TOTAL -> {
 					totalLabel = new JLabel(/*"共 1024"*/);
 					add(totalLabel);
 				}
-				case "sizes" -> {
+				case SIZES -> {
 					pageSizeComboBox = new JComboBox<>(new String[]{"10/页", "15/页", "20/页"});
 					add(pageSizeComboBox);
 				}
-				case "first" -> {
+				case FIRST -> {
 					firstBtn = new JButton("首页");
 					add(firstBtn);
 				}
-				case "prev" -> {
+				case PREV -> {
 					previousBtn = new JButton("<");
 					add(previousBtn);
 				}
-				case "pager" -> {
+				case PAGER -> {
 					pageLabel = new JLabel("", JLabel.CENTER);
 					add(pageLabel);
 				}
-				case "next" -> {
+				case NEXT -> {
 					nextBtn = new JButton(">");
 					add(nextBtn);
 				}
-				case "jumper" -> {
+				case JUMPER -> {
 					spinnerNumberModel = new SpinnerNumberModel(1, 1, 10, 1);
 					JSpinner pageSpinner = new JSpinner(spinnerNumberModel);
 					add(pageSpinner);
@@ -113,7 +176,7 @@ public class PaginationPanel extends BasicComponent {
 					jumpBtn = new JButton("跳转");
 					add(jumpBtn);
 				}
-				case "export" -> {// unfinished
+				case EXPORT -> {// unfinished
 					exportBtn = new JButton("导出");
 					add(exportBtn);
 				}
@@ -123,14 +186,14 @@ public class PaginationPanel extends BasicComponent {
 
 	@Override
 	protected void addListener() {
-		for (String str : layout) {
-			switch (str) {
-				case "sizes" -> pageSizeComboBox.addActionListener(this);
-				case "first" -> firstBtn.addActionListener(this);
-				case "prev" -> previousBtn.addActionListener(this);
-				case "next" -> nextBtn.addActionListener(this);
-				case "jumper" -> jumpBtn.addActionListener(this);
-				case "export" -> exportBtn.addActionListener(this);// unfinished
+		for (Component component : layoutSet) {
+			switch (component) {
+				case SIZES -> pageSizeComboBox.addActionListener(this);
+				case FIRST -> firstBtn.addActionListener(this);
+				case PREV -> previousBtn.addActionListener(this);
+				case NEXT -> nextBtn.addActionListener(this);
+				case JUMPER -> jumpBtn.addActionListener(this);
+				case EXPORT -> exportBtn.addActionListener(this);// unfinished
 			}
 		}
 	}
