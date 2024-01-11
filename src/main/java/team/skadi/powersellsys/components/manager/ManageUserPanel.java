@@ -45,7 +45,17 @@ public class ManageUserPanel extends ManagePanel {
 
 	@Override
 	protected JPanel getSearchPanel() {
-		SearchPanel searchPanel = new SearchPanel(app, new String[]{"用户账号", "用户姓名", "用户性别", "用户年龄", "用户住址"});
+		SearchPanel searchPanel = new SearchPanel(
+				app,
+				new String[]{"用户账号", "用户姓名", "用户性别", "用户年龄", "用户住址"},
+				new SearchPanel.Type[]{
+						SearchPanel.Type.STRING,
+						SearchPanel.Type.STRING,
+						SearchPanel.Type.STRING,
+						SearchPanel.Type.INTEGER,
+						SearchPanel.Type.STRING
+				}
+		);
 		searchPanel.addOnClickListener(this);
 		return searchPanel;
 	}
